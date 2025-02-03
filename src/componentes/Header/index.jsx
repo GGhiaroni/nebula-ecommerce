@@ -5,6 +5,9 @@ import Opcoes from "../Opcoes";
 const HeaderEstilizado = styled.header`
   background-color: var(--preto);
   padding: 1rem 20rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Header = () => {

@@ -14,6 +14,9 @@ const OpcoesEstilizadas = styled.ul`
   list-style: none;
   color: #fff;
   display: flex;
+  gap: 15px;
+  font-size: 22px;
+  cursor: pointer;
 `;
 
 const Opcoes = () => {
