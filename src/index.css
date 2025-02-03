@@ -1,9 +1,11 @@
---root {
+:root {
   --preto: #1c2120;
+  --fontePrincipal: "Bebas Neue";
 }
 
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: var(--fontePrincipal);
 }

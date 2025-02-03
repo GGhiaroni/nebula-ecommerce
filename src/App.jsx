@@ -1,11 +1,8 @@
+import Header from "./componentes/Header";
 import "./index.css";
 
 function App() {
-  return (
-    <>
-      <h1>funcionando</h1>
-    </>
-  );
+  return <Header />;
 }
 
 export default App;
