@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Logomarca from "../Logomarca";
+import Opcoes from "../Opcoes";
 
 const HeaderEstilizado = styled.header`
   background-color: var(--preto);
@@ -10,6 +11,7 @@ const Header = () => {
   return (
     <HeaderEstilizado>
       <Logomarca />
+      <Opcoes />
     </HeaderEstilizado>
   );
 };
