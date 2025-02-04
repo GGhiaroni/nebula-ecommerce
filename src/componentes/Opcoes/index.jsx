@@ -11,23 +11,6 @@ const opcoes = [
   "Acessórios",
 ];
 
-const underlineEffect = keyframes`
-  0% {
-    width: 0%;
-    left: 50%;
-    opacity: 0;
-  }
-  50% {
-    width: 100%;
-    left: 0%;
-    opacity: 1;
-  }
-  100% {
-    width: 100%;
-    opacity: 1;
-  }
-`;
-
 const bgFade = keyframes`
   0% {
     background: rgba(255, 255, 255, 0);

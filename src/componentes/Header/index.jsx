@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import IconesHeader from "../IconesHeader";
 import Logomarca from "../Logomarca";
 import Opcoes from "../Opcoes";
 
@@ -15,6 +16,7 @@ const Header = () => {
     <HeaderEstilizado>
       <Logomarca />
       <Opcoes />
+      <IconesHeader />
     </HeaderEstilizado>
   );
 };
