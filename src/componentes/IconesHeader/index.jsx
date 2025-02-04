@@ -1,4 +1,6 @@
+import { useState } from "react";
 import styled from "styled-components";
+import ModalDePesquisa from "../ModalDePesquisa";
 import bagIcon from "/public/bag-icon-white.png";
 import chatIcon from "/public/chat-icon-white.png";
 import searchIcon from "/public/search-icon-white.png";
@@ -42,16 +44,37 @@ const IconesHeaderEstilizado = styled.ul`
   }
 `;
 
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+`;
+
 const IconesHeader = () => {
+  const [modalAberta, setModalAberta] = useState(false);
+
+  const abrirModal = () => setModalAberta(true);
+  const fecharModal = () => setModalAberta(false);
+
   return (
-    <IconesHeaderEstilizado>
-      {icones.map((icone, index) => (
-        <li key={index}>
-          <img src={icone} alt="icone header" />
-        </li>
-      ))}
-      ;
-    </IconesHeaderEstilizado>
+    <>
+      <IconesHeaderEstilizado>
+        {icones.map((icone, index) => (
+          <li key={index} onClick={index === 0 ? abrirModal : undefined}>
+            <img src={icone} alt="icone header" />
+          </li>
+        ))}
+        ;
+      </IconesHeaderEstilizado>
+      {modalAberta && <ModalDePesquisa fecharModal={fecharModal} />}
+    </>
   );
 };
 
