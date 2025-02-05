@@ -1,15 +1,21 @@
+import { useEffect, useState } from "react";
+
 const FeedHome = () => {
-  const produtos = fetch(
-    "https://fakestoreapi.com/products/category/men's%20clothing"
-  )
-    .then((res) => res.json())
-    .then((json) => console.log(json));
+  const [feed, setFeed] = useState([]);
+
+  useEffect(() => {
+    const produtos = fetch(
+      "https://fakestoreapi.com/products/category/men's%20clothing"
+    )
+      .then((res) => res.json())
+      .then((json) => setFeed(json));
+  }, []);
 
   return (
     <>
-      {produtos.map((produto) => {
-        <img src={produto.image} />;
-      })}
+      {feed.map((produto) => (
+        <img src={produto.image} />
+      ))}
     </>
   );
 };
