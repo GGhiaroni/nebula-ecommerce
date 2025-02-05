@@ -80,11 +80,12 @@ const ModalContainer = styled.div`
 const InputPesquisa = styled.input`
   width: 100%;
   padding: 10px;
-  font-size: 16px;
+  font-size: 24px;
   border: 1px solid #ccc;
   border-radius: 4px;
   outline: none;
   background: white;
+  font-family: var(--fontePrincipal);
 `;
 
 const ModalDePesquisa = ({ fecharModal }) => {
@@ -107,7 +108,7 @@ const ModalDePesquisa = ({ fecharModal }) => {
         isClosing={isClosing}
         onClick={(e) => e.stopPropagation()}
       >
-        <InputPesquisa type="text" placeholder="Digite sua pesquisa..." />
+        <InputPesquisa type="text" placeholder="Digite sua pesquisa" />
       </ModalContainer>
     </ModalOverlay>
   );
