@@ -73,6 +73,18 @@ const FeedHome = () => {
         "electronics",
       ];
 
+      // Novo produto a ser adicionado
+      const novoProduto = {
+        id: Date.now(), // Criando um ID único para o produto
+        title: "Blusa do Fluminense",
+        price: 88.9,
+        description: "lorem ipsum set",
+        image:
+          "https://dcdn.mitiendanube.com/stores/002/263/620/products/u31fl514231_425_00-removebg-preview-11-eb8db83b00e15767d816576328395233-240-0.png",
+        category: "men's%20clothing",
+      };
+
+      // Buscar produtos por categoria
       const results = await Promise.all(
         categorias.map((categoria) =>
           fetch(`https://fakestoreapi.com/products/category/${categoria}`).then(
@@ -80,11 +92,13 @@ const FeedHome = () => {
           )
         )
       );
+
+      // Atualizar estado com os produtos existentes + novo produto em todas as categorias
       setProdutos({
-        masculino: results[0],
-        feminino: results[1],
-        joias: results[2],
-        eletronicos: results[3],
+        masculino: [novoProduto, ...results[0]],
+        feminino: [novoProduto, ...results[1]],
+        joias: [novoProduto, ...results[2]],
+        eletronicos: [novoProduto, ...results[3]],
       });
     };
 
