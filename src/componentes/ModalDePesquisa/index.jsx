@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CgClose } from "react-icons/cg";
 import styled, { keyframes } from "styled-components";
+import searchIcon from "/public/search-icon-black.png";
 
 const fadeIn = keyframes`
   from {
@@ -44,7 +45,7 @@ const ModalOverlay = styled.div`
 const FecharBotao = styled.button`
   position: absolute;
   top: -60px;
-  left: 50%;
+  right: -135px;
   transform: translateX(-50%);
   background: none;
   border: none;
@@ -60,32 +61,64 @@ const FecharBotao = styled.button`
 
 const Titulo = styled.h2`
   color: white;
-  font-size: 24px;
-  margin-bottom: 10px;
+  font-size: 32px;
   position: relative;
 `;
 
 const ModalContainer = styled.div`
-  background: transparent;
+  background: #242424;
   padding: 20px;
-  width: 400px;
+  width: 20%;
+  height: 20%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 0px;
   position: relative;
   animation: ${({ isClosing }) => (isClosing ? fadeOut : fadeIn)} 0.4s
     ease-in-out;
+  border-radius: 12px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
 `;
 
 const InputPesquisa = styled.input`
   width: 100%;
-  padding: 10px;
-  font-size: 24px;
-  border: 1px solid #ccc;
+  padding: 12px 50px 12px 15px;
+  font-size: 20px;
+  border: 4px solid #ffffff;
   border-radius: 4px;
   outline: none;
   background: white;
-  font-family: var(--fontePrincipal);
+  font-family: var(--fonteSecundaria);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+`;
+
+const ContainerInput = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+const BotaoLupa = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+
+  &:hover {
+    opacity: 0.7;
+  }
+`;
+
+const ImagemLupa = styled.img`
+  width: 30px;
+  height: 30px;
 `;
 
 const ModalDePesquisa = ({ fecharModal }) => {
@@ -98,17 +131,22 @@ const ModalDePesquisa = ({ fecharModal }) => {
 
   return (
     <ModalOverlay isClosing={isClosing} onClick={handleClose}>
-      <Titulo>
-        O que você está procurando?
-        <FecharBotao onClick={handleClose}>
-          <CgClose />
-        </FecharBotao>
-      </Titulo>
       <ModalContainer
         isClosing={isClosing}
         onClick={(e) => e.stopPropagation()}
       >
-        <InputPesquisa type="text" placeholder="Digite sua pesquisa" />
+        <Titulo>
+          O que você está procurando?
+          <FecharBotao onClick={handleClose}>
+            <CgClose />
+          </FecharBotao>
+        </Titulo>
+        <ContainerInput>
+          <InputPesquisa type="text" placeholder="Digite sua pesquisa" />
+          <BotaoLupa>
+            <ImagemLupa src={searchIcon} alt="lupa para buscar produto" />
+          </BotaoLupa>
+        </ContainerInput>
       </ModalContainer>
     </ModalOverlay>
   );
