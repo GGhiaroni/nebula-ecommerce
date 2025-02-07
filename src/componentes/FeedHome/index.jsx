@@ -34,6 +34,7 @@ const GridProdutos = styled.div`
 const CardProduto = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   background: white;
   padding: 15px;
@@ -41,6 +42,7 @@ const CardProduto = styled.div`
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
   cursor: pointer;
+  height: 220px;
 
   &:hover {
     transform: scale(1.05);
@@ -120,7 +122,6 @@ const FeedHome = () => {
       <CarrosselContainer>
         <Swiper
           navigation={true}
-          pagination={{ clickable: true }}
           autoplay={{ delay: 3000 }}
           modules={[Navigation, Pagination, Autoplay]}
           slidesPerView={3}
