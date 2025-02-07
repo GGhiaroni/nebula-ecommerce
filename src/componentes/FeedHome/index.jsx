@@ -1,13 +1,27 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const FeedHomeEstilizado = styled.section`
   display: flex;
   flex-direction: column;
   align-items: start;
   gap: 50px;
-  padding: 40px;
+  padding: 40px 500px;
   background-color: #f5f5f5;
+`;
+
+const CarrosselContainer = styled.div`
+  width: 100%;
+  max-width: 800px;
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: #333;
+  }
 `;
 
 const CategoriaTitulo = styled.h2`
@@ -92,8 +106,34 @@ const FeedHome = () => {
     fetchProdutos();
   }, []);
 
+  const produtosDestaque = [
+    ...produtos.masculino.slice(0, 2),
+    ...produtos.feminino.slice(0, 2),
+    ...produtos.joias.slice(0, 2),
+    ...produtos.eletronicos.slice(0, 2),
+  ];
+
   return (
     <FeedHomeEstilizado>
+      <CarrosselContainer>
+        <CategoriaTitulo>Produtos em Destaque</CategoriaTitulo>
+        <Swiper
+          navigation={true}
+          modules={[Navigation]}
+          slidesPerView={3}
+          spaceBetween={20}
+        >
+          {produtosDestaque.map((produto) => (
+            <SwiperSlide key={produto.id}>
+              <CardProduto>
+                <img src={produto.image} alt={produto.title} />
+                <p>{produto.title}</p>
+              </CardProduto>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </CarrosselContainer>
+
       <div>
         <CategoriaTitulo>Roupas Masculinas</CategoriaTitulo>
         <ContainerProdutos>
