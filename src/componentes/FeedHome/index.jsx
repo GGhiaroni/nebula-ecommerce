@@ -2,52 +2,43 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
+import "swiper/css/pagination";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 const FeedHomeEstilizado = styled.section`
   display: flex;
   flex-direction: column;
-  align-items: start;
-  gap: 50px;
-  padding: 40px 500px;
-  background-color: #f5f5f5;
-`;
-
-const CarrosselContainer = styled.div`
-  width: 100%;
-  max-width: 800px;
-
-  .swiper-button-prev,
-  .swiper-button-next {
-    color: #333;
-  }
+  align-items: center;
+  gap: 40px;
+  padding: 40px 80px;
+  background-color: #f0f0f5;
 `;
 
 const CategoriaTitulo = styled.h2`
-  font-size: 24px;
+  font-size: 26px;
   font-weight: bold;
-  color: #333;
+  color: #222;
   text-transform: uppercase;
+  text-align: center;
   margin-bottom: 20px;
 `;
 
-const ContainerProdutos = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
+const GridProdutos = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 1100px;
 `;
 
 const CardProduto = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 200px;
   background: white;
   padding: 15px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
   cursor: pointer;
 
@@ -56,8 +47,8 @@ const CardProduto = styled.div`
   }
 
   img {
-    width: 150px;
-    height: 180px;
+    width: 100px;
+    height: 120px;
     object-fit: contain;
   }
 
@@ -66,7 +57,17 @@ const CardProduto = styled.div`
     font-weight: bold;
     text-align: center;
     margin-top: 10px;
-    color: #555;
+    color: #333;
+  }
+`;
+
+const CarrosselContainer = styled.div`
+  width: 100%;
+  max-width: 800px;
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: #222;
   }
 `;
 
@@ -86,7 +87,6 @@ const FeedHome = () => {
         "jewelery",
         "electronics",
       ];
-
       const results = await Promise.all(
         categorias.map((categoria) =>
           fetch(`https://fakestoreapi.com/products/category/${categoria}`).then(
@@ -95,11 +95,12 @@ const FeedHome = () => {
         )
       );
 
+      const limite = 4;
       setProdutos({
-        masculino: results[0],
-        feminino: results[1],
-        joias: results[2],
-        eletronicos: results[3],
+        masculino: results[0].slice(0, limite),
+        feminino: results[1].slice(0, limite),
+        joias: results[2].slice(0, limite),
+        eletronicos: results[3].slice(0, limite),
       });
     };
 
@@ -115,11 +116,13 @@ const FeedHome = () => {
 
   return (
     <FeedHomeEstilizado>
+      <CategoriaTitulo>🔥 Produtos em Destaque 🔥</CategoriaTitulo>
       <CarrosselContainer>
-        <CategoriaTitulo>Produtos em Destaque</CategoriaTitulo>
         <Swiper
           navigation={true}
-          modules={[Navigation]}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 3000 }}
+          modules={[Navigation, Pagination, Autoplay]}
           slidesPerView={3}
           spaceBetween={20}
         >
@@ -136,50 +139,50 @@ const FeedHome = () => {
 
       <div>
         <CategoriaTitulo>Roupas Masculinas</CategoriaTitulo>
-        <ContainerProdutos>
+        <GridProdutos>
           {produtos.masculino.map((produto) => (
             <CardProduto key={produto.id}>
               <img src={produto.image} alt={produto.title} />
               <p>{produto.title}</p>
             </CardProduto>
           ))}
-        </ContainerProdutos>
+        </GridProdutos>
       </div>
 
       <div>
         <CategoriaTitulo>Roupas Femininas</CategoriaTitulo>
-        <ContainerProdutos>
+        <GridProdutos>
           {produtos.feminino.map((produto) => (
             <CardProduto key={produto.id}>
               <img src={produto.image} alt={produto.title} />
               <p>{produto.title}</p>
             </CardProduto>
           ))}
-        </ContainerProdutos>
+        </GridProdutos>
       </div>
 
       <div>
         <CategoriaTitulo>Joias</CategoriaTitulo>
-        <ContainerProdutos>
+        <GridProdutos>
           {produtos.joias.map((produto) => (
             <CardProduto key={produto.id}>
               <img src={produto.image} alt={produto.title} />
               <p>{produto.title}</p>
             </CardProduto>
           ))}
-        </ContainerProdutos>
+        </GridProdutos>
       </div>
 
       <div>
         <CategoriaTitulo>Eletrônicos</CategoriaTitulo>
-        <ContainerProdutos>
+        <GridProdutos>
           {produtos.eletronicos.map((produto) => (
             <CardProduto key={produto.id}>
               <img src={produto.image} alt={produto.title} />
               <p>{produto.title}</p>
             </CardProduto>
           ))}
-        </ContainerProdutos>
+        </GridProdutos>
       </div>
     </FeedHomeEstilizado>
   );

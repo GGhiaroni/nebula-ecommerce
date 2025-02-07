@@ -1,11 +1,16 @@
 :root {
   --preto: #1c2120;
   --fontePrincipal: "Bebas Neue";
+  --fonteSecundaria: "Manrope";
+}
+
+header {
+  font-family: var(--fontePrincipal);
 }
 
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: var(--fontePrincipal);
+  font-family: var(--fonteSecundaria);
 }
