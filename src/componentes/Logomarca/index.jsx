@@ -17,6 +17,7 @@ const LogomarcaNebula = styled.div`
 
 const LinkLogo = styled(Link)`
   text-decoration: none;
+  cursor: pointer;
 `;
 
 const Logomarca = () => {

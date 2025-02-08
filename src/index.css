@@ -4,7 +4,8 @@
   --fonteSecundaria: "Manrope";
 }
 
-header {
+header,
+footer {
   font-family: var(--fontePrincipal);
 }
 
