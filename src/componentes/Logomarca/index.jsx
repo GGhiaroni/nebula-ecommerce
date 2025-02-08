@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import styled from "styled-components";
 
 const LogomarcaNebula = styled.div`
@@ -14,12 +15,18 @@ const LogomarcaNebula = styled.div`
   }
 `;
 
+const LinkLogo = styled(Link)`
+  text-decoration: none;
+`;
+
 const Logomarca = () => {
   return (
-    <LogomarcaNebula>
-      <h1>nebula</h1>
-      <img src="../public/nebula-icon-white.png" />
-    </LogomarcaNebula>
+    <LinkLogo to="/">
+      <LogomarcaNebula>
+        <h1>nebula</h1>
+        <img src="../public/nebula-icon-white.png" />
+      </LogomarcaNebula>
+    </LinkLogo>
   );
 };
 
