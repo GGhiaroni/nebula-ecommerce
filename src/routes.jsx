@@ -6,10 +6,11 @@ import "./index.css";
 import Eletronicos from "./pages/Eletronicos";
 import Home from "./pages/Home";
 import Joias from "./pages/Joias";
+import Pagina404 from "./pages/Pagina404";
 import RoupasFemininas from "./pages/RoupasFemininas";
 import RoupasMasculinas from "./pages/RoupasMasculinas";
 
-function App() {
+function AppRoutes() {
   return (
     <BrowserRouter>
       <Header />
@@ -19,6 +20,7 @@ function App() {
         <Route path="/roupas-femininas" element={<RoupasFemininas />} />
         <Route path="/joias" element={<Joias />} />
         <Route path="/eletronicos" element={<Eletronicos />} />
+        <Route path="*" element={<Pagina404 />} />
       </Routes>
       <InformacoesAdicionais />
       <Footer />
@@ -26,4 +28,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppRoutes;

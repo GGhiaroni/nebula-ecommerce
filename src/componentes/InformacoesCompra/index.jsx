@@ -60,7 +60,7 @@ const InformacoesCompra = () => {
   return (
     <InformacoesCompraEstilizado>
       {informacoesCompra.map((info, item) => (
-        <ContainerInformacoes>
+        <ContainerInformacoes key={item}>
           <img src={info.icone} />
           <ContainerTexto>
             <h2>{info.titulo}</h2>
