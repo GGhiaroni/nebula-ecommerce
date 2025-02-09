@@ -13,6 +13,7 @@ import QuemSomos from "./pages/QuemSomos";
 import RoupasFemininas from "./pages/RoupasFemininas";
 import RoupasMasculinas from "./pages/RoupasMasculinas";
 import TrocasEDevolucoes from "./pages/TrocasEDevolucoes";
+import Atendimento from "./pages/Atendimento";
 
 function AppRoutes() {
   return (
@@ -24,8 +25,8 @@ function AppRoutes() {
         <Route path="/roupas-femininas" element={<RoupasFemininas />} />
         <Route path="/joias" element={<Joias />} />
         <Route path="/eletronicos" element={<Eletronicos />} />
-        <Route path="/atendimento" element={<Eletronicos />} />
-        <Route path="/quemsomos" element={<QuemSomos />} />
+        <Route path="/atendimento" element={<Atendimento />} />
+        <Route path="/quem-somos" element={<QuemSomos />} />
         <Route path="/trocas-e-devolucoes" element={<TrocasEDevolucoes />} />
         <Route path="/avaliacoes" element={<Avaliacoes />} />
         <Route path="/cashback" element={<Cashback />} />

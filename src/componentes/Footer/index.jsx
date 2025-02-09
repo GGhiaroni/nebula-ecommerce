@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import styled from "styled-components";
 import Logomarca from "../Logomarca";
 
@@ -63,12 +64,31 @@ const Footer = () => {
     "Cashback",
   ];
 
+  const rotas = {
+    Atendimento: "/atendimento",
+    "Quem somos": "/quem-somos",
+    "Trocas e devoluções": "/trocas-e-devolucoes",
+    Avaliações: "/avaliacoes",
+    Cashback: "/cashback",
+  };
+
+  const LinkEstilizado = styled(Link)`
+    text-decoration: none;
+    color: white;
+  `;
+
   return (
     <FooterEstilizado>
       <Logomarca />
       <FooterColunasLista>
         {listaFooter.map((item, index) => (
-          <li key={index}>{item}</li>
+          <li key={index}>
+            {rotas[item] ? (
+              <LinkEstilizado to={rotas[item]}>{item}</LinkEstilizado>
+            ) : (
+              item
+            )}
+          </li>
         ))}
       </FooterColunasLista>
       <h2>Nebula © Todos os direitos reservados.</h2>
