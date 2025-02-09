@@ -27,7 +27,7 @@ const informacoesCompra = [
   },
 ];
 
-const InformacoesAdicionaisEstilizado = styled.div`
+const InformacoesCompraEstilizado = styled.div`
   padding: 3rem;
   background-color: var(--preto);
   display: flex;
@@ -56,9 +56,9 @@ const ContainerTexto = styled.div`
     font-size: 20px;
   }
 `;
-const InformacoesAdicionais = () => {
+const InformacoesCompra = () => {
   return (
-    <InformacoesAdicionaisEstilizado>
+    <InformacoesCompraEstilizado>
       {informacoesCompra.map((info, item) => (
         <ContainerInformacoes>
           <img src={info.icone} />
@@ -68,8 +68,8 @@ const InformacoesAdicionais = () => {
           </ContainerTexto>
         </ContainerInformacoes>
       ))}
-    </InformacoesAdicionaisEstilizado>
+    </InformacoesCompraEstilizado>
   );
 };
 
-export default InformacoesAdicionais;
+export default InformacoesCompra;
