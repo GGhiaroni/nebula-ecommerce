@@ -1,15 +1,15 @@
+import { Link } from "react-router";
 import styled, { keyframes } from "styled-components";
 
-const opcoes = [
-  "Lançamentos",
-  "Camisetas",
-  "Shorts",
-  "Moletons",
-  "Jaquetas",
-  "Calças",
-  "Camisas",
-  "Acessórios",
-];
+const opcoes = ["Masculino", "Feminino", "Acessórios", "Jóias", "Eletrônicos"];
+
+const rotas = {
+  Masculino: "/roupas-masculinas",
+  Feminino: "/roupas-femininas",
+  Acessórios: "acessorios",
+  Jóias: "/joias",
+  Eletrônicos: "/eletronicos",
+};
 
 const bgFade = keyframes`
   0% {
@@ -31,7 +31,7 @@ const OpcoesEstilizadas = styled.ul`
   color: #fff;
   display: flex;
   gap: 20px;
-  font-size: 20px;
+  font-size: 25px;
   cursor: pointer;
   font-weight: 500;
   text-transform: uppercase;
@@ -70,11 +70,22 @@ const OpcoesEstilizadas = styled.ul`
   }
 `;
 
+const LinkEstilizado = styled(Link)`
+  text-decoration: none;
+  color: white;
+`;
+
 const Opcoes = () => {
   return (
     <OpcoesEstilizadas>
       {opcoes.map((opcao, index) => (
-        <li key={index}>{opcao}</li>
+        <li key={index}>
+          {rotas[opcao] ? (
+            <LinkEstilizado to={rotas[opcao]}>{opcao}</LinkEstilizado>
+          ) : (
+            opcao
+          )}
+        </li>
       ))}
     </OpcoesEstilizadas>
   );
