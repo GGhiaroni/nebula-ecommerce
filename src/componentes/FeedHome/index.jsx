@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import styled from "styled-components";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -73,6 +74,22 @@ const CarrosselContainer = styled.div`
   }
 `;
 
+const BotaoFavorito = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: ${({ favoritado }) => (favoritado ? "red" : "gray")};
+  transition: color 0.3s;
+
+  &:hover {
+    color: red;
+  }
+`;
+
 const FeedHome = () => {
   const [produtos, setProdutos] = useState({
     masculino: [],
@@ -80,6 +97,8 @@ const FeedHome = () => {
     joias: [],
     eletronicos: [],
   });
+
+  const [favoritos, setFavoritos] = useState([]);
 
   useEffect(() => {
     const fetchProdutos = async () => {
@@ -143,6 +162,16 @@ const FeedHome = () => {
         <GridProdutos>
           {produtos.masculino.map((produto) => (
             <CardProduto key={produto.id}>
+              <BotaoFavorito
+                favoritado={favoritos.includes(produto.id)}
+                onClick={() => toggleFavorito(produto.id)}
+              >
+                {favoritos.includes(produto.id) ? (
+                  <MdFavorite />
+                ) : (
+                  <MdFavoriteBorder />
+                )}
+              </BotaoFavorito>
               <img src={produto.image} alt={produto.title} />
               <p>{produto.title}</p>
             </CardProduto>
