@@ -135,7 +135,7 @@ const ModalDePesquisa = ({ fecharModal }) => {
 
   const handlePesquisa = () => {
     if (termoPesquisa.trim() !== "") {
-      navigate(`/resultados?query=${encodeURIComponent(termoPesquisa)}`);
+      navigate(`/busca?query=${encodeURIComponent(termoPesquisa)}`);
     }
   };
 

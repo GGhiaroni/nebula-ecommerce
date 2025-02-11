@@ -3,6 +3,7 @@ import Footer from "./componentes/Footer";
 import Header from "./componentes/Header";
 import InformacoesAdicionais from "./componentes/InformacoesCompra";
 import "./index.css";
+import Atendimento from "./pages/Atendimento";
 import Avaliacoes from "./pages/Avaliacoes";
 import Cashback from "./pages/Cashback";
 import Eletronicos from "./pages/Eletronicos";
@@ -10,10 +11,10 @@ import Home from "./pages/Home";
 import Joias from "./pages/Joias";
 import Pagina404 from "./pages/Pagina404";
 import QuemSomos from "./pages/QuemSomos";
+import ResultadosDePesquisa from "./pages/ResultadosDePesquisa";
 import RoupasFemininas from "./pages/RoupasFemininas";
 import RoupasMasculinas from "./pages/RoupasMasculinas";
 import TrocasEDevolucoes from "./pages/TrocasEDevolucoes";
-import Atendimento from "./pages/Atendimento";
 
 function AppRoutes() {
   return (
@@ -30,6 +31,7 @@ function AppRoutes() {
         <Route path="/trocas-e-devolucoes" element={<TrocasEDevolucoes />} />
         <Route path="/avaliacoes" element={<Avaliacoes />} />
         <Route path="/cashback" element={<Cashback />} />
+        <Route path="/busca" element={<ResultadosDePesquisa />} />
         <Route path="*" element={<Pagina404 />} />
       </Routes>
       <InformacoesAdicionais />
