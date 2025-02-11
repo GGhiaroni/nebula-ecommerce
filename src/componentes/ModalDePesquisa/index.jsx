@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CgClose } from "react-icons/cg";
+import { useNavigate } from "react-router";
 import styled, { keyframes } from "styled-components";
 import searchIcon from "/public/search-icon-black.png";
 
@@ -123,10 +124,25 @@ const ImagemLupa = styled.img`
 
 const ModalDePesquisa = ({ fecharModal }) => {
   const [isClosing, setIsClosing] = useState(false);
+  const [termoPesquisa, setTermoPesquisa] = useState("");
+
+  const navigate = useNavigate();
 
   const handleClose = () => {
     setIsClosing(true);
     setTimeout(fecharModal, 400);
+  };
+
+  const handlePesquisa = () => {
+    if (termoPesquisa.trim() !== "") {
+      navigate(`/resultados?query=${encodeURIComponent(termoPesquisa)}`);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handlePesquisa();
+    }
   };
 
   return (
