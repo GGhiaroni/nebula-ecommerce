@@ -142,6 +142,7 @@ const ModalDePesquisa = ({ fecharModal }) => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handlePesquisa();
+      handleClose();
     }
   };
 
@@ -165,7 +166,12 @@ const ModalDePesquisa = ({ fecharModal }) => {
             onChange={(e) => setTermoPesquisa(e.target.value)}
             onKeyDown={handleKeyDown}
           />
-          <BotaoLupa onClick={handlePesquisa}>
+          <BotaoLupa
+            onClick={() => {
+              handlePesquisa();
+              handleClose();
+            }}
+          >
             <ImagemLupa src={searchIcon} alt="lupa para buscar produto" />
           </BotaoLupa>
         </ContainerInput>
