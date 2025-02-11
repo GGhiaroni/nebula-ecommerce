@@ -158,8 +158,14 @@ const ModalDePesquisa = ({ fecharModal }) => {
           </FecharBotao>
         </Titulo>
         <ContainerInput>
-          <InputPesquisa type="text" placeholder="Digite sua pesquisa" />
-          <BotaoLupa>
+          <InputPesquisa
+            type="text"
+            placeholder="Digite sua pesquisa"
+            value={termoPesquisa}
+            onChange={(e) => setTermoPesquisa(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+          <BotaoLupa onClick={handlePesquisa}>
             <ImagemLupa src={searchIcon} alt="lupa para buscar produto" />
           </BotaoLupa>
         </ContainerInput>
