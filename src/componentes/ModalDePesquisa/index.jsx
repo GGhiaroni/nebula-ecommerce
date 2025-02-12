@@ -122,6 +122,37 @@ const ImagemLupa = styled.img`
   height: 30px;
 `;
 
+const SugestoesContainer = styled.div`
+  width: 100%;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  top: 45px;
+  left: 0;
+  z-index: 10;
+`;
+
+const SugestaoItem = styled.div`
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background: #f0f0f0;
+  }
+`;
+
+const ProdutoImagem = styled.img`
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+`;
+
 const ModalDePesquisa = ({ fecharModal }) => {
   const [isClosing, setIsClosing] = useState(false);
   const [termoPesquisa, setTermoPesquisa] = useState("");
@@ -154,6 +185,24 @@ const ModalDePesquisa = ({ fecharModal }) => {
       .then((data) => setProdutos(data));
   }, []);
 
+  useEffect(() => {
+    if (termoPesquisa.trim === "") {
+      setSugestoes([]);
+      return;
+    }
+
+    const produtosFiltrados = produtos.filter((produto) =>
+      produto.title.toLowerCase().includes(termoPesquisa.toLocaleLowerCase())
+    );
+
+    setSugestoes(produtosFiltrados);
+  }, [termoPesquisa, produtos]);
+
+  const handleSelecionarSugestao = (produto) => {
+    navigate(`/produto/${produto.id}`);
+    handleClose();
+  };
+
   return (
     <ModalOverlay isClosing={isClosing} onClick={handleClose}>
       <ModalContainer
@@ -182,6 +231,19 @@ const ModalDePesquisa = ({ fecharModal }) => {
           >
             <ImagemLupa src={searchIcon} alt="lupa para buscar produto" />
           </BotaoLupa>
+          {sugestoes.length > 0 && (
+            <SugestoesContainer>
+              {sugestoes.map((produto) => (
+                <SugestaoItem
+                  key={produto.id}
+                  onClick={() => handleSelecionarSugestao(produto)}
+                >
+                  <ProdutoImagem src={produto.image} alt={produto.title} />
+                  {produto.title}
+                </SugestaoItem>
+              ))}
+            </SugestoesContainer>
+          )}
         </ContainerInput>
       </ModalContainer>
     </ModalOverlay>
