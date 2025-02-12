@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -100,6 +101,8 @@ const FeedHome = () => {
 
   const [favoritos, setFavoritos] = useState([]);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchProdutos = async () => {
       const categorias = [
@@ -135,6 +138,10 @@ const FeedHome = () => {
     ...produtos.eletronicos.slice(0, 2),
   ];
 
+  const handleSelecionarProduto = (produto) => {
+    navigate(`/produto/${produto.id}`);
+  };
+
   return (
     <FeedHomeEstilizado>
       <CategoriaTitulo>🔥 Produtos em Destaque 🔥</CategoriaTitulo>
@@ -148,7 +155,7 @@ const FeedHome = () => {
         >
           {produtosDestaque.map((produto) => (
             <SwiperSlide key={produto.id}>
-              <CardProduto>
+              <CardProduto onClick={() => handleSelecionarProduto(produto)}>
                 <img src={produto.image} alt={produto.title} />
                 <p>{produto.title}</p>
               </CardProduto>
@@ -161,7 +168,10 @@ const FeedHome = () => {
         <CategoriaTitulo>Roupas Masculinas</CategoriaTitulo>
         <GridProdutos>
           {produtos.masculino.map((produto) => (
-            <CardProduto key={produto.id}>
+            <CardProduto
+              key={produto.id}
+              onClick={() => handleSelecionarProduto(produto)}
+            >
               <BotaoFavorito
                 favoritado={favoritos.includes(produto.id)}
                 onClick={() => toggleFavorito(produto.id)}
@@ -183,7 +193,10 @@ const FeedHome = () => {
         <CategoriaTitulo>Roupas Femininas</CategoriaTitulo>
         <GridProdutos>
           {produtos.feminino.map((produto) => (
-            <CardProduto key={produto.id}>
+            <CardProduto
+              key={produto.id}
+              onClick={() => handleSelecionarProduto(produto)}
+            >
               <img src={produto.image} alt={produto.title} />
               <p>{produto.title}</p>
             </CardProduto>
@@ -195,7 +208,10 @@ const FeedHome = () => {
         <CategoriaTitulo>Joias</CategoriaTitulo>
         <GridProdutos>
           {produtos.joias.map((produto) => (
-            <CardProduto key={produto.id}>
+            <CardProduto
+              key={produto.id}
+              onClick={() => handleSelecionarProduto(produto)}
+            >
               <img src={produto.image} alt={produto.title} />
               <p>{produto.title}</p>
             </CardProduto>
@@ -207,7 +223,10 @@ const FeedHome = () => {
         <CategoriaTitulo>Eletrônicos</CategoriaTitulo>
         <GridProdutos>
           {produtos.eletronicos.map((produto) => (
-            <CardProduto key={produto.id}>
+            <CardProduto
+              key={produto.id}
+              onClick={() => handleSelecionarProduto(produto)}
+            >
               <img src={produto.image} alt={produto.title} />
               <p>{produto.title}</p>
             </CardProduto>
