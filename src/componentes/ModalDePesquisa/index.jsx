@@ -186,7 +186,7 @@ const ModalDePesquisa = ({ fecharModal }) => {
   }, []);
 
   useEffect(() => {
-    if (termoPesquisa.trim === "") {
+    if (termoPesquisa.trim() === "") {
       setSugestoes([]);
       return;
     }
