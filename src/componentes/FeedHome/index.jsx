@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import "swiper/css";
@@ -172,16 +171,6 @@ const FeedHome = () => {
               key={produto.id}
               onClick={() => handleSelecionarProduto(produto)}
             >
-              <BotaoFavorito
-                favoritado={favoritos.includes(produto.id)}
-                onClick={() => toggleFavorito(produto.id)}
-              >
-                {favoritos.includes(produto.id) ? (
-                  <MdFavorite />
-                ) : (
-                  <MdFavoriteBorder />
-                )}
-              </BotaoFavorito>
               <img src={produto.image} alt={produto.title} />
               <p>{produto.title}</p>
             </CardProduto>
