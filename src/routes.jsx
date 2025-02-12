@@ -10,6 +10,7 @@ import Eletronicos from "./pages/Eletronicos";
 import Home from "./pages/Home";
 import Joias from "./pages/Joias";
 import Pagina404 from "./pages/Pagina404";
+import PaginaProduto from "./pages/PaginaProduto";
 import QuemSomos from "./pages/QuemSomos";
 import ResultadosDePesquisa from "./pages/ResultadosDePesquisa";
 import RoupasFemininas from "./pages/RoupasFemininas";
@@ -32,7 +33,7 @@ function AppRoutes() {
         <Route path="/avaliacoes" element={<Avaliacoes />} />
         <Route path="/cashback" element={<Cashback />} />
         <Route path="/busca" element={<ResultadosDePesquisa />} />
-        <Route path="/produto/:id" element={<PaginaDoProduto />} />
+        <Route path="/produto/:id" element={<PaginaProduto />} />
         <Route path="*" element={<Pagina404 />} />
       </Routes>
       <InformacoesAdicionais />
