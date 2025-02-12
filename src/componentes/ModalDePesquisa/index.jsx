@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { useNavigate } from "react-router";
 import styled, { keyframes } from "styled-components";
@@ -125,6 +125,8 @@ const ImagemLupa = styled.img`
 const ModalDePesquisa = ({ fecharModal }) => {
   const [isClosing, setIsClosing] = useState(false);
   const [termoPesquisa, setTermoPesquisa] = useState("");
+  const [produtos, setProdutos] = useState([]);
+  const [sugestoes, setSugestoes] = useState([]);
 
   const navigate = useNavigate();
 
@@ -145,6 +147,12 @@ const ModalDePesquisa = ({ fecharModal }) => {
       handleClose();
     }
   };
+
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then((res) => res.json())
+      .then((data) => setProdutos(data));
+  }, []);
 
   return (
     <ModalOverlay isClosing={isClosing} onClick={handleClose}>
