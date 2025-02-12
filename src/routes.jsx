@@ -32,6 +32,7 @@ function AppRoutes() {
         <Route path="/avaliacoes" element={<Avaliacoes />} />
         <Route path="/cashback" element={<Cashback />} />
         <Route path="/busca" element={<ResultadosDePesquisa />} />
+        <Route path="/produto/:id" element={<PaginaDoProduto />} />
         <Route path="*" element={<Pagina404 />} />
       </Routes>
       <InformacoesAdicionais />
