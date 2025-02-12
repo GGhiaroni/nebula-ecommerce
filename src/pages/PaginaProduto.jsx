@@ -6,7 +6,7 @@ const PaginaProduto = () => {
   const [produto, setProduto] = useState([]);
 
   useEffect(() => {
-    const produto = fetch("https://fakestoreapi.com/products/1")
+    const produto = fetch(`https://fakestoreapi.com/products/${id}`)
       .then((res) => res.json())
       .then((data) => setProduto(data));
   }, []);
