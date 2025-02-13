@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import "swiper/css";
@@ -98,23 +99,17 @@ const FeedHome = () => {
     eletronicos: [],
   });
 
-  const [favoritos, setFavoritos] = useState([]);
-
   const navigate = useNavigate();
+
+  const categorias = useSelector((state) => state.categorias);
 
   useEffect(() => {
     const fetchProdutos = async () => {
-      const categorias = [
-        "men's%20clothing",
-        "women's%20clothing",
-        "jewelery",
-        "electronics",
-      ];
       const results = await Promise.all(
         categorias.map((categoria) =>
-          fetch(`https://fakestoreapi.com/products/category/${categoria}`).then(
-            (res) => res.json()
-          )
+          fetch(
+            `https://fakestoreapi.com/products/category/${categoria.tagNaFakeStoreApi}`
+          ).then((res) => res.json())
         )
       );
 
