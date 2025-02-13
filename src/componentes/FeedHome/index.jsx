@@ -75,22 +75,6 @@ const CarrosselContainer = styled.div`
   }
 `;
 
-const BotaoFavorito = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 24px;
-  color: ${({ favoritado }) => (favoritado ? "red" : "gray")};
-  transition: color 0.3s;
-
-  &:hover {
-    color: red;
-  }
-`;
-
 const FeedHome = () => {
   const [produtos, setProdutos] = useState({
     masculino: [],
