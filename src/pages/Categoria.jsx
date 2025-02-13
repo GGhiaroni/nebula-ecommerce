@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const CategoriaContainer = styled.div`
   text-align: center;
@@ -48,6 +48,22 @@ const Produto = styled.div`
     color: #333;
   }
 `;
+
+const pulse = keyframes`
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+`;
+
+const LoadingMessage = styled.p`
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #555;
+  margin-top: 50px;
+  animation: ${pulse} 1.5s infinite;
+`;
+
 const Categoria = () => {
   const { nomeCategoria } = useParams();
   const [produtos, setProdutos] = useState([]);
@@ -84,9 +100,7 @@ const Categoria = () => {
       </CategoriaContainer>
 
       {loading ? (
-        <p style={{ textAlign: "center", fontSize: "18px" }}>
-          Carregando produtos...
-        </p>
+        <LoadingMessage>🔄 Carregando produtos...</LoadingMessage>
       ) : (
         <ContainerProdutos>
           {produtos.map((produto) => (
