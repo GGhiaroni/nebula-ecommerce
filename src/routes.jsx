@@ -1,3 +1,4 @@
+import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router";
 import Footer from "./componentes/Footer";
 import Header from "./componentes/Header";
@@ -16,26 +17,29 @@ import ResultadosDePesquisa from "./pages/ResultadosDePesquisa";
 import RoupasFemininas from "./pages/RoupasFemininas";
 import RoupasMasculinas from "./pages/RoupasMasculinas";
 import TrocasEDevolucoes from "./pages/TrocasEDevolucoes";
+import store from "./store";
 
 function AppRoutes() {
   return (
     <BrowserRouter>
       <Header />
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="/roupas-masculinas" element={<RoupasMasculinas />} />
-        <Route path="/roupas-femininas" element={<RoupasFemininas />} />
-        <Route path="/joias" element={<Joias />} />
-        <Route path="/eletronicos" element={<Eletronicos />} />
-        <Route path="/atendimento" element={<Atendimento />} />
-        <Route path="/quem-somos" element={<QuemSomos />} />
-        <Route path="/trocas-e-devolucoes" element={<TrocasEDevolucoes />} />
-        <Route path="/avaliacoes" element={<Avaliacoes />} />
-        <Route path="/cashback" element={<Cashback />} />
-        <Route path="/busca" element={<ResultadosDePesquisa />} />
-        <Route path="/produto/:id" element={<PaginaProduto />} />
-        <Route path="*" element={<Pagina404 />} />
-      </Routes>
+      <Provider store={store}>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/roupas-masculinas" element={<RoupasMasculinas />} />
+          <Route path="/roupas-femininas" element={<RoupasFemininas />} />
+          <Route path="/joias" element={<Joias />} />
+          <Route path="/eletronicos" element={<Eletronicos />} />
+          <Route path="/atendimento" element={<Atendimento />} />
+          <Route path="/quem-somos" element={<QuemSomos />} />
+          <Route path="/trocas-e-devolucoes" element={<TrocasEDevolucoes />} />
+          <Route path="/avaliacoes" element={<Avaliacoes />} />
+          <Route path="/cashback" element={<Cashback />} />
+          <Route path="/busca" element={<ResultadosDePesquisa />} />
+          <Route path="/produto/:id" element={<PaginaProduto />} />
+          <Route path="*" element={<Pagina404 />} />
+        </Routes>
+      </Provider>
       <InformacoesAdicionais />
       <Footer />
     </BrowserRouter>
