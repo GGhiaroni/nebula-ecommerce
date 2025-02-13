@@ -4,11 +4,11 @@ import styled, { keyframes } from "styled-components";
 const opcoes = ["Masculino", "Feminino", "Acessórios", "Jóias", "Eletrônicos"];
 
 const rotas = {
-  Masculino: "/roupas-masculinas",
-  Feminino: "/roupas-femininas",
-  Acessórios: "acessorios",
-  Jóias: "/joias",
-  Eletrônicos: "/eletronicos",
+  Masculino: "/categoria/roupas-masculinas",
+  Feminino: "/categoria/roupas-femininas",
+  Acessórios: "/categoria/acessorios",
+  Jóias: "/categoria/joias",
+  Eletrônicos: "/categoria/eletronicos",
 };
 
 const bgFade = keyframes`

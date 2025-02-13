@@ -7,15 +7,12 @@ import "./index.css";
 import Atendimento from "./pages/Atendimento";
 import Avaliacoes from "./pages/Avaliacoes";
 import Cashback from "./pages/Cashback";
-import Eletronicos from "./pages/Eletronicos";
+import Categoria from "./pages/Categoria";
 import Home from "./pages/Home";
-import Joias from "./pages/Joias";
 import Pagina404 from "./pages/Pagina404";
 import PaginaProduto from "./pages/PaginaProduto";
 import QuemSomos from "./pages/QuemSomos";
 import ResultadosDePesquisa from "./pages/ResultadosDePesquisa";
-import RoupasFemininas from "./pages/RoupasFemininas";
-import RoupasMasculinas from "./pages/RoupasMasculinas";
 import TrocasEDevolucoes from "./pages/TrocasEDevolucoes";
 import store from "./store";
 
@@ -26,10 +23,7 @@ function AppRoutes() {
       <Provider store={store}>
         <Routes>
           <Route index element={<Home />} />
-          <Route path="/roupas-masculinas" element={<RoupasMasculinas />} />
-          <Route path="/roupas-femininas" element={<RoupasFemininas />} />
-          <Route path="/joias" element={<Joias />} />
-          <Route path="/eletronicos" element={<Eletronicos />} />
+          <Route path="/categoria/:nomeCategoria" element={<Categoria />} />
           <Route path="/atendimento" element={<Atendimento />} />
           <Route path="/quem-somos" element={<QuemSomos />} />
           <Route path="/trocas-e-devolucoes" element={<TrocasEDevolucoes />} />
