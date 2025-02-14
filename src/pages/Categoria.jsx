@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { FaHeart } from "react-icons/fa";
+import { FaCartPlus } from "react-icons/fa";
+import { IoMdHeartEmpty } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import styled, { keyframes } from "styled-components";
@@ -76,18 +77,21 @@ const Produto = styled.div`
 const Preco = styled.span`
   font-size: 18px;
   font-weight: bold;
-  color: #333;
+  color: #fdfdfd;
 `;
 
 const BotaoFavorito = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   cursor: pointer;
   font-size: 22px;
-  color: #c63131;
   transition: transform 0.2s;
   display: flex;
   align-items: center;
+  color: #fdfdfd;
 
   &:hover {
     transform: scale(1.2);
@@ -107,11 +111,30 @@ const ContainerBaseCard = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background-color: #f9f9f9;
+  background-color: #1c211f;
   width: 100%;
   padding: 10px;
   margin-top: auto;
   border-radius: 0 0 12px 12px;
+`;
+
+const BotaoCarrinho = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #fdfdfd;
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
+const ContainerBaseCardIcones = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const Categoria = () => {
@@ -157,9 +180,14 @@ const Categoria = () => {
               <h4>{produto.title}</h4>
               <ContainerBaseCard>
                 <Preco>R$ {produto.price.toFixed(2).replace(".", ",")}</Preco>
-                <BotaoFavorito>
-                  <FaHeart />
-                </BotaoFavorito>
+                <ContainerBaseCardIcones>
+                  <BotaoFavorito>
+                    <IoMdHeartEmpty />
+                  </BotaoFavorito>
+                  <BotaoCarrinho>
+                    <FaCartPlus />
+                  </BotaoCarrinho>
+                </ContainerBaseCardIcones>
               </ContainerBaseCard>
             </Produto>
           ))}
