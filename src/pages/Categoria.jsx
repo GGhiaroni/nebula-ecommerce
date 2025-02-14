@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaHeart } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import styled, { keyframes } from "styled-components";
@@ -17,7 +18,7 @@ const pulse = keyframes`
 const CategoriaContainer = styled.div`
   text-align: center;
   padding: 40px 20px;
-  background: linear-gradient(135deg, #f5f7fa, #e9edf3);
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
   min-height: 100vh;
 `;
 
@@ -31,18 +32,15 @@ const HeaderImage = styled.img`
 `;
 
 const ContainerProdutos = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
 `;
 
 const Produto = styled.div`
   background-color: #fff;
   border-radius: 12px;
-  padding: 20px;
+  padding: 20px 10px 0px 10px;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out, box-shadow 0.3s;
@@ -50,6 +48,10 @@ const Produto = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+  width: 260px;
+  height: auto;
+  cursor: pointer;
 
   &:hover {
     transform: scale(1.05);
@@ -58,15 +60,37 @@ const Produto = styled.div`
 
   img {
     width: 100%;
-    max-height: 150px;
+    max-height: 130px;
     object-fit: contain;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
 
   h4 {
-    font-size: 16px;
+    font-size: 14px;
     color: #333;
     margin-bottom: 10px;
+    flex-grow: 1;
+  }
+`;
+
+const Preco = styled.span`
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+`;
+
+const BotaoFavorito = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  color: #c63131;
+  transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    transform: scale(1.2);
   }
 `;
 
@@ -77,6 +101,17 @@ const LoadingMessage = styled.p`
   color: #333;
   margin-top: 50px;
   animation: ${pulse} 1.5s infinite;
+`;
+
+const ContainerBaseCard = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #f9f9f9;
+  width: 100%;
+  padding: 10px;
+  margin-top: auto;
+  border-radius: 0 0 12px 12px;
 `;
 
 const Categoria = () => {
@@ -120,6 +155,12 @@ const Categoria = () => {
             <Produto key={produto.id}>
               <img src={produto.image} alt={produto.title} />
               <h4>{produto.title}</h4>
+              <ContainerBaseCard>
+                <Preco>R$ {produto.price.toFixed(2).replace(".", ",")}</Preco>
+                <BotaoFavorito>
+                  <FaHeart />
+                </BotaoFavorito>
+              </ContainerBaseCard>
             </Produto>
           ))}
         </ContainerProdutos>
