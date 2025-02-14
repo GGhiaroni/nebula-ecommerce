@@ -4,14 +4,19 @@ const itensSlice = createSlice({
   name: "itens",
   initialState: [],
   reducers: {
-    mudarFavorito: (state, { payload }) => {
-      state = state.map((item) =>
-        item.id === payload ? { ...item, favorito: !item.favorito } : item
+    setItens: (state, action) => {
+      return action.payload;
+    },
+    mudarFavorito: (state, action) => {
+      return state.map((item) =>
+        item.id === action.payload
+          ? { ...item, favorito: !item.favorito }
+          : item
       );
     },
   },
 });
 
-export const { mudarFavorito } = itensSlice.actions;
+export const { mudarFavorito, setItens } = itensSlice.actions;
 
 export default itensSlice.reducer;

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { FaCartPlus } from "react-icons/fa";
-import { IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import styled, { keyframes } from "styled-components";
-import { mudarFavorito } from "../store/reducers/itens";
+import { mudarFavorito, setItens } from "../store/reducers/itens";
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(10px); }
@@ -140,32 +140,37 @@ const ContainerBaseCardIcones = styled.div`
 
 const Categoria = () => {
   const { nomeCategoria } = useParams();
-  const [produtos, setProdutos] = useState([]);
+  const produtos = useSelector((state) => state.itens);
   const [loading, setLoading] = useState(true);
 
   const categoria = useSelector((state) =>
     state.categorias.find((cat) => cat.caminhoUrl === nomeCategoria)
   );
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (!categoria) return;
     setLoading(true);
-    setProdutos([]);
 
     fetch(
       `https://fakestoreapi.com/products/category/${categoria.tagNaFakeStoreApi}`
     )
       .then((res) => res.json())
       .then((data) => {
-        setProdutos(data);
+        console.log("Produtos recebidos:", data);
+        const produtosComFavorito = data.map((produto) => ({
+          ...produto,
+          favorito: false,
+        }));
+
         setLoading(false);
+        dispatch(setItens(produtosComFavorito));
       })
       .catch(() => setLoading(false));
-  }, [categoria]);
+  }, [categoria, dispatch]);
 
   if (!categoria) return <p>Categoria não encontrada.</p>;
-
-  const dispatch = useDispatch();
 
   function handleFavorito(id) {
     dispatch(mudarFavorito(id));
@@ -189,7 +194,11 @@ const Categoria = () => {
                 <Preco>R$ {produto.price.toFixed(2).replace(".", ",")}</Preco>
                 <ContainerBaseCardIcones>
                   <BotaoFavorito onClick={() => handleFavorito(produto.id)}>
-                    <IoMdHeartEmpty />
+                    {produto.favorito ? (
+                      <IoMdHeart color="red" />
+                    ) : (
+                      <IoMdHeartEmpty />
+                    )}
                   </BotaoFavorito>
                   <BotaoCarrinho>
                     <FaCartPlus />
