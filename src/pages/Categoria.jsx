@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { FaCartPlus } from "react-icons/fa";
 import { IoMdHeartEmpty } from "react-icons/io";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import styled, { keyframes } from "styled-components";
+import { mudarFavorito } from "../store/reducers/itens";
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(10px); }
@@ -164,6 +165,12 @@ const Categoria = () => {
 
   if (!categoria) return <p>Categoria não encontrada.</p>;
 
+  const dispatch = useDispatch();
+
+  function handleFavorito(id) {
+    dispatch(mudarFavorito(id));
+  }
+
   return (
     <CategoriaContainer>
       <HeaderImage src={categoria.header} alt={categoria.nome} />
@@ -181,7 +188,7 @@ const Categoria = () => {
               <ContainerBaseCard>
                 <Preco>R$ {produto.price.toFixed(2).replace(".", ",")}</Preco>
                 <ContainerBaseCardIcones>
-                  <BotaoFavorito>
+                  <BotaoFavorito onClick={() => handleFavorito(produto.id)}>
                     <IoMdHeartEmpty />
                   </BotaoFavorito>
                   <BotaoCarrinho>
