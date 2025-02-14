@@ -4,9 +4,10 @@ const itensSlice = createSlice({
   name: "itens",
   initialState: [],
   reducers: {
-    mudarFavorito: (state, params) => {
-      console.log("state: ", state);
-      console.log("params: ", params);
+    mudarFavorito: (state, { payload }) => {
+      state = state.map((item) =>
+        item.id === payload ? { ...item, favorito: !item.favorito } : item
+      );
     },
   },
 });
