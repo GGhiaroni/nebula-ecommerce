@@ -6,6 +6,7 @@ import InformacoesAdicionais from "./componentes/InformacoesCompra";
 import "./index.css";
 import Atendimento from "./pages/Atendimento";
 import Avaliacoes from "./pages/Avaliacoes";
+import Carrinho from "./pages/Carrinho";
 import Cashback from "./pages/Cashback";
 import Categoria from "./pages/Categoria";
 import Home from "./pages/Home";
@@ -31,6 +32,7 @@ function AppRoutes() {
           <Route path="/cashback" element={<Cashback />} />
           <Route path="/busca" element={<ResultadosDePesquisa />} />
           <Route path="/produto/:id" element={<PaginaProduto />} />
+          <Route path="/carrinho" element={<Carrinho />} />
           <Route path="*" element={<Pagina404 />} />
         </Routes>
       </Provider>
