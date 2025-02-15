@@ -140,7 +140,7 @@ const ContainerBaseCardIcones = styled.div`
 
 const Categoria = () => {
   const { nomeCategoria } = useParams();
-  const produtos = useSelector((state) => state.itens);
+  const produtos = useSelector((state) => state.itens.lista || []);
   const [loading, setLoading] = useState(true);
 
   const categoria = useSelector((state) =>
@@ -158,7 +158,6 @@ const Categoria = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log("Produtos recebidos:", data);
         const produtosComFavorito = data.map((produto) => ({
           ...produto,
           favorito: false,

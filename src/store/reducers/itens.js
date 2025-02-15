@@ -2,16 +2,27 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const itensSlice = createSlice({
   name: "itens",
-  initialState: [],
+  initialState: {
+    lista: [],
+    favoritos: [],
+  },
   reducers: {
     setItens: (state, action) => {
-      return action.payload;
+      state.lista = action.payload.map((produto) => ({
+        ...produto,
+        favorito: state.favoritos.includes(produto.id),
+      }));
     },
     mudarFavorito: (state, action) => {
-      return state.map((item) =>
-        item.id === action.payload
-          ? { ...item, favorito: !item.favorito }
-          : item
+      const id = action.payload;
+      if (state.favoritos.includes(id)) {
+        state.favoritos = state.favoritos.filter((favId) => favId !== id);
+      } else {
+        state.favoritos.push(id);
+      }
+
+      state.lista = state.lista.map((item) =>
+        item.id === id ? { ...item, favorito: !item.favorito } : item
       );
     },
   },
