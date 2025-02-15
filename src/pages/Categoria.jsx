@@ -4,6 +4,7 @@ import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import styled, { keyframes } from "styled-components";
+import { mudarCarrinho } from "../store/reducers/carrinho";
 import { mudarFavorito, setItens } from "../store/reducers/itens";
 
 const fadeIn = keyframes`
@@ -149,6 +150,8 @@ const Categoria = () => {
 
   const dispatch = useDispatch();
 
+  const carrinho = useSelector((state) => state.carrinho);
+
   useEffect(() => {
     if (!categoria) return;
     setLoading(true);
@@ -175,6 +178,10 @@ const Categoria = () => {
     dispatch(mudarFavorito(id));
   }
 
+  function handleCarrinho(id) {
+    dispatch(mudarCarrinho(id));
+  }
+
   return (
     <CategoriaContainer>
       <HeaderImage src={categoria.header} alt={categoria.nome} />
@@ -185,27 +192,34 @@ const Categoria = () => {
         <LoadingMessage>🔄 Carregando produtos...</LoadingMessage>
       ) : (
         <ContainerProdutos>
-          {produtos.map((produto) => (
-            <Produto key={produto.id}>
-              <img src={produto.image} alt={produto.title} />
-              <h4>{produto.title}</h4>
-              <ContainerBaseCard>
-                <Preco>R$ {produto.price.toFixed(2).replace(".", ",")}</Preco>
-                <ContainerBaseCardIcones>
-                  <BotaoFavorito onClick={() => handleFavorito(produto.id)}>
-                    {produto.favorito ? (
-                      <IoMdHeart color="red" />
-                    ) : (
-                      <IoMdHeartEmpty />
-                    )}
-                  </BotaoFavorito>
-                  <BotaoCarrinho>
-                    <FaCartPlus />
-                  </BotaoCarrinho>
-                </ContainerBaseCardIcones>
-              </ContainerBaseCard>
-            </Produto>
-          ))}
+          {produtos.map((produto) => {
+            const estaNoCarrinho = carrinho.some(
+              (item) => item.id === produto.id
+            );
+            return (
+              <Produto key={produto.id}>
+                <img src={produto.image} alt={produto.title} />
+                <h4>{produto.title}</h4>
+                <ContainerBaseCard>
+                  <Preco>R$ {produto.price.toFixed(2).replace(".", ",")}</Preco>
+                  <ContainerBaseCardIcones>
+                    <BotaoFavorito onClick={() => handleFavorito(produto.id)}>
+                      {produto.favorito ? (
+                        <IoMdHeart color="red" />
+                      ) : (
+                        <IoMdHeartEmpty />
+                      )}
+                    </BotaoFavorito>
+                    <BotaoCarrinho onClick={() => handleCarrinho(produto.id)}>
+                      <FaCartPlus
+                        color={estaNoCarrinho ? "#1875E8" : "#fdfdfd"}
+                      />
+                    </BotaoCarrinho>
+                  </ContainerBaseCardIcones>
+                </ContainerBaseCard>
+              </Produto>
+            );
+          })}
         </ContainerProdutos>
       )}
     </CategoriaContainer>
