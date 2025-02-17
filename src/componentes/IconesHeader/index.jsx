@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import ModalDePesquisa from "../ModalDePesquisa";
 import bagIcon from "/public/bag-icon-white.png";
@@ -63,11 +64,21 @@ const IconesHeader = () => {
   const abrirModal = () => setModalAberta(true);
   const fecharModal = () => setModalAberta(false);
 
+  const navigate = useNavigate();
+
+  const handleIconClick = (index) => {
+    if (index === 0) {
+      abrirModal();
+    } else {
+      navigate("/carrinho");
+    }
+  };
+
   return (
     <>
       <IconesHeaderEstilizado>
         {icones.map((icone, index) => (
-          <li key={index} onClick={index === 0 ? abrirModal : undefined}>
+          <li key={index} onClick={() => handleIconClick(index)}>
             <img src={icone} alt="icone header" />
           </li>
         ))}

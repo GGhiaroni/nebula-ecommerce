@@ -7,17 +7,23 @@ const carrinhoSlice = createSlice({
   initialState: estadoInicial,
   reducers: {
     mudarCarrinho: (state, { payload }) => {
-      const temItem = state.some((item) => item.id === payload);
+      const temItem = state.find((item) => item.id === payload.id);
+
       if (!temItem) {
         return [
           ...state,
           {
-            id: payload,
+            ...payload,
             quantidade: 1,
           },
         ];
       }
-      return state.filter((item) => item.id !== payload);
+
+      return state.map((item) =>
+        item.id === payload.id
+          ? { ...item, quantidade: item.quantidade + 1 }
+          : item
+      );
     },
   },
 });

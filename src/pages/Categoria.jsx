@@ -178,8 +178,9 @@ const Categoria = () => {
     dispatch(mudarFavorito(id));
   }
 
-  function handleCarrinho(id) {
-    dispatch(mudarCarrinho(id));
+  function handleCarrinho(produto) {
+    dispatch(mudarCarrinho(produto));
+    console.log("item adicionado ao carrinho: ", produto);
   }
 
   return (
@@ -210,7 +211,11 @@ const Categoria = () => {
                         <IoMdHeartEmpty />
                       )}
                     </BotaoFavorito>
-                    <BotaoCarrinho onClick={() => handleCarrinho(produto.id)}>
+                    <BotaoCarrinho
+                      onClick={() => {
+                        handleCarrinho(produto);
+                      }}
+                    >
                       <FaCartPlus
                         color={estaNoCarrinho ? "#1875E8" : "#fdfdfd"}
                       />
