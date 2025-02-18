@@ -1,3 +1,4 @@
+import { FaRegTrashCan } from "react-icons/fa6";
 import { GiShoppingCart } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
@@ -95,6 +96,12 @@ const Button = styled.button`
   }
 `;
 
+const ButtonLixeira = styled.button`
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+`;
+
 const Carrinho = () => {
   const carrinho = useSelector((state) => state.carrinho);
 
@@ -121,6 +128,9 @@ const Carrinho = () => {
                 <ItemTitle>{item.title}</ItemTitle>
                 <ItemQuantity>Quantidade: {item.quantidade}</ItemQuantity>
               </ItemDetails>
+              <ButtonLixeira>
+                <FaRegTrashCan size={18} />
+              </ButtonLixeira>
             </Item>
           ))}
         </ItemList>
