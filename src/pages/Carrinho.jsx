@@ -74,8 +74,12 @@ const ItemTitle = styled.h3`
 `;
 
 const ItemQuantity = styled.p`
-  font-size: 14px;
-  color: #555;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
 
 const EmptyMessage = styled.p`
@@ -101,6 +105,39 @@ const ButtonLixeira = styled.button`
   border: none;
   cursor: pointer;
   background-color: transparent;
+`;
+
+const ControleQuantidadeContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const ControleQuantidadeItens = styled.button`
+  cursor: pointer;
+  border: none;
+  background: #007bff;
+  color: white;
+  width: 20px;
+  height: 20px;
+  font-size: 18px;
+
+  text-align: center;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s, transform 0.2s;
+
+  &:hover {
+    background: #0056b3;
+    transform: scale(1.1);
+  }
+
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
 `;
 
 const Carrinho = () => {
@@ -132,7 +169,15 @@ const Carrinho = () => {
               <ItemImage src={item.image} alt={item.title} />
               <ItemDetails>
                 <ItemTitle>{item.title}</ItemTitle>
-                <ItemQuantity>Quantidade: {item.quantidade}</ItemQuantity>
+                <ItemQuantity>
+                  <ControleQuantidadeContainer>
+                    <ControleQuantidadeItens disabled={item.quantidade === 1}>
+                      -
+                    </ControleQuantidadeItens>
+                    <span>{item.quantidade}</span>
+                    <ControleQuantidadeItens>+</ControleQuantidadeItens>
+                  </ControleQuantidadeContainer>
+                </ItemQuantity>
               </ItemDetails>
               <ButtonLixeira
                 onClick={() => {
