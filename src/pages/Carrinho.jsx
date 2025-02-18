@@ -128,6 +128,7 @@ const Carrinho = () => {
         <EmptyMessage>O carrinho está vazio.</EmptyMessage>
       )}
 
+      <h4>Total de itens: {carrinho.length}</h4>
       <div style={{ textAlign: "right", marginTop: "20px" }}>
         <Button>Finalizar Compra</Button>
       </div>
