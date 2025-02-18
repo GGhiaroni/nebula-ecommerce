@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import ModalDePesquisa from "../ModalDePesquisa";
-import bagIcon from "/public/bag-icon-white.png";
+import cartIcon from "/public/cart-icon-white.png";
 import chatIcon from "/public/chat-icon-white.png";
 import searchIcon from "/public/search-icon-white.png";
 
-const icones = [searchIcon, chatIcon, bagIcon];
+const icones = [searchIcon, chatIcon, cartIcon];
 
 const IconesHeaderEstilizado = styled.ul`
   list-style: none;
@@ -69,7 +69,7 @@ const IconesHeader = () => {
   const handleIconClick = (index) => {
     if (index === 0) {
       abrirModal();
-    } else {
+    } else if (index === 2) {
       navigate("/carrinho");
     }
   };
