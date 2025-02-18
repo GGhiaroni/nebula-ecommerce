@@ -20,8 +20,8 @@ import store from "./store";
 function AppRoutes() {
   return (
     <BrowserRouter>
-      <Header />
       <Provider store={store}>
+        <Header />
         <Routes>
           <Route index element={<Home />} />
           <Route path="/categoria/:nomeCategoria" element={<Categoria />} />

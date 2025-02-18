@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import ModalDePesquisa from "../ModalDePesquisa";
 import cartIcon from "/public/cart-icon-white.png";
 import chatIcon from "/public/chat-icon-white.png";
@@ -45,17 +46,37 @@ const IconesHeaderEstilizado = styled.ul`
   }
 `;
 
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
+const bounceInItens = keyframes`
+  0% { transform: scale(0.8); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); }
+`;
+
+const QuantidadeDeItens = styled.span`
+  position: absolute;
+  bottom: -12px;
+  right: -15px;
+  background: #ff4d4f;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 50%;
+  width: 6px;
+  height: 13px;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  animation: ${bounceInItens} 0.3s ease-in-out;
+
+  ${(props) =>
+    props.quantidade > 9 &&
+    `
+    min-width: 26px;
+    border-radius: 16px;
+    padding: 4px 10px;
+    `}
 `;
 
 const IconesHeader = () => {
@@ -65,6 +86,14 @@ const IconesHeader = () => {
   const fecharModal = () => setModalAberta(false);
 
   const navigate = useNavigate();
+
+  const totalItensCarrinho = useSelector((state) => state.carrinho).reduce(
+    (acc, itens) => {
+      acc += itens.quantidade;
+      return acc;
+    },
+    0
+  );
 
   const handleIconClick = (index) => {
     if (index === 0) {
@@ -80,9 +109,13 @@ const IconesHeader = () => {
         {icones.map((icone, index) => (
           <li key={index} onClick={() => handleIconClick(index)}>
             <img src={icone} alt="icone header" />
+            {index === 2 && totalItensCarrinho > 0 && (
+              <QuantidadeDeItens quantidade={totalItensCarrinho}>
+                {totalItensCarrinho}
+              </QuantidadeDeItens>
+            )}
           </li>
         ))}
-        ;
       </IconesHeaderEstilizado>
       {modalAberta && <ModalDePesquisa fecharModal={fecharModal} />}
     </>
