@@ -2,7 +2,7 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { GiShoppingCart } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
-import { removerItem } from "../store/reducers/carrinho";
+import { controlarQuantidade, removerItem } from "../store/reducers/carrinho";
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(-20px); }
@@ -153,6 +153,16 @@ const Carrinho = () => {
     dispatch(removerItem(item));
   }
 
+  function handleControleQuantidadeItens(item, tipo) {
+    let novaQuantidade = item.quantidade;
+    if (tipo === "aumentar") {
+      novaQuantidade += 1;
+    } else if (tipo === "diminuir" && item.quantidade > 1) {
+      novaQuantidade -= 1;
+    }
+    dispatch(controlarQuantidade({ id: item.id, quantidade: novaQuantidade }));
+  }
+
   return (
     <Container>
       <Header>
@@ -171,11 +181,22 @@ const Carrinho = () => {
                 <ItemTitle>{item.title}</ItemTitle>
                 <ItemQuantity>
                   <ControleQuantidadeContainer>
-                    <ControleQuantidadeItens disabled={item.quantidade === 1}>
+                    <ControleQuantidadeItens
+                      disabled={item.quantidade === 1}
+                      onClick={() =>
+                        handleControleQuantidadeItens(item, "diminuir")
+                      }
+                    >
                       -
                     </ControleQuantidadeItens>
                     <span>{item.quantidade}</span>
-                    <ControleQuantidadeItens>+</ControleQuantidadeItens>
+                    <ControleQuantidadeItens
+                      onClick={() =>
+                        handleControleQuantidadeItens(item, "aumentar")
+                      }
+                    >
+                      +
+                    </ControleQuantidadeItens>
                   </ControleQuantidadeContainer>
                 </ItemQuantity>
               </ItemDetails>
