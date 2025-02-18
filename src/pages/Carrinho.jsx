@@ -1,7 +1,8 @@
 import { FaRegTrashCan } from "react-icons/fa6";
 import { GiShoppingCart } from "react-icons/gi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
+import { removerItem } from "../store/reducers/carrinho";
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(-20px); }
@@ -104,11 +105,16 @@ const ButtonLixeira = styled.button`
 
 const Carrinho = () => {
   const carrinho = useSelector((state) => state.carrinho);
+  const dispatch = useDispatch();
 
   const total = carrinho.reduce((acc, item) => {
     acc += item.price * item.quantidade || 0;
     return acc;
   }, 0);
+
+  function excluirItemCarrinho(item) {
+    dispatch(removerItem(item));
+  }
 
   return (
     <Container>
@@ -128,7 +134,11 @@ const Carrinho = () => {
                 <ItemTitle>{item.title}</ItemTitle>
                 <ItemQuantity>Quantidade: {item.quantidade}</ItemQuantity>
               </ItemDetails>
-              <ButtonLixeira>
+              <ButtonLixeira
+                onClick={() => {
+                  excluirItemCarrinho(item.id);
+                }}
+              >
                 <FaRegTrashCan size={18} />
               </ButtonLixeira>
             </Item>
