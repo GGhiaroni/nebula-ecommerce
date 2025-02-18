@@ -45,8 +45,8 @@ const ModalOverlay = styled.div`
 
 const FecharBotao = styled.button`
   position: absolute;
-  top: -60px;
-  right: -135px;
+  top: -115px;
+  right: -220px;
   transform: translateX(-50%);
   background: none;
   border: none;
@@ -62,15 +62,16 @@ const FecharBotao = styled.button`
 
 const Titulo = styled.h2`
   color: white;
-  font-size: 32px;
+  font-size: 35px;
+  white-space: nowrap;
   position: relative;
 `;
 
 const ModalContainer = styled.div`
   background: #242424;
-  padding: 20px;
-  width: 20%;
-  height: 20%;
+  padding: 10px 20px;
+  width: 50%;
+  height: 40%;
   display: flex;
   flex-direction: column;
   align-items: center;
