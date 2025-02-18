@@ -73,7 +73,7 @@ const QuantidadeDeItens = styled.span`
   ${(props) =>
     props.quantidade > 9 &&
     `
-    min-width: 26px;
+    max-width: 26px;
     border-radius: 16px;
     padding: 4px 10px;
     `}
