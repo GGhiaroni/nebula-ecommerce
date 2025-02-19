@@ -65,7 +65,15 @@ const Select = styled.select`
   border: 2px solid #ccc;
   border-radius: 10px;
   font-size: 16px;
+  appearance: none;
+  background-color: white;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%236c5ce7' d='M2 0L0 2h4zM2 5L0 3h4z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 10px;
+  padding-right: 40px;
   transition: all 0.3s ease-in-out;
+  cursor: pointer;
 
   &:focus {
     border-color: #6c5ce7;
