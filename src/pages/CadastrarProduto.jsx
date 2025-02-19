@@ -1,21 +1,108 @@
 import { useSelector } from "react-redux";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import headerCadastroProduto from "/public/cadastrar-produto.jpeg";
 
-const HeaderImage = styled.img`
-  width: 100%;
-  max-height: 300px;
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  margin-bottom: 20px;
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 `;
 
 const Container = styled.div`
   text-align: center;
   padding: 40px 20px;
-  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #e2eafc;
+`;
+
+const HeaderImage = styled.img`
+  width: 100%;
+  max-height: 280px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+`;
+
+const Form = styled.form`
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  max-width: 420px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: ${fadeIn} 0.7s ease-in-out;
+`;
+
+const Input = styled.input`
+  padding: 14px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+
+  &:focus {
+    border-color: #6c5ce7;
+    outline: none;
+    box-shadow: 0 0 10px rgba(108, 92, 231, 0.4);
+  }
+`;
+
+const Select = styled.select`
+  padding: 14px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+
+  &:focus {
+    border-color: #6c5ce7;
+    outline: none;
+    box-shadow: 0 0 10px rgba(108, 92, 231, 0.4);
+  }
+`;
+
+const Button = styled.button`
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  &:hover {
+    background: linear-gradient(135deg, #5a4bcf, #8f84ff);
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(108, 92, 231, 0.3);
+  }
+`;
+
+const Title = styled.h1`
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 `;
 
 const CadastrarProduto = () => {
@@ -26,24 +113,24 @@ const CadastrarProduto = () => {
   return (
     <Container>
       <HeaderImage src={headerCadastroProduto} alt="header cadastrar produto" />
-      <form>
-        <input placeholder="Nome do produto" alt="nome do produto" />
-        <input placeholder="Descrição do produto" alt="descrição do produto" />
-        <input
-          placeholder="URL da imagem do produto"
-          alt="url da imagem do produto"
-        />
-        <select>
-          <option value="">Selecione a categoria</option>
+      <Title>
+        <span>🛍️ </span> Cadastro de Produtos
+      </Title>
+      <Form>
+        <Input placeholder="📦 Nome do produto" />
+        <Input placeholder="📝 Descrição do produto" />
+        <Input placeholder="🌄 URL da imagem do produto" />
+        <Select>
+          <option value="">📂 Selecione a categoria</option>
           {categorias.map((categoria) => (
             <option key={categoria.id} value={categoria.id}>
               {categoria.nome}
             </option>
           ))}
-        </select>
-        <input type="number" placeholder="Preço do produto" />
-        <button type="submit">Cadastrar produto</button>
-      </form>
+        </Select>
+        <Input type="number" placeholder="💰 Preço do produto" />
+        <Button type="submit">✨ Cadastrar Produto</Button>
+      </Form>
     </Container>
   );
 };
