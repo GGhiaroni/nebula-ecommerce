@@ -1,3 +1,4 @@
+import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import headerCadastroProduto from "/public/cadastrar-produto.jpeg";
@@ -118,6 +119,8 @@ const CadastrarProduto = () => {
     state.categorias.map(({ nome, id }) => ({ nome, id }))
   );
 
+  const { register, handleSubmit } = useForm();
+
   return (
     <Container>
       <HeaderImage src={headerCadastroProduto} alt="header cadastrar produto" />
@@ -125,10 +128,16 @@ const CadastrarProduto = () => {
         <span>🛍️ </span> Cadastro de Produtos
       </Title>
       <Form>
-        <Input placeholder="📦 Nome do produto" />
-        <Input placeholder="📝 Descrição do produto" />
-        <Input placeholder="🌄 URL da imagem do produto" />
-        <Select>
+        <Input {...register("nome")} placeholder="📦 Nome do produto" />
+        <Input
+          {...register("descricao")}
+          placeholder="📝 Descrição do produto"
+        />
+        <Input
+          {...register("imagem")}
+          placeholder="🌄 URL da imagem do produto"
+        />
+        <Select {...register("categoria")}>
           <option value="">📂 Selecione a categoria</option>
           {categorias.map((categoria) => (
             <option key={categoria.id} value={categoria.id}>
@@ -136,7 +145,11 @@ const CadastrarProduto = () => {
             </option>
           ))}
         </Select>
-        <Input type="number" placeholder="💰 Preço do produto" />
+        <Input
+          {...register("preco")}
+          type="number"
+          placeholder="💰 Preço do produto"
+        />
         <Button type="submit">✨ Cadastrar Produto</Button>
       </Form>
     </Container>
