@@ -121,13 +121,15 @@ const CadastrarProduto = () => {
 
   const { register, handleSubmit } = useForm();
 
+  function cadastrarProduto() {}
+
   return (
     <Container>
       <HeaderImage src={headerCadastroProduto} alt="header cadastrar produto" />
       <Title>
         <span>🛍️ </span> Cadastro de Produtos
       </Title>
-      <Form>
+      <Form onSubmit={handleSubmit(cadastrarProduto)}>
         <Input {...register("nome")} placeholder="📦 Nome do produto" />
         <Input
           {...register("descricao")}
