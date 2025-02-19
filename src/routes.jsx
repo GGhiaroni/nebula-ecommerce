@@ -6,6 +6,7 @@ import InformacoesAdicionais from "./componentes/InformacoesCompra";
 import "./index.css";
 import Atendimento from "./pages/Atendimento";
 import Avaliacoes from "./pages/Avaliacoes";
+import CadastrarProduto from "./pages/CadastrarProduto";
 import Carrinho from "./pages/Carrinho";
 import Cashback from "./pages/Cashback";
 import Categoria from "./pages/Categoria";
@@ -33,6 +34,7 @@ function AppRoutes() {
           <Route path="/busca" element={<ResultadosDePesquisa />} />
           <Route path="/produto/:id" element={<PaginaProduto />} />
           <Route path="/carrinho" element={<Carrinho />} />
+          <Route path="/cadastrar-produto" element={<CadastrarProduto />} />
           <Route path="*" element={<Pagina404 />} />
         </Routes>
       </Provider>
