@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import headerCadastroProduto from "/public/cadastrar-produto.jpeg";
 
@@ -119,10 +119,37 @@ const CadastrarProduto = () => {
     state.categorias.map(({ nome, id }) => ({ nome, id }))
   );
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
+
+  const dispatch = useDispatch();
+
+  const itens = useSelector((state) => state.itens);
 
   function cadastrarProduto(produto) {
-    console.log(produto);
+    fetch("https://fakestoreapi.com/products", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: produto.nome,
+        price: parseFloat(produto.preco),
+        description: produto.descricao,
+        image: produto.imagem,
+        category: produto.categoria,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Produto cadastrado com sucesso:", data);
+        alert("✅ Produto cadastrado com sucesso!");
+        dispatch({ type: "setItens", payload: [...itens.lista, data] });
+        reset();
+      })
+      .catch((err) => {
+        console.error("Erro ao cadastrar produto:", err);
+        alert("❌ Ocorreu um erro ao cadastrar o produto.");
+      });
   }
 
   return (

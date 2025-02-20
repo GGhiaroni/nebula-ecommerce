@@ -1,5 +1,6 @@
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router";
+import { ToastContainer } from "react-toastify";
 import Footer from "./componentes/Footer";
 import Header from "./componentes/Header";
 import InformacoesAdicionais from "./componentes/InformacoesCompra";
@@ -22,6 +23,7 @@ function AppRoutes() {
   return (
     <BrowserRouter>
       <Provider store={store}>
+        <ToastContainer position="top-right" autoClose={5000} />
         <Header />
         <Routes>
           <Route index element={<Home />} />

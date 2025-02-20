@@ -3,6 +3,8 @@ import { FaCartPlus } from "react-icons/fa";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styled, { keyframes } from "styled-components";
 import { mudarCarrinho } from "../store/reducers/carrinho";
 import { mudarFavorito, setItens } from "../store/reducers/itens";
@@ -180,7 +182,7 @@ const Categoria = () => {
 
   function handleCarrinho(produto) {
     dispatch(mudarCarrinho(produto));
-    console.log("item adicionado ao carrinho: ", produto);
+    toast.success("Produto adicionado ao carrinho!");
   }
 
   return (
