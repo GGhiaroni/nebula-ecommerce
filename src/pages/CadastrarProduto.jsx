@@ -121,7 +121,9 @@ const CadastrarProduto = () => {
 
   const { register, handleSubmit } = useForm();
 
-  function cadastrarProduto() {}
+  function cadastrarProduto(produto) {
+    console.log(produto);
+  }
 
   return (
     <Container>
@@ -130,16 +132,19 @@ const CadastrarProduto = () => {
         <span>🛍️ </span> Cadastro de Produtos
       </Title>
       <Form onSubmit={handleSubmit(cadastrarProduto)}>
-        <Input {...register("nome")} placeholder="📦 Nome do produto" />
         <Input
-          {...register("descricao")}
+          {...register("nome", { required: true })}
+          placeholder="📦 Nome do produto"
+        />
+        <Input
+          {...register("descricao", { required: true })}
           placeholder="📝 Descrição do produto"
         />
         <Input
-          {...register("imagem")}
+          {...register("imagem", { required: true })}
           placeholder="🌄 URL da imagem do produto"
         />
-        <Select {...register("categoria")}>
+        <Select {...register("categoria", { required: true })}>
           <option value="">📂 Selecione a categoria</option>
           {categorias.map((categoria) => (
             <option key={categoria.id} value={categoria.id}>
@@ -148,7 +153,7 @@ const CadastrarProduto = () => {
           ))}
         </Select>
         <Input
-          {...register("preco")}
+          {...register("preco", { required: true })}
           type="number"
           placeholder="💰 Preço do produto"
         />
