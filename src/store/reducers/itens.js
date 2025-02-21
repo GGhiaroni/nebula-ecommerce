@@ -15,10 +15,11 @@ const itensSlice = createSlice({
       });
     },
     setItens: (state, action) => {
-      state.lista = action.payload.map((produto) => ({
-        ...produto,
-        favorito: state.favoritos.includes(produto.id),
-      }));
+      const novosProdutos = action.payload.filter(
+        (novoProduto) =>
+          !state.lista.some((produto) => produto.id === novoProduto.id)
+      );
+      state.lista = [...state.lista, ...novosProdutos];
     },
     mudarFavorito: (state, action) => {
       const id = action.payload;

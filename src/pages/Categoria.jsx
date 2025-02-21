@@ -149,13 +149,11 @@ const Categoria = () => {
 
   const [produtos, setProdutos] = useState(produtosDaStore);
 
+  console.log("Produtos da store após redirecionamento:", produtosDaStore);
+
   const categoria = useSelector((state) =>
     state.categorias.find((cat) => cat.caminhoUrl === nomeCategoria)
   );
-
-  useEffect(() => {
-    setProdutos(produtosDaStore);
-  }, [produtosDaStore]);
 
   const dispatch = useDispatch();
 
@@ -164,21 +162,37 @@ const Categoria = () => {
   useEffect(() => {
     if (!categoria) return;
 
-    if (produtosDaStore.length > 0) {
-      setProdutos(produtosDaStore);
+    console.log("Categoria atual:", categoria);
+    console.log("Produtos da store antes da filtragem:", produtosDaStore);
+
+    const produtosFiltrados = produtosDaStore.filter(
+      (produto) => produto.category === categoria.tagNaFakeStoreApi
+    );
+
+    console.log("Produtos filtrados:", produtosFiltrados);
+
+    setProdutos(produtosFiltrados);
+
+    if (produtosFiltrados.length > 0) {
       setLoading(false);
       return;
     }
+
+    console.log("Fazendo fetch da API...");
 
     fetch(
       `https://fakestoreapi.com/products/category/${categoria.tagNaFakeStoreApi}`
     )
       .then((res) => res.json())
       .then((data) => {
+        console.log("Dados da API:", data);
+
         const produtosComFavorito = data.map((produto) => ({
           ...produto,
           favorito: false,
         }));
+
+        console.log("Produtos com favorito:", produtosComFavorito);
 
         dispatch(setItens(produtosComFavorito));
         setProdutos(produtosComFavorito);
@@ -213,38 +227,44 @@ const Categoria = () => {
         <LoadingMessage>🔄 Carregando produtos...</LoadingMessage>
       ) : (
         <ContainerProdutos>
-          {produtos.map((produto) => {
-            const estaNoCarrinho = carrinho.some(
-              (item) => item.id === produto.id
-            );
-            return (
-              <Produto key={produto.id}>
-                <img src={produto.image} alt={produto.title} />
-                <h4>{produto.title}</h4>
-                <ContainerBaseCard>
-                  <Preco>R$ {produto.price.toFixed(2).replace(".", ",")}</Preco>
-                  <ContainerBaseCardIcones>
-                    <BotaoFavorito onClick={() => handleFavorito(produto.id)}>
-                      {produto.favorito ? (
-                        <IoMdHeart color="red" />
-                      ) : (
-                        <IoMdHeartEmpty />
-                      )}
-                    </BotaoFavorito>
-                    <BotaoCarrinho
-                      onClick={() => {
-                        handleCarrinho(produto);
-                      }}
-                    >
-                      <FaCartPlus
-                        color={estaNoCarrinho ? "#1875E8" : "#fdfdfd"}
-                      />
-                    </BotaoCarrinho>
-                  </ContainerBaseCardIcones>
-                </ContainerBaseCard>
-              </Produto>
-            );
-          })}
+          {produtos.length > 0 ? (
+            produtos.map((produto) => {
+              const estaNoCarrinho = carrinho.some(
+                (item) => item.id === produto.id
+              );
+              return (
+                <Produto key={produto.id}>
+                  <img src={produto.image} alt={produto.title} />
+                  <h4>{produto.title}</h4>
+                  <ContainerBaseCard>
+                    <Preco>
+                      R$ {produto.price.toFixed(2).replace(".", ",")}
+                    </Preco>
+                    <ContainerBaseCardIcones>
+                      <BotaoFavorito onClick={() => handleFavorito(produto.id)}>
+                        {produto.favorito ? (
+                          <IoMdHeart color="red" />
+                        ) : (
+                          <IoMdHeartEmpty />
+                        )}
+                      </BotaoFavorito>
+                      <BotaoCarrinho
+                        onClick={() => {
+                          handleCarrinho(produto);
+                        }}
+                      >
+                        <FaCartPlus
+                          color={estaNoCarrinho ? "#1875E8" : "#fdfdfd"}
+                        />
+                      </BotaoCarrinho>
+                    </ContainerBaseCardIcones>
+                  </ContainerBaseCard>
+                </Produto>
+              );
+            })
+          ) : (
+            <p>Nenhum produto encontrado nesta categoria.</p>
+          )}
         </ContainerProdutos>
       )}
     </CategoriaContainer>

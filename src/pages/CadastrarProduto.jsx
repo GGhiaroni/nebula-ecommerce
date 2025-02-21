@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import styled, { keyframes } from "styled-components";
-import { addItem } from "../store/reducers/itens";
+import { addItem, setItens } from "../store/reducers/itens";
 import headerCadastroProduto from "/public/cadastrar-produto.jpeg";
 
 const fadeIn = keyframes`
@@ -118,10 +118,11 @@ const Title = styled.h1`
 
 const CadastrarProduto = () => {
   const categorias = useSelector((state) =>
-    state.categorias.map(({ nome, id, caminhoUrl }) => ({
+    state.categorias.map(({ nome, id, caminhoUrl, tagNaFakeStoreApi }) => ({
       nome,
       id,
       caminhoUrl,
+      tagNaFakeStoreApi,
     }))
   );
 
@@ -137,6 +138,7 @@ const CadastrarProduto = () => {
     const categoriaSelecionada = categorias.find(
       (categoria) => categoria.id === parseInt(produto.categoria)
     );
+
     fetch("https://fakestoreapi.com/products", {
       method: "POST",
       headers: {
@@ -147,17 +149,36 @@ const CadastrarProduto = () => {
         price: parseFloat(produto.preco),
         description: produto.descricao,
         image: produto.imagem,
-        category: produto.categoria,
+        category: categoriaSelecionada.tagNaFakeStoreApi,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("Produto cadastrado com sucesso:", data);
-        alert("✅ Produto cadastrado com sucesso!");
-        console.log("Disparando addItem com:", data);
-        dispatch(addItem(data));
-        reset();
-        navigate(`/categoria/${categoriaSelecionada.caminhoUrl}`);
+        const novoProduto = {
+          ...data,
+          category: categoriaSelecionada.tagNaFakeStoreApi,
+          favorito: false,
+        };
+
+        dispatch(addItem(novoProduto));
+
+        fetch(
+          `https://fakestoreapi.com/products/category/${categoriaSelecionada.tagNaFakeStoreApi}`
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            const produtosComFavorito = data.map((produto) => ({
+              ...produto,
+              favorito: false,
+            }));
+
+            dispatch(setItens(produtosComFavorito));
+
+            navigate(`/categoria/${categoriaSelecionada.caminhoUrl}`);
+          })
+          .catch((err) => {
+            console.error("Erro ao carregar os produtos da categoria:", err);
+          });
       })
       .catch((err) => {
         console.error("Erro ao cadastrar produto:", err);
