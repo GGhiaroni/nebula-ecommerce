@@ -143,12 +143,19 @@ const ContainerBaseCardIcones = styled.div`
 
 const Categoria = () => {
   const { nomeCategoria } = useParams();
-  const produtos = useSelector((state) => state.itens.lista || []);
   const [loading, setLoading] = useState(true);
+
+  const produtosDaStore = useSelector((state) => state.itens.lista || []);
+
+  const [produtos, setProdutos] = useState(produtosDaStore);
 
   const categoria = useSelector((state) =>
     state.categorias.find((cat) => cat.caminhoUrl === nomeCategoria)
   );
+
+  useEffect(() => {
+    setProdutos(produtosDaStore);
+  }, [produtosDaStore]);
 
   const dispatch = useDispatch();
 
@@ -156,7 +163,12 @@ const Categoria = () => {
 
   useEffect(() => {
     if (!categoria) return;
-    setLoading(true);
+
+    if (produtosDaStore.length > 0) {
+      setProdutos(produtosDaStore);
+      setLoading(false);
+      return;
+    }
 
     fetch(
       `https://fakestoreapi.com/products/category/${categoria.tagNaFakeStoreApi}`
@@ -168,11 +180,15 @@ const Categoria = () => {
           favorito: false,
         }));
 
-        setLoading(false);
         dispatch(setItens(produtosComFavorito));
+        setProdutos(produtosComFavorito);
+        setLoading(false);
       })
-      .catch(() => setLoading(false));
-  }, [categoria, dispatch]);
+      .catch((err) => {
+        console.error("Erro ao carregar os produtos:", err);
+        setLoading(false);
+      });
+  }, [categoria, produtosDaStore, dispatch]);
 
   if (!categoria) return <p>Categoria não encontrada.</p>;
 
@@ -184,6 +200,8 @@ const Categoria = () => {
     dispatch(mudarCarrinho(produto));
     toast.success("Produto adicionado ao carrinho!");
   }
+
+  console.log("Itens no estado:", produtos);
 
   return (
     <CategoriaContainer>

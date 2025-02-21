@@ -7,6 +7,13 @@ const itensSlice = createSlice({
     favoritos: [],
   },
   reducers: {
+    addItem: (state, action) => {
+      const novoItem = action.payload;
+      state.lista.push({
+        ...novoItem,
+        favorito: state.favoritos.includes(novoItem.id),
+      });
+    },
     setItens: (state, action) => {
       state.lista = action.payload.map((produto) => ({
         ...produto,
@@ -28,6 +35,6 @@ const itensSlice = createSlice({
   },
 });
 
-export const { mudarFavorito, setItens } = itensSlice.actions;
+export const { mudarFavorito, setItens, addItem } = itensSlice.actions;
 
 export default itensSlice.reducer;

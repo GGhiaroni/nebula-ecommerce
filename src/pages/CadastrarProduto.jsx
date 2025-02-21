@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import styled, { keyframes } from "styled-components";
+import { addItem } from "../store/reducers/itens";
 import headerCadastroProduto from "/public/cadastrar-produto.jpeg";
 
 const fadeIn = keyframes`
@@ -116,16 +118,25 @@ const Title = styled.h1`
 
 const CadastrarProduto = () => {
   const categorias = useSelector((state) =>
-    state.categorias.map(({ nome, id }) => ({ nome, id }))
+    state.categorias.map(({ nome, id, caminhoUrl }) => ({
+      nome,
+      id,
+      caminhoUrl,
+    }))
   );
 
   const { register, handleSubmit, reset } = useForm();
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   const itens = useSelector((state) => state.itens);
 
   function cadastrarProduto(produto) {
+    const categoriaSelecionada = categorias.find(
+      (categoria) => categoria.id === parseInt(produto.categoria)
+    );
     fetch("https://fakestoreapi.com/products", {
       method: "POST",
       headers: {
@@ -143,8 +154,10 @@ const CadastrarProduto = () => {
       .then((data) => {
         console.log("Produto cadastrado com sucesso:", data);
         alert("✅ Produto cadastrado com sucesso!");
-        dispatch({ type: "setItens", payload: [...itens.lista, data] });
+        console.log("Disparando addItem com:", data);
+        dispatch(addItem(data));
         reset();
+        navigate(`/categoria/${categoriaSelecionada.caminhoUrl}`);
       })
       .catch((err) => {
         console.error("Erro ao cadastrar produto:", err);
