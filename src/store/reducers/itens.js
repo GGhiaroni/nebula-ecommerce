@@ -15,7 +15,6 @@ const itensSlice = createSlice({
       });
     },
     setItens: (state, action) => {
-      // Adiciona os novos produtos sem sobrescrever os já existentes
       const novosProdutos = action.payload.filter(
         (novoProduto) =>
           !state.lista.some((produto) => produto.id === novoProduto.id)

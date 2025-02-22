@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FaCartPlus } from "react-icons/fa";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router";
+import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled, { keyframes } from "styled-components";
@@ -147,7 +147,7 @@ const Categoria = () => {
 
   const produtosDaStore = useSelector((state) => state.itens.lista || []);
 
-  const [produtos, setProdutos] = useState([produtosDaStore]);
+  const [produtos, setProdutos] = useState(produtosDaStore);
 
   const categoria = useSelector((state) =>
     state.categorias.find((cat) => cat.caminhoUrl === nomeCategoria)
@@ -157,18 +157,20 @@ const Categoria = () => {
 
   const carrinho = useSelector((state) => state.carrinho);
 
-  const location = useLocation();
-
   useEffect(() => {
     if (!categoria) return;
 
-    const produtosFiltrados = produtosDaStore.filter(
+    const produtosSalvos =
+      JSON.parse(localStorage.getItem(`produtos-${categoria.caminhoUrl}`)) ||
+      [];
+    dispatch(setItens(produtosSalvos));
+
+    const produtosFiltrados = produtosSalvos.filter(
       (produto) => produto.category === categoria.categoryFakeStoreApi
     );
 
-    setProdutos(produtosFiltrados);
-
     if (produtosFiltrados.length > 0) {
+      setProdutos(produtosFiltrados);
       setLoading(false);
       return;
     }
@@ -189,13 +191,17 @@ const Categoria = () => {
 
         dispatch(setItens(produtosComFavorito));
         setProdutos(produtosComFavorito);
+        localStorage.setItem(
+          `produtos-${categoria.caminhoUrl}`,
+          JSON.stringify(produtosComFavorito)
+        );
         setLoading(false);
       })
       .catch((err) => {
         console.error("Erro ao carregar os produtos:", err);
         setLoading(false);
       });
-  }, [categoria, location, dispatch]);
+  }, [categoria, dispatch]);
 
   if (!categoria) return <p>Categoria não encontrada.</p>;
 

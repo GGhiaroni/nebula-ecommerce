@@ -135,8 +135,6 @@ const CadastrarProduto = () => {
 
   const navigate = useNavigate();
 
-  const itens = useSelector((state) => state.itens);
-
   function cadastrarProduto(produto) {
     const categoriaSelecionada = categorias.find(
       (categoria) => categoria.id === parseInt(produto.categoria)
@@ -164,6 +162,16 @@ const CadastrarProduto = () => {
 
         dispatch(addItem(novoProduto));
         console.log("novo produto cadastrado: ", novoProduto);
+
+        const produtosSalvos =
+          JSON.parse(
+            localStorage.getItem(`produtos-${categoriaSelecionada.caminhoUrl}`)
+          ) || [];
+        produtosSalvos.push(novoProduto);
+        localStorage.setItem(
+          `produtos-${categoriaSelecionada.caminhoUrl}`,
+          JSON.stringify(produtosSalvos)
+        );
 
         fetch(
           `https://fakestoreapi.com/products/category/${categoriaSelecionada.tagNaFakeStoreApi}`
