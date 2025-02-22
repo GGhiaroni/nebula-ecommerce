@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FaCartPlus } from "react-icons/fa";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled, { keyframes } from "styled-components";
@@ -147,9 +147,7 @@ const Categoria = () => {
 
   const produtosDaStore = useSelector((state) => state.itens.lista || []);
 
-  const [produtos, setProdutos] = useState(produtosDaStore);
-
-  console.log("Produtos da store após redirecionamento:", produtosDaStore);
+  const [produtos, setProdutos] = useState([produtosDaStore]);
 
   const categoria = useSelector((state) =>
     state.categorias.find((cat) => cat.caminhoUrl === nomeCategoria)
@@ -159,17 +157,14 @@ const Categoria = () => {
 
   const carrinho = useSelector((state) => state.carrinho);
 
+  const location = useLocation();
+
   useEffect(() => {
     if (!categoria) return;
 
-    console.log("Categoria atual:", categoria);
-    console.log("Produtos da store antes da filtragem:", produtosDaStore);
-
     const produtosFiltrados = produtosDaStore.filter(
-      (produto) => produto.category === categoria.tagNaFakeStoreApi
+      (produto) => produto.category === categoria.categoryFakeStoreApi
     );
-
-    console.log("Produtos filtrados:", produtosFiltrados);
 
     setProdutos(produtosFiltrados);
 
@@ -178,7 +173,7 @@ const Categoria = () => {
       return;
     }
 
-    console.log("Fazendo fetch da API...");
+    setLoading(true);
 
     fetch(
       `https://fakestoreapi.com/products/category/${categoria.tagNaFakeStoreApi}`
@@ -192,8 +187,6 @@ const Categoria = () => {
           favorito: false,
         }));
 
-        console.log("Produtos com favorito:", produtosComFavorito);
-
         dispatch(setItens(produtosComFavorito));
         setProdutos(produtosComFavorito);
         setLoading(false);
@@ -202,20 +195,25 @@ const Categoria = () => {
         console.error("Erro ao carregar os produtos:", err);
         setLoading(false);
       });
-  }, [categoria, produtosDaStore, dispatch]);
+  }, [categoria, location, dispatch]);
 
   if (!categoria) return <p>Categoria não encontrada.</p>;
 
   function handleFavorito(id) {
     dispatch(mudarFavorito(id));
+    setProdutos((prevProdutos) =>
+      prevProdutos.map((produto) =>
+        produto.id === id
+          ? { ...produto, favorito: !produto.favorito }
+          : produto
+      )
+    );
   }
 
   function handleCarrinho(produto) {
     dispatch(mudarCarrinho(produto));
     toast.success("Produto adicionado ao carrinho!");
   }
-
-  console.log("Itens no estado:", produtos);
 
   return (
     <CategoriaContainer>

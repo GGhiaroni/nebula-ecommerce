@@ -17,6 +17,7 @@ const estadoInicial = [
     caminhoUrl: "roupas-masculinas",
     thumbnail: roupasMasculinasThumb,
     header: roupasMasculinasHeader,
+    categoryFakeStoreApi: "men's clothing",
   },
   {
     nome: "Roupas Femininas",
@@ -26,6 +27,7 @@ const estadoInicial = [
     caminhoUrl: "roupas-femininas",
     thumbnail: roupasFemininasThumb,
     header: roupasFemininasHeader,
+    categoryFakeStoreApi: "women's clothing",
   },
   {
     nome: "Jóias",
@@ -35,6 +37,7 @@ const estadoInicial = [
     caminhoUrl: "joias",
     thumbnail: joiasThumb,
     header: joiasHeader,
+    categoryFakeStoreApi: "jewelery",
   },
   {
     nome: "Eletrônicos",
@@ -44,6 +47,7 @@ const estadoInicial = [
     caminhoUrl: "eletronicos",
     thumbnail: eletronicosThumb,
     header: eletronicosHeader,
+    categoryFakeStoreApi: "electronics",
   },
 ];
 

@@ -118,12 +118,15 @@ const Title = styled.h1`
 
 const CadastrarProduto = () => {
   const categorias = useSelector((state) =>
-    state.categorias.map(({ nome, id, caminhoUrl, tagNaFakeStoreApi }) => ({
-      nome,
-      id,
-      caminhoUrl,
-      tagNaFakeStoreApi,
-    }))
+    state.categorias.map(
+      ({ nome, id, caminhoUrl, tagNaFakeStoreApi, categoryFakeStoreApi }) => ({
+        nome,
+        id,
+        caminhoUrl,
+        tagNaFakeStoreApi,
+        categoryFakeStoreApi,
+      })
+    )
   );
 
   const { register, handleSubmit, reset } = useForm();
@@ -149,18 +152,18 @@ const CadastrarProduto = () => {
         price: parseFloat(produto.preco),
         description: produto.descricao,
         image: produto.imagem,
-        category: categoriaSelecionada.tagNaFakeStoreApi,
+        category: categoriaSelecionada.categoryFakeStoreApi,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
         const novoProduto = {
           ...data,
-          category: categoriaSelecionada.tagNaFakeStoreApi,
           favorito: false,
         };
 
         dispatch(addItem(novoProduto));
+        console.log("novo produto cadastrado: ", novoProduto);
 
         fetch(
           `https://fakestoreapi.com/products/category/${categoriaSelecionada.tagNaFakeStoreApi}`
