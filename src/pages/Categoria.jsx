@@ -165,6 +165,8 @@ const Categoria = () => {
       [];
     dispatch(setItens(produtosSalvos));
 
+    console.log("produtos salvos no localstorage: ", produtosSalvos);
+
     const produtosFiltrados = produtosSalvos.filter(
       (produto) => produto.category === categoria.categoryFakeStoreApi
     );
