@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { MdLogin } from "react-icons/md";
-import { Link } from "react-router";
+import { MdLogin, MdPersonAdd } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled, { keyframes } from "styled-components";
@@ -70,11 +69,6 @@ const Emoji = styled.span`
   font-size: 40px;
 `;
 
-const rotate = keyframes`
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(180deg); }
-`;
-
 const CardContainer = styled.div`
   perspective: 1000px;
 `;
@@ -86,19 +80,38 @@ const Card = styled.div`
   border-radius: 12px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   text-align: center;
-  animation: rotate 0.8s ease forwards;
   transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+  transform: ${({ flipped }) =>
+    flipped ? "rotateY(180deg)" : "rotateY(0deg)"};
+  height: ${({ flipped }) => (!flipped ? "380px" : "550px")};
+  position: relative;
 `;
 
-const SwitchMode = styled.p`
-  margin-top: 20px;
-  color: #555;
-  cursor: pointer;
-  text-decoration: underline;
+const CardFace = styled.div`
+  backface-visibility: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 30px;
+`;
 
-  &:hover {
-    color: #333;
-  }
+const FrontFace = styled(CardFace)`
+  transform: rotateY(0deg);
+  display: ${({ flipped }) => (flipped ? "none" : "flex")};
+`;
+
+const BackFace = styled(CardFace)`
+  transform: rotateY(180deg);
+  display: ${({ flipped }) => (flipped ? "flex" : "none")};
 `;
 
 const DivSpanEstilizado = styled.div`
@@ -111,10 +124,14 @@ const DivSpanEstilizado = styled.div`
 const SpanEstilizado = styled.span`
   font-size: 14px;
   color: #696969;
+  margin-top: 15px;
 `;
 
 const SegundoSpanEstilizado = styled(SpanEstilizado)`
+  margin-top: 10px;
   position: relative;
+  cursor: pointer;
+  display: inline-block;
 
   &::after {
     content: "";
@@ -132,14 +149,13 @@ const SegundoSpanEstilizado = styled(SpanEstilizado)`
   }
 `;
 
-const LinkEstilizado = styled(Link)`
-  text-decoration: none;
-`;
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [possuiConta, setPossuiConta] = useState(true);
+  const [nome, setNome] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [flipped, setFlipped] = useState(false);
 
   const handleLogin = () => {
     if (!email || !password) {
@@ -149,36 +165,90 @@ const Login = () => {
     toast.success("Login realizado com sucesso! 🎉");
   };
 
+  const handleCadastro = () => {
+    if (!nome || !telefone || !cpf || !email || !password) {
+      toast.error("Por favor, preencha todos os campos! ⚠️");
+      return;
+    }
+    toast.success("Cadastro realizado com sucesso! 🎉");
+  };
+
+  const toggleFlip = () => {
+    setFlipped(!flipped);
+  };
+
   return (
     <PageContainer>
       <CardContainer>
-        <Card>
-          <Emoji>🥳</Emoji>
-          <Title>Bem-vindo de volta!</Title>
-          <Input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            type="password"
-            placeholder="Senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button onClick={handleLogin}>
-            Entrar <MdLogin color="#ffffff" size={20} />{" "}
-          </Button>
-          <DivSpanEstilizado>
+        <Card flipped={flipped}>
+          <FrontFace flipped={flipped}>
+            <Emoji>🥳</Emoji>
+            <Title>Bem-vindo de volta!</Title>
+            <Input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              type="password"
+              placeholder="Senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button onClick={handleLogin}>
+              Entrar <MdLogin color="#ffffff" size={20} />{" "}
+            </Button>
+
             <SpanEstilizado>Ainda não possui uma conta?</SpanEstilizado>
-            <LinkEstilizado>
-              <SegundoSpanEstilizado>Cadastre-se</SegundoSpanEstilizado>
-            </LinkEstilizado>
-          </DivSpanEstilizado>
-          <ToastContainer />
+            <SegundoSpanEstilizado onClick={toggleFlip}>
+              Cadastre-se
+            </SegundoSpanEstilizado>
+          </FrontFace>
+          <BackFace flipped={flipped}>
+            <Emoji>📝</Emoji>
+            <Title>Crie sua conta!</Title>
+            <Input
+              type="text"
+              placeholder="Nome"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+            />
+            <Input
+              type="text"
+              placeholder="Telefone"
+              value={telefone}
+              onChange={(e) => setTelefone(e.target.value)}
+            />
+            <Input
+              type="text"
+              placeholder="CPF"
+              value={cpf}
+              onChange={(e) => setCpf(e.target.value)}
+            />
+            <Input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              type="password"
+              placeholder="Senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button onClick={handleCadastro}>
+              Cadastrar <MdPersonAdd color="#ffffff" size={20} />{" "}
+            </Button>
+            <SpanEstilizado>Já possui uma conta?</SpanEstilizado>
+            <SegundoSpanEstilizado onClick={toggleFlip}>
+              Faça login
+            </SegundoSpanEstilizado>
+          </BackFace>
         </Card>
       </CardContainer>
+      <ToastContainer />
     </PageContainer>
   );
 };
