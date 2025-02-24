@@ -101,6 +101,8 @@ const IconesHeader = () => {
       abrirModal();
     } else if (index === 2) {
       navigate("/carrinho");
+    } else if (index === 3) {
+      navigate("/login");
     }
   };
 

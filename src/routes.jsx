@@ -36,6 +36,7 @@ function AppRoutes() {
           <Route path="/busca" element={<ResultadosDePesquisa />} />
           <Route path="/produto/:id" element={<PaginaProduto />} />
           <Route path="/carrinho" element={<Carrinho />} />
+          <Route path="/login" element={<CadastrarProduto />} />
           <Route path="/cadastrar-produto" element={<CadastrarProduto />} />
           <Route path="*" element={<Pagina404 />} />
         </Routes>
