@@ -84,7 +84,7 @@ const Login = () => {
 
   const handleLogin = () => {
     if (!email || !password) {
-      toast.error("Por favor, preencha todos os campos! 😅");
+      toast.error("Por favor, preencha todos os campos! ⚠️");
       return;
     }
     toast.success("Login realizado com sucesso! 🎉");
