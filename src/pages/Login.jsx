@@ -177,6 +177,9 @@ const Login = () => {
       return;
     }
     toast.success("Cadastro realizado com sucesso! 🎉");
+    setTimeout(() => {
+      toggleFlip();
+    }, 2000);
   };
 
   const toggleFlip = () => {
