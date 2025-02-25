@@ -164,11 +164,22 @@ const Login = () => {
       toast.error("Por favor, preencha todos os campos! ⚠️");
       return;
     }
-    toast.success("Login realizado com sucesso! 🎉");
+    const usuariosCadastrados =
+      JSON.parse(localStorage.getItem("usuarios")) || [];
 
-    setTimeout(() => {
-      navigate("/");
-    }, 2000);
+    const usuario = usuariosCadastrados.find(
+      (u) => u.email === email && u.senha === password
+    );
+
+    if (usuario) {
+      toast.success("Login realizado com sucesso! 🎉");
+
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    } else {
+      toast.error("Email ou senha incorretos! ⚠️");
+    }
   };
 
   const handleCadastro = () => {
@@ -176,6 +187,43 @@ const Login = () => {
       toast.error("Por favor, preencha todos os campos! ⚠️");
       return;
     }
+
+    const usuariosCadastrados =
+      JSON.parse(localStorage.getItem("usuarios")) || [];
+
+    const emailJaExiste = usuariosCadastrados.find((u) => u.email === email);
+    const telefoneJaExiste = usuariosCadastrados.find(
+      (u) => u.telefone === telefone
+    );
+    const cpfJaExiste = usuariosCadastrados.find((u) => u.cpf === cpf);
+
+    if (emailJaExiste) {
+      toast.error("Este e-mail já está cadastrado! ⚠️");
+      return;
+    }
+
+    if (telefoneJaExiste) {
+      toast.error("Este número de telefone já está cadastrado! ⚠️");
+      return;
+    }
+
+    if (cpfJaExiste) {
+      toast.error("Este CPF já está cadastrado! ⚠️");
+      return;
+    }
+
+    const novoUsuario = {
+      nome,
+      telefone,
+      cpf,
+      email,
+      senha: password,
+    };
+
+    usuariosCadastrados.push(novoUsuario);
+
+    localStorage.setItem("usuarios", JSON.stringify(usuariosCadastrados));
+
     toast.success("Cadastro realizado com sucesso! 🎉");
     setTimeout(() => {
       toggleFlip();
