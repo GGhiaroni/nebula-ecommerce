@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { MdLogin, MdPersonAdd } from "react-icons/md";
+import { useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled, { keyframes } from "styled-components";
@@ -156,6 +157,7 @@ const Login = () => {
   const [telefone, setTelefone] = useState("");
   const [cpf, setCpf] = useState("");
   const [flipped, setFlipped] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     if (!email || !password) {
@@ -163,6 +165,10 @@ const Login = () => {
       return;
     }
     toast.success("Login realizado com sucesso! 🎉");
+
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
   };
 
   const handleCadastro = () => {
