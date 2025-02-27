@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { MdLogin, MdPersonAdd } from "react-icons/md";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled, { keyframes } from "styled-components";
+import { login } from "../store/reducers/itens";
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(-20px); }
@@ -158,6 +160,7 @@ const Login = () => {
   const [cpf, setCpf] = useState("");
   const [flipped, setFlipped] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = () => {
     if (!email || !password) {
@@ -173,6 +176,8 @@ const Login = () => {
 
     if (usuario) {
       toast.success("Login realizado com sucesso! 🎉");
+
+      dispatch(login(usuario));
 
       setTimeout(() => {
         navigate("/");
