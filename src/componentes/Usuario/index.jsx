@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+import { Link } from "react-router";
 import styled from "styled-components";
 import exemploFoto from "/public/roupas-femininas-thumb.jpg";
 
@@ -8,8 +10,41 @@ const FotoUsuario = styled.img`
   width: 50px;
 `;
 
+const SpanEstilizado = styled.span`
+  color: #ffffff;
+  font-size: 25px;
+  cursor: pointer;
+`;
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ContainerFotoSpan = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Usuario = () => {
-  <FotoUsuario src={exemploFoto} />;
+  const usuario = useSelector((state) => state.usuario.dados);
+  return (
+    <Container>
+      {" "}
+      {usuario ? (
+        <ContainerFotoSpan>
+          <FotoUsuario src={exemploFoto} />
+          <SpanEstilizado>{usuario.nome}</SpanEstilizado>
+        </ContainerFotoSpan>
+      ) : (
+        <Link to={"/login"}>
+          <SpanEstilizado>Faça seu login</SpanEstilizado>
+        </Link>
+      )}
+    </Container>
+  );
 };
 
 export default Usuario;

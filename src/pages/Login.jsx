@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled, { keyframes } from "styled-components";
-import { login } from "../store/reducers/itens";
+import { login } from "../store/reducers/usuario";
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(-20px); }
