@@ -31,7 +31,7 @@ const OpcoesEstilizadas = styled.ul`
   color: #fff;
   display: flex;
   gap: 20px;
-  font-size: 25px;
+  font-size: 18px;
   cursor: pointer;
   font-weight: 500;
   text-transform: uppercase;
@@ -73,6 +73,7 @@ const OpcoesEstilizadas = styled.ul`
 const LinkEstilizado = styled(Link)`
   text-decoration: none;
   color: white;
+  font-family: var(--fonteSecundaria);
 `;
 
 const Opcoes = () => {

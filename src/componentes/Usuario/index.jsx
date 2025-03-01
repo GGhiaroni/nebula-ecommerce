@@ -40,6 +40,7 @@ const SpanEstilizado = styled.span`
   color: #ffffff;
   font-size: 18px;
   cursor: pointer;
+  font-family: var(--fonteSecundaria);
 `;
 
 const Container = styled.div`
