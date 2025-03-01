@@ -12,7 +12,7 @@ const FotoUsuario = styled.img`
 
 const SpanEstilizado = styled.span`
   color: #ffffff;
-  font-size: 25px;
+  font-size: 18px;
   cursor: pointer;
 `;
 
@@ -26,6 +26,7 @@ const ContainerFotoSpan = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 15px;
 `;
 
 const Usuario = () => {
@@ -36,7 +37,6 @@ const Usuario = () => {
       {usuario ? (
         <ContainerFotoSpan>
           <FotoUsuario src={exemploFoto} />
-          <SpanEstilizado>{usuario.nome}</SpanEstilizado>
         </ContainerFotoSpan>
       ) : (
         <Link to={"/login"}>
