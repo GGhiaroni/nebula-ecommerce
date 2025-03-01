@@ -102,6 +102,10 @@ const LogoutButton = styled.button`
   }
 `;
 
+const LinkSpan = styled(Link)`
+  text-decoration: none;
+`;
+
 const Usuario = () => {
   const usuario = useSelector((state) => state.usuario.dados);
   const [dropdownAberto, setDropdownAberto] = useState(false);
@@ -164,9 +168,9 @@ const Usuario = () => {
           </DropdownMenu>
         </>
       ) : (
-        <Link to={"/login"}>
+        <LinkSpan to={"/login"}>
           <SpanEstilizado>Faça seu login</SpanEstilizado>
-        </Link>
+        </LinkSpan>
       )}
     </Container>
   );

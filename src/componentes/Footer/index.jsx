@@ -11,6 +11,7 @@ const FooterEstilizado = styled.footer`
   color: white;
   font-size: 18px;
   gap: 8rem;
+  font-family: var(--fonteSecundaria);
 
   @media (min-width: 768px) {
     padding: 3rem 5rem;

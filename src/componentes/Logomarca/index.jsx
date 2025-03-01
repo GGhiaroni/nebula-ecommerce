@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import styled from "styled-components";
 
 const LogomarcaNebula = styled.div`
+  font-family: var(--fontePrincipal);
   display: flex;
   gap: 20px;
   align-items: center;

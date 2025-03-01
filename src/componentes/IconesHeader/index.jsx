@@ -6,9 +6,8 @@ import ModalDePesquisa from "../ModalDePesquisa";
 import cartIcon from "/public/cart-icon-white.png";
 import chatIcon from "/public/chat-icon-white.png";
 import searchIcon from "/public/search-icon-white.png";
-import userIcon from "/public/user-icon-white.png";
 
-const icones = [searchIcon, chatIcon, cartIcon, userIcon];
+const icones = [searchIcon, chatIcon, cartIcon];
 
 const IconesHeaderEstilizado = styled.ul`
   list-style: none;
@@ -101,8 +100,6 @@ const IconesHeader = () => {
       abrirModal();
     } else if (index === 2) {
       navigate("/carrinho");
-    } else if (index === 3) {
-      navigate("/login");
     }
   };
 
