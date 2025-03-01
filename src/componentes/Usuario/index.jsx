@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { IoLogOutOutline } from "react-icons/io5";
-import { useSelector } from "react-redux";
-import { Link } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router";
 import styled, { keyframes } from "styled-components";
+import { logout } from "../../store/reducers/usuario";
 import exemploFoto from "/public/roupas-femininas-thumb.jpg";
 
 const slideDown = keyframes`
@@ -104,6 +105,8 @@ const Usuario = () => {
   const usuario = useSelector((state) => state.usuario.dados);
   const [dropdownAberto, setDropdownAberto] = useState(false);
   const timeoutRef = useRef(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleMouseEnterContainer = () => {
     if (timeoutRef.current) {
@@ -131,6 +134,11 @@ const Usuario = () => {
     setDropdownAberto(false);
   };
 
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
   return (
     <Container
       onMouseEnter={handleMouseEnterContainer}
@@ -148,7 +156,7 @@ const Usuario = () => {
               <AiOutlineUser />
               Meu perfil
             </DropdownItem>
-            <LogoutButton to={"/"}>
+            <LogoutButton onClick={handleLogout}>
               <IoLogOutOutline />
               Logout
             </LogoutButton>
