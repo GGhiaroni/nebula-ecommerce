@@ -1,3 +1,4 @@
+import { AiOutlineUser } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { Link } from "react-router";
 import styled from "styled-components";
@@ -20,24 +21,69 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 `;
 
-const ContainerFotoSpan = styled.div`
+const DropdownMenu = styled.div`
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: ${({ dropdownIsOpen }) => (dropdownIsOpen ? "block" : "none")};
+  z-index: 1000;
+`;
+
+const DropdownItem = styled(Link)`
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 15px;
+  justify-content: center;
+  padding: 10px 20px;
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  &:hover {
+    background-color: #f1f1f1;
+  }
+`;
+
+const LogoutButton = styled.button`
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+  &:hover {
+    background-color: #f1f1f1;
+  }
 `;
 
 const Usuario = () => {
   const usuario = useSelector((state) => state.usuario.dados);
+  const [dropdownAberto, setDropdownAberto] = useState(false);
   return (
-    <Container>
+    <Container
+      onMouseEnter={() => setDropdownAberto(true)}
+      onMouseLeave={() => setDropdownAberto(false)}
+    >
       {" "}
       {usuario ? (
-        <ContainerFotoSpan>
+        <>
           <FotoUsuario src={exemploFoto} />
-        </ContainerFotoSpan>
+          <DropdownMenu dropdownIsOpen={dropdownAberto}>
+            <DropdownItem>
+              <AiOutlineUser />
+              Meu perfil
+            </DropdownItem>
+            <LogoutButton></LogoutButton>
+          </DropdownMenu>
+        </>
       ) : (
         <Link to={"/login"}>
           <SpanEstilizado>Faça seu login</SpanEstilizado>
