@@ -6,7 +6,6 @@ import { Link } from "react-router";
 import styled, { keyframes } from "styled-components";
 import exemploFoto from "/public/roupas-femininas-thumb.jpg";
 
-// Animação de entrada do dropdown
 const slideDown = keyframes`
   from {
     opacity: 0;
@@ -18,7 +17,6 @@ const slideDown = keyframes`
   }
 `;
 
-// Animação de saída do dropdown
 const slideUp = keyframes`
   from {
     opacity: 1;
@@ -54,7 +52,7 @@ const Container = styled.div`
 const DropdownMenu = styled.div`
   position: absolute;
   top: 60px;
-  right: 0;
+  right: -60px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -150,7 +148,7 @@ const Usuario = () => {
               <AiOutlineUser />
               Meu perfil
             </DropdownItem>
-            <LogoutButton>
+            <LogoutButton to={"/"}>
               <IoLogOutOutline />
               Logout
             </LogoutButton>

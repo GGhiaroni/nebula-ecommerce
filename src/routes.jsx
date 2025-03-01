@@ -13,6 +13,7 @@ import Cashback from "./pages/Cashback";
 import Categoria from "./pages/Categoria";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import MeuPerfil from "./pages/MeuPerfil";
 import Pagina404 from "./pages/Pagina404";
 import PaginaProduto from "./pages/PaginaProduto";
 import QuemSomos from "./pages/QuemSomos";
@@ -39,6 +40,7 @@ function AppRoutes() {
           <Route path="/carrinho" element={<Carrinho />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cadastrar-produto" element={<CadastrarProduto />} />
+          <Route path="/meu-perfil" element={<MeuPerfil />} />
           <Route path="*" element={<Pagina404 />} />
         </Routes>
       </Provider>
