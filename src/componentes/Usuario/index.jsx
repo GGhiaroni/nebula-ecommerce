@@ -1,8 +1,34 @@
+import { useRef, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
+import { IoLogOutOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { Link } from "react-router";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import exemploFoto from "/public/roupas-femininas-thumb.jpg";
+
+// Animação de entrada do dropdown
+const slideDown = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+// Animação de saída do dropdown
+const slideUp = keyframes`
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+`;
 
 const FotoUsuario = styled.img`
   border-radius: 50%;
@@ -22,6 +48,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
+  cursor: pointer;
 `;
 
 const DropdownMenu = styled.div`
@@ -29,59 +56,104 @@ const DropdownMenu = styled.div`
   top: 60px;
   right: 0;
   background-color: #ffffff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   display: ${({ dropdownIsOpen }) => (dropdownIsOpen ? "block" : "none")};
   z-index: 1000;
+  width: 180px;
+  animation: ${({ dropdownIsOpen }) => (dropdownIsOpen ? slideDown : slideUp)}
+    0.3s ease-in-out;
+  transform-origin: top;
 `;
 
 const DropdownItem = styled(Link)`
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 10px 20px;
+  justify-content: start;
+  gap: 12px;
+  padding: 12px 20px;
   color: #333;
   text-decoration: none;
   font-size: 16px;
+  font-family: var(--fonteSecundaria);
+  transition: background-color 0.2s ease;
   &:hover {
-    background-color: #f1f1f1;
+    background-color: #f8f9fa;
   }
 `;
 
 const LogoutButton = styled.button`
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 12px;
   width: 100%;
-  padding: 10px 20px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-family: var(--fonteSecundaria);
   background: none;
   border: none;
   color: #333;
-  font-size: 16px;
   text-align: left;
   cursor: pointer;
+  transition: background-color 0.2s ease;
   &:hover {
-    background-color: #f1f1f1;
+    background-color: #f8f9fa;
   }
 `;
 
 const Usuario = () => {
   const usuario = useSelector((state) => state.usuario.dados);
   const [dropdownAberto, setDropdownAberto] = useState(false);
+  const timeoutRef = useRef(null);
+
+  const handleMouseEnterContainer = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setDropdownAberto(true);
+  };
+
+  const handleMouseLeaveContainer = () => {
+    timeoutRef.current = setTimeout(() => {
+      setDropdownAberto(false);
+    }, 300);
+  };
+
+  const handleMouseEnterDropdown = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setDropdownAberto(true);
+  };
+
+  const handleMouseLeaveDropdown = () => {
+    setDropdownAberto(false);
+  };
+
   return (
     <Container
-      onMouseEnter={() => setDropdownAberto(true)}
-      onMouseLeave={() => setDropdownAberto(false)}
+      onMouseEnter={handleMouseEnterContainer}
+      onMouseLeave={handleMouseLeaveContainer}
     >
-      {" "}
       {usuario ? (
         <>
-          <FotoUsuario src={exemploFoto} />
-          <DropdownMenu dropdownIsOpen={dropdownAberto}>
-            <DropdownItem>
+          <FotoUsuario src={exemploFoto} alt="Foto do usuário" />
+          <DropdownMenu
+            dropdownIsOpen={dropdownAberto}
+            onMouseEnter={handleMouseEnterDropdown}
+            onMouseLeave={handleMouseLeaveDropdown}
+          >
+            <DropdownItem to={"/meu-perfil"}>
               <AiOutlineUser />
               Meu perfil
             </DropdownItem>
-            <LogoutButton></LogoutButton>
+            <LogoutButton>
+              <IoLogOutOutline />
+              Logout
+            </LogoutButton>
           </DropdownMenu>
         </>
       ) : (
