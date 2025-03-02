@@ -194,19 +194,6 @@ const Login = () => {
       return;
     }
 
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      const novoUsuario = {
-        nome,
-        telefone,
-        cpf,
-        email,
-        senha: password,
-        foto: reader.result,
-      };
-    };
-
     const usuariosCadastrados =
       JSON.parse(localStorage.getItem("usuarios")) || [];
 
@@ -231,14 +218,37 @@ const Login = () => {
       return;
     }
 
-    usuariosCadastrados.push(novoUsuario);
+    const reader = new FileReader();
 
-    localStorage.setItem("usuarios", JSON.stringify(usuariosCadastrados));
+    let novoUsuario = {
+      nome,
+      telefone,
+      cpf,
+      email,
+      senha: password,
+      foto: null,
+    };
 
-    toast.success("Cadastro realizado com sucesso! 🎉");
-    setTimeout(() => {
-      toggleFlip();
-    }, 2000);
+    reader.onloadend = () => {
+      novoUsuario.foto = reader.result;
+      usuariosCadastrados.push(novoUsuario);
+      localStorage.setItem("usuarios", JSON.stringify(usuariosCadastrados));
+      toast.success("Cadastro realizado com sucesso! 🎉");
+      setTimeout(() => {
+        toggleFlip();
+      }, 2000);
+    };
+
+    if (foto) {
+      reader.readAsDataURL(foto);
+    } else {
+      usuariosCadastrados.push(novoUsuario);
+      localStorage.setItem("usuarios", JSON.stringify(usuariosCadastrados));
+      toast.success("Cadastro realizado com sucesso! 🎉");
+      setTimeout(() => {
+        toggleFlip();
+      }, 2000);
+    }
   };
 
   const toggleFlip = () => {
@@ -325,5 +335,4 @@ const Login = () => {
     </PageContainer>
   );
 };
-
 export default Login;
