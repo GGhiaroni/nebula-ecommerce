@@ -76,7 +76,7 @@ const MeuPerfil = () => {
   return (
     <Container>
       <Avatar
-        src={usuario.avatar || "caminho/para/avatar-padrao.png"}
+        src={usuario.foto || "caminho/para/avatar-padrao.png"}
         alt="Avatar do usuário"
       />
       <Nome>{usuario.nome}</Nome>

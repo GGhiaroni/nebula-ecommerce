@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import styled, { keyframes } from "styled-components";
 import { logout } from "../../store/reducers/usuario";
-import exemploFoto from "/public/roupas-femininas-thumb.jpg";
 
 const slideDown = keyframes`
   from {
@@ -151,7 +150,7 @@ const Usuario = () => {
     >
       {usuario ? (
         <>
-          <FotoUsuario src={exemploFoto} alt="Foto do usuário" />
+          <FotoUsuario src={usuario.foto} alt="Foto do usuário" />
           <DropdownMenu
             dropdownIsOpen={dropdownAberto}
             onMouseEnter={handleMouseEnterDropdown}
