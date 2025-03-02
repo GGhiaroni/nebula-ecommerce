@@ -159,6 +159,7 @@ const Login = () => {
   const [telefone, setTelefone] = useState("");
   const [cpf, setCpf] = useState("");
   const [flipped, setFlipped] = useState(false);
+  const [foto, setFoto] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -193,6 +194,19 @@ const Login = () => {
       return;
     }
 
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      const novoUsuario = {
+        nome,
+        telefone,
+        cpf,
+        email,
+        senha: password,
+        foto: reader.result,
+      };
+    };
+
     const usuariosCadastrados =
       JSON.parse(localStorage.getItem("usuarios")) || [];
 
@@ -216,14 +230,6 @@ const Login = () => {
       toast.error("Este CPF já está cadastrado! ⚠️");
       return;
     }
-
-    const novoUsuario = {
-      nome,
-      telefone,
-      cpf,
-      email,
-      senha: password,
-    };
 
     usuariosCadastrados.push(novoUsuario);
 
@@ -275,6 +281,11 @@ const Login = () => {
               placeholder="Nome"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
+            />
+            <Input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setFoto(e.target.files[0])}
             />
             <Input
               type="text"
