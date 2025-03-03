@@ -160,6 +160,8 @@ const Login = () => {
   const [cpf, setCpf] = useState("");
   const [flipped, setFlipped] = useState(false);
   const [foto, setFoto] = useState(null);
+  const [dataNascimento, setDataNascimento] = useState("");
+  const [endereco, setEndereco] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -189,7 +191,7 @@ const Login = () => {
   };
 
   const handleCadastro = () => {
-    if (!nome || !telefone || !cpf || !email || !password) {
+    if (!nome || !telefone || !cpf || !email || !password || !dataNascimento) {
       toast.error("Por favor, preencha todos os campos! ⚠️");
       return;
     }
@@ -227,6 +229,8 @@ const Login = () => {
       email,
       senha: password,
       foto: null,
+      dataNascimento,
+      endereco,
     };
 
     reader.onloadend = () => {
@@ -305,9 +309,21 @@ const Login = () => {
             />
             <Input
               type="text"
+              placeholder="Data de nascimento"
+              value={dataNascimento}
+              onChange={(e) => setDataNascimento(e.target.value)}
+            />
+            <Input
+              type="text"
               placeholder="CPF"
               value={cpf}
               onChange={(e) => setCpf(e.target.value)}
+            />
+            <Input
+              type="text"
+              placeholder="Endereço"
+              value={endereco}
+              onChange={(e) => setEndereco(e.target.value)}
             />
             <Input
               type="email"
