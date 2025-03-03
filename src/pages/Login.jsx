@@ -166,6 +166,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nome, setNome] = useState("");
+  const [sobrenome, setSobrenome] = useState("");
   const [telefone, setTelefone] = useState("");
   const [cpf, setCpf] = useState("");
   const [flipped, setFlipped] = useState(false);
@@ -211,6 +212,7 @@ const Login = () => {
   const handleCadastro = () => {
     if (
       !nome ||
+      !sobrenome ||
       !telefone ||
       !cpf ||
       !email ||
@@ -250,6 +252,7 @@ const Login = () => {
 
     let novoUsuario = {
       nome,
+      sobrenome,
       telefone,
       cpf,
       email,
@@ -354,22 +357,26 @@ const Login = () => {
             </SegundoSpanEstilizado>
           </FrontFace>
           <BackFace flipped={flipped}>
-            <Emoji>📝</Emoji>
-            <Title>Crie sua conta!</Title>
-            <Label>Nome</Label>
+            <Title>
+              Crie sua conta! <Emoji>📝</Emoji>
+            </Title>
             <Input
               type="text"
               placeholder="Nome"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
             />
-            <Label>Foto</Label>
+            <Input
+              type="text"
+              placeholder="Sobrenome"
+              value={sobrenome}
+              onChange={(e) => setSobrenome(e.target.value)}
+            />
             <Input
               type="file"
               accept="image/*"
               onChange={(e) => setFoto(e.target.files[0])}
             />
-            <Label>Telefone</Label>
             <Input
               type="text"
               placeholder="Telefone"
@@ -377,14 +384,12 @@ const Login = () => {
               onChange={(e) => setTelefone(e.target.value)}
             />
 
-            <Label>Data de nascimento</Label>
             <Input
               type="text"
               placeholder="Data de nascimento"
               value={dataNascimento}
               onChange={(e) => setDataNascimento(e.target.value)}
             />
-            <Label>CPF</Label>
             <Input
               type="text"
               placeholder="CPF"
