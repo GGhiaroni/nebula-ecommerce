@@ -78,7 +78,7 @@ const CardContainer = styled.div`
 
 const Card = styled.div`
   width: 350px;
-  padding: 30px;
+  padding: 6rem 12rem;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
@@ -150,6 +150,25 @@ const SegundoSpanEstilizado = styled(SpanEstilizado)`
   &:hover::after {
     width: 100%;
   }
+`;
+
+const FormGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+`;
+
+const FormGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Label = styled.label`
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+  text-align: left;
 `;
 
 const Login = () => {
@@ -341,60 +360,104 @@ const Login = () => {
           <BackFace flipped={flipped}>
             <Emoji>📝</Emoji>
             <Title>Crie sua conta!</Title>
+            <Label>Nome</Label>
             <Input
               type="text"
               placeholder="Nome"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
             />
+            <Label>Foto</Label>
             <Input
               type="file"
               accept="image/*"
               onChange={(e) => setFoto(e.target.files[0])}
             />
+            <Label>Telefone</Label>
             <Input
               type="text"
               placeholder="Telefone"
               value={telefone}
               onChange={(e) => setTelefone(e.target.value)}
             />
+
+            <Label>Data de nascimento</Label>
             <Input
               type="text"
               placeholder="Data de nascimento"
               value={dataNascimento}
               onChange={(e) => setDataNascimento(e.target.value)}
             />
+            <Label>CPF</Label>
             <Input
               type="text"
               placeholder="CPF"
               value={cpf}
               onChange={(e) => setCpf(e.target.value)}
             />
-            <Input
-              type="text"
-              placeholder="CEP"
-              value={cep}
-              onChange={(e) => {
-                setCep(e.target.value);
-                handleCep(e.target.value);
-              }}
-            />
-            <Input type="text" placeholder="Rua" value={rua} readOnly />
-            <Input type="text" placeholder="Bairro" value={bairro} readOnly />
-            <Input type="text" placeholder="Cidade" value={cidade} readOnly />
-            <Input type="text" placeholder="Estado" value={estado} readOnly />
-            <Input
-              type="text"
-              placeholder="Número"
-              value={numero}
-              onChange={(e) => setNumero(e.target.value)}
-            />
-            <Input
-              type="text"
-              placeholder="Complemento"
-              value={complemento}
-              onChange={(e) => setComplemento(e.target.value)}
-            />
+            <FormGrid>
+              <FormGroup>
+                <Label>CEP</Label>
+                <Input
+                  type="text"
+                  placeholder="CEP"
+                  value={cep}
+                  onChange={(e) => {
+                    setCep(e.target.value);
+                    handleCep(e.target.value);
+                  }}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Rua</Label>
+                <Input type="text" placeholder="Rua" value={rua} readOnly />
+              </FormGroup>
+              <FormGroup>
+                <Label>Bairro</Label>
+                <Input
+                  type="text"
+                  placeholder="Bairro"
+                  value={bairro}
+                  readOnly
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Cidade</Label>
+                <Input
+                  type="text"
+                  placeholder="Cidade"
+                  value={cidade}
+                  readOnly
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Estado</Label>
+                <Input
+                  type="text"
+                  placeholder="Estado"
+                  value={estado}
+                  readOnly
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Número</Label>
+                <Input
+                  type="text"
+                  placeholder="Número"
+                  value={numero}
+                  onChange={(e) => setNumero(e.target.value)}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Complemento</Label>
+                <Input
+                  type="text"
+                  placeholder="Complemento"
+                  value={complemento}
+                  onChange={(e) => setComplemento(e.target.value)}
+                />
+              </FormGroup>
+            </FormGrid>
             <Input
               type="email"
               placeholder="Email"
