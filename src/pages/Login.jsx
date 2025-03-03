@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled, { keyframes } from "styled-components";
+import backgroundImage from "../../public/sign-up-bg.png";
 import { login } from "../store/reducers/usuario";
 
 const fadeIn = keyframes`
@@ -22,21 +23,23 @@ const PageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(135deg, #74ebd5, #acb6e5);
   animation: ${fadeIn} 1s ease-out;
+  padding: 20px;
 `;
 
 const Title = styled.h1`
   margin-bottom: 20px;
   color: #333;
+  font-size: 1.8rem;
 `;
 
 const Input = styled.input`
-  width: 90%;
+  width: 100%;
   padding: 12px;
-  margin: 10px 0;
-  border: 2px solid #ccc;
+  margin: 8px 0;
+  border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 16px;
   transition: border-color 0.3s ease;
@@ -69,26 +72,28 @@ const Button = styled.button`
 `;
 
 const Emoji = styled.span`
-  font-size: 40px;
+  font-size: 30px;
 `;
 
 const CardContainer = styled.div`
-  perspective: 100px;
+  perspective: 1000px;
+  width: 100%;
+  max-width: 800px;
 `;
 
 const Card = styled.div`
-  width: 350px;
-  padding: 6rem 12rem;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
   transform-style: preserve-3d;
   transition: transform 0.8s ease;
   transform: ${({ flipped }) =>
     flipped ? "rotateY(180deg)" : "rotateY(0deg)"};
-  height: ${({ flipped }) => (!flipped ? "380px" : "550px")};
   position: relative;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const CardFace = styled.div`
@@ -104,7 +109,6 @@ const CardFace = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  padding: 30px;
 `;
 
 const FrontFace = styled(CardFace)`
@@ -160,6 +164,27 @@ const CepContainer = styled.div`
 
 const SmallInput = styled(Input)`
   flex: 1;
+`;
+
+const BackFaceContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+`;
+
+const BackFaceEsquerda = styled.div`
+  background-image: url(${backgroundImage});
+  background-size: cover;
+  background-position: center;
+  width: 50%;
+  height: 100%;
+`;
+
+const BackFaceDireita = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  width: 50%;
 `;
 
 const Login = () => {
@@ -357,116 +382,121 @@ const Login = () => {
             </SegundoSpanEstilizado>
           </FrontFace>
           <BackFace flipped={flipped}>
-            <Title>
-              Crie sua conta! <Emoji>📝</Emoji>
-            </Title>
-            <Input
-              type="text"
-              placeholder="Nome"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-            />
-            <Input
-              type="text"
-              placeholder="Sobrenome"
-              value={sobrenome}
-              onChange={(e) => setSobrenome(e.target.value)}
-            />
-            <Input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setFoto(e.target.files[0])}
-            />
-            <Input
-              type="text"
-              placeholder="Telefone"
-              value={telefone}
-              onChange={(e) => setTelefone(e.target.value)}
-            />
+            <BackFaceContainer>
+              <BackFaceEsquerda></BackFaceEsquerda>
+              <BackFaceDireita>
+                <Title>
+                  Crie sua conta! <Emoji>📝</Emoji>
+                </Title>
+                <Input
+                  type="text"
+                  placeholder="Nome"
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
+                />
+                <Input
+                  type="text"
+                  placeholder="Sobrenome"
+                  value={sobrenome}
+                  onChange={(e) => setSobrenome(e.target.value)}
+                />
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setFoto(e.target.files[0])}
+                />
+                <Input
+                  type="text"
+                  placeholder="Telefone"
+                  value={telefone}
+                  onChange={(e) => setTelefone(e.target.value)}
+                />
 
-            <Input
-              type="text"
-              placeholder="Data de nascimento"
-              value={dataNascimento}
-              onChange={(e) => setDataNascimento(e.target.value)}
-            />
-            <Input
-              type="text"
-              placeholder="CPF"
-              value={cpf}
-              onChange={(e) => setCpf(e.target.value)}
-            />
-            <CepContainer>
-              <SmallInput
-                type="text"
-                placeholder="CEP"
-                value={cep}
-                onChange={(e) => {
-                  setCep(e.target.value);
-                  if (e.target.value.length === 8) {
-                    handleCep(e.target.value);
-                  }
-                }}
-                style={{ borderColor: buscandoCep ? "#1a9b83" : "" }}
-              />
-              {buscandoCep && <span>🔍</span>}
-            </CepContainer>
-            {rua && (
-              <>
-                <Input type="text" placeholder="Rua" value={rua} readOnly />
                 <Input
                   type="text"
-                  placeholder="Bairro"
-                  value={bairro}
-                  readOnly
+                  placeholder="Data de nascimento"
+                  value={dataNascimento}
+                  onChange={(e) => setDataNascimento(e.target.value)}
                 />
                 <Input
                   type="text"
-                  placeholder="Cidade"
-                  value={cidade}
-                  readOnly
-                />
-                <Input
-                  type="text"
-                  placeholder="Estado"
-                  value={estado}
-                  readOnly
+                  placeholder="CPF"
+                  value={cpf}
+                  onChange={(e) => setCpf(e.target.value)}
                 />
                 <CepContainer>
                   <SmallInput
                     type="text"
-                    placeholder="Número"
-                    value={numero}
-                    onChange={(e) => setNumero(e.target.value)}
+                    placeholder="CEP"
+                    value={cep}
+                    onChange={(e) => {
+                      setCep(e.target.value);
+                      if (e.target.value.length === 8) {
+                        handleCep(e.target.value);
+                      }
+                    }}
+                    style={{ borderColor: buscandoCep ? "#1a9b83" : "" }}
                   />
-                  <SmallInput
-                    type="text"
-                    placeholder="Complemento"
-                    value={complemento}
-                    onChange={(e) => setComplemento(e.target.value)}
-                  />
+                  {buscandoCep && <span>🔍</span>}
                 </CepContainer>
-              </>
-            )}
-            <Input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Input
-              type="password"
-              placeholder="Senha"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button onClick={handleCadastro}>
-              Cadastrar <MdPersonAdd color="#ffffff" size={20} />{" "}
-            </Button>
-            <SpanEstilizado>Já possui uma conta?</SpanEstilizado>
-            <SegundoSpanEstilizado onClick={toggleFlip}>
-              Faça login
-            </SegundoSpanEstilizado>
+                {rua && (
+                  <>
+                    <Input type="text" placeholder="Rua" value={rua} readOnly />
+                    <Input
+                      type="text"
+                      placeholder="Bairro"
+                      value={bairro}
+                      readOnly
+                    />
+                    <Input
+                      type="text"
+                      placeholder="Cidade"
+                      value={cidade}
+                      readOnly
+                    />
+                    <Input
+                      type="text"
+                      placeholder="Estado"
+                      value={estado}
+                      readOnly
+                    />
+                    <CepContainer>
+                      <SmallInput
+                        type="text"
+                        placeholder="Número"
+                        value={numero}
+                        onChange={(e) => setNumero(e.target.value)}
+                      />
+                      <SmallInput
+                        type="text"
+                        placeholder="Complemento"
+                        value={complemento}
+                        onChange={(e) => setComplemento(e.target.value)}
+                      />
+                    </CepContainer>
+                  </>
+                )}
+                <Input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <Input
+                  type="password"
+                  placeholder="Senha"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <Button onClick={handleCadastro}>
+                  Cadastrar <MdPersonAdd color="#ffffff" size={20} />{" "}
+                </Button>
+                <SpanEstilizado>Já possui uma conta?</SpanEstilizado>
+                <SegundoSpanEstilizado onClick={toggleFlip}>
+                  Faça login
+                </SegundoSpanEstilizado>
+              </BackFaceDireita>
+            </BackFaceContainer>
           </BackFace>
         </Card>
       </CardContainer>
