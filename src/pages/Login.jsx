@@ -171,6 +171,16 @@ const Label = styled.label`
   text-align: left;
 `;
 
+const CepContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const SmallInput = styled(Input)`
+  flex: 1;
+`;
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -188,6 +198,7 @@ const Login = () => {
   const [numero, setNumero] = useState("");
   const [complemento, setComplemento] = useState("");
   const [endereco, setEndereco] = useState("");
+  const [buscandoCep, setBuscandoCep] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -299,6 +310,8 @@ const Login = () => {
       return;
     }
 
+    setBuscandoCep(true);
+
     try {
       const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
       const data = await response.json();
@@ -323,6 +336,8 @@ const Login = () => {
       setCidade("");
       setEstado("");
     }
+
+    setBuscandoCep(false);
   };
 
   const toggleFlip = () => {
@@ -395,69 +410,58 @@ const Login = () => {
               value={cpf}
               onChange={(e) => setCpf(e.target.value)}
             />
-            <FormGrid>
-              <FormGroup>
-                <Label>CEP</Label>
-                <Input
-                  type="text"
-                  placeholder="CEP"
-                  value={cep}
-                  onChange={(e) => {
-                    setCep(e.target.value);
+            <CepContainer>
+              <SmallInput
+                type="text"
+                placeholder="CEP"
+                value={cep}
+                onChange={(e) => {
+                  setCep(e.target.value);
+                  if (e.target.value.length === 8) {
                     handleCep(e.target.value);
-                  }}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Rua</Label>
+                  }
+                }}
+                style={{ borderColor: buscandoCep ? "#1a9b83" : "" }}
+              />
+              {buscandoCep && <span>🔍</span>}
+            </CepContainer>
+            {rua && (
+              <>
                 <Input type="text" placeholder="Rua" value={rua} readOnly />
-              </FormGroup>
-              <FormGroup>
-                <Label>Bairro</Label>
                 <Input
                   type="text"
                   placeholder="Bairro"
                   value={bairro}
                   readOnly
                 />
-              </FormGroup>
-              <FormGroup>
-                <Label>Cidade</Label>
                 <Input
                   type="text"
                   placeholder="Cidade"
                   value={cidade}
                   readOnly
                 />
-              </FormGroup>
-              <FormGroup>
-                <Label>Estado</Label>
                 <Input
                   type="text"
                   placeholder="Estado"
                   value={estado}
                   readOnly
                 />
-              </FormGroup>
-              <FormGroup>
-                <Label>Número</Label>
-                <Input
-                  type="text"
-                  placeholder="Número"
-                  value={numero}
-                  onChange={(e) => setNumero(e.target.value)}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Complemento</Label>
-                <Input
-                  type="text"
-                  placeholder="Complemento"
-                  value={complemento}
-                  onChange={(e) => setComplemento(e.target.value)}
-                />
-              </FormGroup>
-            </FormGrid>
+                <CepContainer>
+                  <SmallInput
+                    type="text"
+                    placeholder="Número"
+                    value={numero}
+                    onChange={(e) => setNumero(e.target.value)}
+                  />
+                  <SmallInput
+                    type="text"
+                    placeholder="Complemento"
+                    value={complemento}
+                    onChange={(e) => setComplemento(e.target.value)}
+                  />
+                </CepContainer>
+              </>
+            )}
             <Input
               type="email"
               placeholder="Email"
