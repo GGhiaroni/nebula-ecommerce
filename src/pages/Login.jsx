@@ -73,7 +73,7 @@ const Emoji = styled.span`
 `;
 
 const CardContainer = styled.div`
-  perspective: 1000px;
+  perspective: 100px;
 `;
 
 const Card = styled.div`
@@ -117,13 +117,6 @@ const BackFace = styled(CardFace)`
   display: ${({ flipped }) => (flipped ? "flex" : "none")};
 `;
 
-const DivSpanEstilizado = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
-`;
-
 const SpanEstilizado = styled.span`
   font-size: 14px;
   color: #696969;
@@ -150,18 +143,6 @@ const SegundoSpanEstilizado = styled(SpanEstilizado)`
   &:hover::after {
     width: 100%;
   }
-`;
-
-const FormGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-  margin-bottom: 20px;
-`;
-
-const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
 `;
 
 const Label = styled.label`
