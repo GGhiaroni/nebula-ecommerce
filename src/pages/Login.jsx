@@ -161,6 +161,13 @@ const Login = () => {
   const [flipped, setFlipped] = useState(false);
   const [foto, setFoto] = useState(null);
   const [dataNascimento, setDataNascimento] = useState("");
+  const [cep, setCep] = useState("");
+  const [rua, setRua] = useState("");
+  const [bairro, setBairro] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [estado, setEstado] = useState("");
+  const [numero, setNumero] = useState("");
+  const [complemento, setComplemento] = useState("");
   const [endereco, setEndereco] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -191,7 +198,15 @@ const Login = () => {
   };
 
   const handleCadastro = () => {
-    if (!nome || !telefone || !cpf || !email || !password || !dataNascimento) {
+    if (
+      !nome ||
+      !telefone ||
+      !cpf ||
+      !email ||
+      !password ||
+      !dataNascimento ||
+      !cep
+    ) {
       toast.error("Por favor, preencha todos os campos! ⚠️");
       return;
     }
@@ -230,6 +245,7 @@ const Login = () => {
       senha: password,
       foto: null,
       dataNascimento,
+      cep,
       endereco,
     };
 
@@ -252,6 +268,41 @@ const Login = () => {
       setTimeout(() => {
         toggleFlip();
       }, 2000);
+    }
+  };
+
+  const handleCep = async (cep) => {
+    if (!cep) {
+      setRua("");
+      setBairro("");
+      setCidade("");
+      setEstado("");
+      return;
+    }
+
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const data = await response.json();
+
+      if (data.erro) {
+        toast.error("CEP não encontrado! ⚠️");
+        setRua("");
+        setBairro("");
+        setCidade("");
+        setEstado("");
+        return;
+      }
+
+      setRua(data.logradouro);
+      setBairro(data.bairro);
+      setCidade(data.localidade);
+      setEstado(data.uf);
+    } catch (error) {
+      toast.error("Erro ao buscar o endereço! ⚠️");
+      setRua("");
+      setBairro("");
+      setCidade("");
+      setEstado("");
     }
   };
 
@@ -321,9 +372,28 @@ const Login = () => {
             />
             <Input
               type="text"
-              placeholder="Endereço"
-              value={endereco}
-              onChange={(e) => setEndereco(e.target.value)}
+              placeholder="CEP"
+              value={cep}
+              onChange={(e) => {
+                setCep(e.target.value);
+                handleCep(e.target.value);
+              }}
+            />
+            <Input type="text" placeholder="Rua" value={rua} readOnly />
+            <Input type="text" placeholder="Bairro" value={bairro} readOnly />
+            <Input type="text" placeholder="Cidade" value={cidade} readOnly />
+            <Input type="text" placeholder="Estado" value={estado} readOnly />
+            <Input
+              type="text"
+              placeholder="Número"
+              value={numero}
+              onChange={(e) => setNumero(e.target.value)}
+            />
+            <Input
+              type="text"
+              placeholder="Complemento"
+              value={complemento}
+              onChange={(e) => setComplemento(e.target.value)}
             />
             <Input
               type="email"
