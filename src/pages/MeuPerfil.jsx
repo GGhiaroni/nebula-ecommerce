@@ -26,6 +26,7 @@ const Avatar = styled.img`
   border-radius: 50%;
   margin-bottom: 1rem;
   animation: ${slideIn} 0.5s ease-in-out;
+  object-fit: cover;
 `;
 
 const Nome = styled.h2`
@@ -94,7 +95,6 @@ const MeuPerfil = () => {
           <Label>Telefone:</Label>
           <Valor>{usuario.telefone}</Valor>
         </Item>
-        {/* Adicione mais informações do usuário aqui */}
       </Informacoes>
     </Container>
   );
