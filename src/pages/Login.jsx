@@ -66,7 +66,7 @@ const Input = styled.input`
 
 const Button = styled.button`
   width: 100%;
-  margin-top: 10px;
+  margin-top: 30px;
   padding: 12px;
   background-color: #1a9b83;
   color: white;
@@ -199,7 +199,7 @@ const BackFaceEsquerda = styled.div`
   width: 50%;
   height: 100%;
   border-radius: 12px 0 0 12px;
-  min-height: 700px;
+  min-height: ${({ rua }) => (rua ? "900px" : "700px")};
 `;
 
 const BackFaceDireita = styled.div`
@@ -446,7 +446,7 @@ const Login = () => {
           </FrontFace>
           <BackFace flipped={flipped}>
             <BackFaceContainer>
-              <BackFaceEsquerda></BackFaceEsquerda>
+              <BackFaceEsquerda rua={rua}></BackFaceEsquerda>
               <BackFaceDireita>
                 <Title>
                   Crie sua conta! <Emoji>📝</Emoji>
