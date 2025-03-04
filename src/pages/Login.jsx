@@ -156,25 +156,16 @@ const SpanEstilizado = styled.span`
 
 const SegundoSpanEstilizado = styled(SpanEstilizado)`
   margin-top: 10px;
-  position: relative;
   cursor: pointer;
-  display: inline-block;
+  display: inline;
   color: #1a9b83;
   font-weight: 500;
+  text-decoration: none;
 
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 0;
-    height: 2px;
-    background-color: #1a9b83;
-    transition: width 0.3s ease;
-  }
-
-  &:hover::after {
-    width: 100%;
+  &:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
   }
 `;
 
