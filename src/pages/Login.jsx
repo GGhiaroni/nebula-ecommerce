@@ -33,6 +33,7 @@ const Title = styled.h1`
   margin-bottom: 20px;
   color: #333;
   font-size: 1.8rem;
+  font-weight: 600;
 `;
 
 const Input = styled.input`
@@ -41,12 +42,19 @@ const Input = styled.input`
   margin: 8px 0;
   border: 1px solid #ddd;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 14px;
   transition: border-color 0.3s ease;
   font-family: var(--fontePrimaria);
+  background-color: #f9f9f9;
+
   &:focus {
     border-color: #74ebd5;
     outline: none;
+    box-shadow: 0 0 8px rgba(116, 235, 213, 0.3);
+  }
+
+  &::placeholder {
+    color: #999;
   }
 `;
 
@@ -58,16 +66,23 @@ const Button = styled.button`
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
+  font-weight: 500;
 
   &:hover {
     animation: ${buttonHover} 0.5s ease-in-out;
     background-color: #19c8a8;
+    box-shadow: 0 4px 12px rgba(25, 200, 168, 0.3);
+  }
+
+  &:active {
+    transform: scale(0.98);
   }
 `;
 
@@ -106,7 +121,6 @@ const CardFace = styled.div`
   justify-content: center;
   background: #fff;
   border-radius: 12px;
-  position: absolute;
   top: 0;
   left: 0;
 `;
@@ -119,6 +133,8 @@ const FrontFace = styled(CardFace)`
 const BackFace = styled(CardFace)`
   transform: rotateY(180deg);
   display: ${({ flipped }) => (flipped ? "flex" : "none")};
+  width: 100%;
+  height: 100%;
 `;
 
 const SpanEstilizado = styled.span`
@@ -132,6 +148,8 @@ const SegundoSpanEstilizado = styled(SpanEstilizado)`
   position: relative;
   cursor: pointer;
   display: inline-block;
+  color: #1a9b83;
+  font-weight: 500;
 
   &::after {
     content: "";
@@ -140,20 +158,13 @@ const SegundoSpanEstilizado = styled(SpanEstilizado)`
     bottom: -2px;
     width: 0;
     height: 2px;
-    background-color: #acb6e5;
+    background-color: #1a9b83;
     transition: width 0.3s ease;
   }
 
   &:hover::after {
     width: 100%;
   }
-`;
-
-const Label = styled.label`
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 5px;
-  text-align: left;
 `;
 
 const CepContainer = styled.div`
@@ -178,6 +189,8 @@ const BackFaceEsquerda = styled.div`
   background-position: center;
   width: 50%;
   height: 100%;
+  border-radius: 12px 0 0 12px;
+  min-height: 650px;
 `;
 
 const BackFaceDireita = styled.div`
@@ -185,6 +198,12 @@ const BackFaceDireita = styled.div`
   flex-direction: column;
   padding: 2rem;
   width: 50%;
+`;
+
+const BackFaceDireitaColunas = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 `;
 
 const Login = () => {
@@ -388,106 +407,119 @@ const Login = () => {
                 <Title>
                   Crie sua conta! <Emoji>📝</Emoji>
                 </Title>
-                <Input
-                  type="text"
-                  placeholder="Nome"
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value)}
-                />
-                <Input
-                  type="text"
-                  placeholder="Sobrenome"
-                  value={sobrenome}
-                  onChange={(e) => setSobrenome(e.target.value)}
-                />
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setFoto(e.target.files[0])}
-                />
-                <Input
-                  type="text"
-                  placeholder="Telefone"
-                  value={telefone}
-                  onChange={(e) => setTelefone(e.target.value)}
-                />
-
-                <Input
-                  type="text"
-                  placeholder="Data de nascimento"
-                  value={dataNascimento}
-                  onChange={(e) => setDataNascimento(e.target.value)}
-                />
-                <Input
-                  type="text"
-                  placeholder="CPF"
-                  value={cpf}
-                  onChange={(e) => setCpf(e.target.value)}
-                />
-                <CepContainer>
-                  <SmallInput
+                <BackFaceDireitaColunas>
+                  <Input
                     type="text"
-                    placeholder="CEP"
-                    value={cep}
-                    onChange={(e) => {
-                      setCep(e.target.value);
-                      if (e.target.value.length === 8) {
-                        handleCep(e.target.value);
-                      }
-                    }}
-                    style={{ borderColor: buscandoCep ? "#1a9b83" : "" }}
+                    placeholder="Nome"
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
                   />
-                  {buscandoCep && <span>🔍</span>}
-                </CepContainer>
-                {rua && (
-                  <>
-                    <Input type="text" placeholder="Rua" value={rua} readOnly />
-                    <Input
+                  <Input
+                    type="text"
+                    placeholder="Sobrenome"
+                    value={sobrenome}
+                    onChange={(e) => setSobrenome(e.target.value)}
+                  />
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setFoto(e.target.files[0])}
+                  />
+                  <Input
+                    type="text"
+                    placeholder="Telefone"
+                    value={telefone}
+                    onChange={(e) => setTelefone(e.target.value)}
+                  />
+
+                  <Input
+                    type="text"
+                    placeholder="Data de nascimento"
+                    value={dataNascimento}
+                    onChange={(e) => setDataNascimento(e.target.value)}
+                  />
+                  <Input
+                    type="text"
+                    placeholder="CPF"
+                    value={cpf}
+                    onChange={(e) => setCpf(e.target.value)}
+                  />
+                  <CepContainer>
+                    <SmallInput
                       type="text"
-                      placeholder="Bairro"
-                      value={bairro}
-                      readOnly
+                      placeholder="CEP"
+                      value={cep}
+                      onChange={(e) => {
+                        setCep(e.target.value);
+                        if (e.target.value.length === 8) {
+                          handleCep(e.target.value);
+                        }
+                      }}
+                      style={{ borderColor: buscandoCep ? "#1a9b83" : "" }}
                     />
-                    <Input
-                      type="text"
-                      placeholder="Cidade"
-                      value={cidade}
-                      readOnly
-                    />
-                    <Input
-                      type="text"
-                      placeholder="Estado"
-                      value={estado}
-                      readOnly
-                    />
-                    <CepContainer>
-                      <SmallInput
+                    {buscandoCep && <span>🔍</span>}
+                  </CepContainer>
+                  {rua && (
+                    <>
+                      <Input
                         type="text"
-                        placeholder="Número"
-                        value={numero}
-                        onChange={(e) => setNumero(e.target.value)}
+                        placeholder="Rua"
+                        value={rua}
+                        readOnly
                       />
-                      <SmallInput
+                      <Input
                         type="text"
-                        placeholder="Complemento"
-                        value={complemento}
-                        onChange={(e) => setComplemento(e.target.value)}
+                        placeholder="Bairro"
+                        value={bairro}
+                        readOnly
                       />
-                    </CepContainer>
-                  </>
-                )}
-                <Input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <Input
-                  type="password"
-                  placeholder="Senha"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                      <Input
+                        type="text"
+                        placeholder="Cidade"
+                        value={cidade}
+                        readOnly
+                      />
+                      <Input
+                        type="text"
+                        placeholder="Estado"
+                        value={estado}
+                        readOnly
+                      />
+                      <CepContainer>
+                        <SmallInput
+                          type="text"
+                          placeholder="Número"
+                          value={numero}
+                          onChange={(e) => setNumero(e.target.value)}
+                        />
+                        <SmallInput
+                          type="text"
+                          placeholder="Complemento"
+                          value={complemento}
+                          onChange={(e) => setComplemento(e.target.value)}
+                        />
+                      </CepContainer>
+                    </>
+                  )}
+                  <Input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <Input
+                    type="password"
+                    placeholder="Senha"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <Input
+                    type="password"
+                    placeholder="Confirmar senha"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </BackFaceDireitaColunas>
                 <Button onClick={handleCadastro}>
                   Cadastrar <MdPersonAdd color="#ffffff" size={20} />{" "}
                 </Button>
