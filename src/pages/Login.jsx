@@ -253,6 +253,7 @@ const FotoInput = styled.input`
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [senhaConfirmada, setSenhaConfirmada] = useState("");
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [telefone, setTelefone] = useState("");
@@ -305,6 +306,9 @@ const Login = () => {
       !cpf ||
       !email ||
       !password ||
+      !numero ||
+      !complemento ||
+      !senhaConfirmada ||
       !dataNascimento ||
       !cep
     ) {
@@ -333,6 +337,13 @@ const Login = () => {
 
     if (cpfJaExiste) {
       toast.error("Este CPF já está cadastrado! ⚠️");
+      return;
+    }
+
+    if (password !== senhaConfirmada) {
+      toast.error(
+        "Senhas não são compatíveis. Verifique e tente novamente. ⚠️"
+      );
       return;
     }
 
@@ -571,8 +582,8 @@ const Login = () => {
                   <Input
                     type="password"
                     placeholder="Confirmar senha"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={senhaConfirmada}
+                    onChange={(e) => setSenhaConfirmada(e.target.value)}
                   />
                 </BackFaceDireitaColunas>
                 <Button onClick={handleCadastro}>
