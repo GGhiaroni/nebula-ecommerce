@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaCamera } from "react-icons/fa";
 import { MdLogin, MdPersonAdd } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
@@ -219,6 +220,35 @@ const BackFaceDireitaColunas = styled.div`
   }
 `;
 
+const FotoInputContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #f9f9f9;
+  color: #999;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-color: #74ebd5;
+  }
+`;
+
+const FotoInput = styled.input`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+`;
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -433,11 +463,15 @@ const Login = () => {
                     value={sobrenome}
                     onChange={(e) => setSobrenome(e.target.value)}
                   />
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setFoto(e.target.files[0])}
-                  />
+                  <FotoInputContainer>
+                    <FaCamera style={{ marginRight: "8px" }} />
+                    <span>Selecionar Foto</span>
+                    <FotoInput
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => setFoto(e.target.files[0])}
+                    />
+                  </FotoInputContainer>
                   <Input
                     type="text"
                     placeholder="Telefone"
