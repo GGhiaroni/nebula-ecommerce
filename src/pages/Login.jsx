@@ -174,12 +174,6 @@ const SegundoSpanEstilizado = styled(SpanEstilizado)`
   }
 `;
 
-const EnderecoContainer = styled.div`
-  display: ${({ show }) => (show ? "grid" : "none")};
-  grid-template-columns: 1fr 1fr;
-  gap: 4px;
-`;
-
 const CepContainer = styled.div`
   display: flex;
   align-items: center;
@@ -522,7 +516,7 @@ const Login = () => {
                     {buscandoCep && <span>🔍</span>}
                   </CepContainer>
                   {rua && (
-                    <EnderecoContainer show={rua}>
+                    <>
                       <Input
                         type="text"
                         placeholder="Rua"
@@ -547,21 +541,20 @@ const Login = () => {
                         value={estado}
                         readOnly
                       />
-                      <CepContainer>
-                        <SmallInput
-                          type="text"
-                          placeholder="Número"
-                          value={numero}
-                          onChange={(e) => setNumero(e.target.value)}
-                        />
-                        <SmallInput
-                          type="text"
-                          placeholder="Complemento"
-                          value={complemento}
-                          onChange={(e) => setComplemento(e.target.value)}
-                        />
-                      </CepContainer>
-                    </EnderecoContainer>
+
+                      <SmallInput
+                        type="text"
+                        placeholder="Número"
+                        value={numero}
+                        onChange={(e) => setNumero(e.target.value)}
+                      />
+                      <SmallInput
+                        type="text"
+                        placeholder="Complemento"
+                        value={complemento}
+                        onChange={(e) => setComplemento(e.target.value)}
+                      />
+                    </>
                   )}
                   <Input
                     type="email"
@@ -572,6 +565,12 @@ const Login = () => {
                   <Input
                     type="password"
                     placeholder="Senha"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <Input
+                    type="password"
+                    placeholder="Confirmar senha"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
