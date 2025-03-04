@@ -174,6 +174,12 @@ const SegundoSpanEstilizado = styled(SpanEstilizado)`
   }
 `;
 
+const EnderecoContainer = styled.div`
+  display: ${({ show }) => (show ? "grid" : "none")};
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+`;
+
 const CepContainer = styled.div`
   display: flex;
   align-items: center;
@@ -500,6 +506,14 @@ const Login = () => {
                         setCep(e.target.value);
                         if (e.target.value.length === 8) {
                           handleCep(e.target.value);
+                        } else if (e.target.value.length === 0) {
+                          setCep("");
+                          setRua("");
+                          setBairro("");
+                          setCidade("");
+                          setEstado("");
+                          setNumero("");
+                          setComplemento("");
                         }
                       }}
                       style={{ borderColor: buscandoCep ? "#1a9b83" : "" }}
@@ -507,7 +521,7 @@ const Login = () => {
                     {buscandoCep && <span>🔍</span>}
                   </CepContainer>
                   {rua && (
-                    <>
+                    <EnderecoContainer show={rua}>
                       <Input
                         type="text"
                         placeholder="Rua"
@@ -546,7 +560,7 @@ const Login = () => {
                           onChange={(e) => setComplemento(e.target.value)}
                         />
                       </CepContainer>
-                    </>
+                    </EnderecoContainer>
                   )}
                   <Input
                     type="email"
