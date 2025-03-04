@@ -239,6 +239,7 @@ const FotoInputContainer = styled.div`
   color: #999;
   font-size: 14px;
   transition: border-color 0.3s ease;
+  width: 100%;
 
   &:hover {
     border-color: #74ebd5;
