@@ -177,19 +177,19 @@ const SegundoSpanEstilizado = styled(SpanEstilizado)`
 const EnderecoContainer = styled.div`
   display: ${({ show }) => (show ? "grid" : "none")};
   grid-template-columns: 1fr 1fr;
-  gap: 2px;
+  gap: 4px;
 `;
 
 const CepContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
-  flex-direction: column;
   align-items: stretch;
+  flex-direction: column;
+  gap: 4px;
 `;
 
 const SmallInput = styled(Input)`
-  flex: 1;
+  flex: none;
 `;
 
 const BackFaceContainer = styled.div`
@@ -572,12 +572,6 @@ const Login = () => {
                   <Input
                     type="password"
                     placeholder="Senha"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <Input
-                    type="password"
-                    placeholder="Confirmar senha"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
