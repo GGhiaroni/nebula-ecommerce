@@ -135,6 +135,7 @@ const BackFace = styled(CardFace)`
   display: ${({ flipped }) => (flipped ? "flex" : "none")};
   width: 100%;
   height: 100%;
+  min-width: 1000px;
 `;
 
 const SpanEstilizado = styled.span`
@@ -190,20 +191,20 @@ const BackFaceEsquerda = styled.div`
   width: 50%;
   height: 100%;
   border-radius: 12px 0 0 12px;
-  min-height: 650px;
+  min-height: 700px;
 `;
 
 const BackFaceDireita = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  padding: 1rem 4rem 2rem 2rem;
   width: 50%;
 `;
 
 const BackFaceDireitaColunas = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 2.2rem;
 `;
 
 const Login = () => {
