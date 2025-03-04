@@ -112,9 +112,13 @@ const Card = styled.div`
   transform: ${({ flipped }) =>
     flipped ? "rotateY(180deg)" : "rotateY(0deg)"};
   position: relative;
-  min-height: 500px;
+  min-height: ${({ flipped }) => (flipped ? "500px" : "auto")};
   display: flex;
   flex-direction: column;
+  padding: ${({ flipped }) => (flipped ? "" : "4rem")};
+  max-width: ${({ flipped }) => (flipped ? "" : "500px")};
+  justify-content: center;
+  align-items: center;
 `;
 
 const CardFace = styled.div`
