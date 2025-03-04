@@ -5,7 +5,8 @@ import { useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled, { keyframes } from "styled-components";
-import backgroundImage from "../../public/sign-up-bg.png";
+import backgroundImagePaginaLogin from "../../public/login-bg.png";
+import backgroundImageCardCadastro from "../../public/sign-up-bg.png";
 import { login } from "../store/reducers/usuario";
 
 const fadeIn = keyframes`
@@ -24,7 +25,10 @@ const PageContainer = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #74ebd5, #acb6e5);
+  background-image: url(${backgroundImagePaginaLogin});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   animation: ${fadeIn} 1s ease-out;
   padding: 20px;
 `;
@@ -38,8 +42,8 @@ const Title = styled.h1`
 
 const Input = styled.input`
   width: 100%;
-  padding: 12px;
-  margin: 8px 0;
+  padding: 10px;
+  margin: 2px 0;
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 14px;
@@ -188,7 +192,7 @@ const BackFaceContainer = styled.div`
 `;
 
 const BackFaceEsquerda = styled.div`
-  background-image: url(${backgroundImage});
+  background-image: url(${backgroundImageCardCadastro});
   background-size: cover;
   background-position: center;
   width: 50%;
