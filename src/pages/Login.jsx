@@ -46,6 +46,7 @@ const Input = styled.input`
   transition: border-color 0.3s ease;
   font-family: var(--fontePrimaria);
   background-color: #f9f9f9;
+  flex: 1;
 
   &:focus {
     border-color: #74ebd5;
@@ -172,6 +173,8 @@ const CepContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-direction: column;
+  align-items: stretch;
 `;
 
 const SmallInput = styled(Input)`
@@ -205,6 +208,11 @@ const BackFaceDireitaColunas = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2.2rem;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const Login = () => {
