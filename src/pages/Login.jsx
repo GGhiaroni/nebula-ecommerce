@@ -429,6 +429,20 @@ const Login = () => {
     return cepTruncado;
   };
 
+  const formatarCpf = (cpf) => {
+    const cpfNumerico = cpf.replace(/\D/g, "");
+    const cpfTruncado = cpfNumerico.slice(0, 11);
+
+    if (cpfTruncado.length === 11) {
+      return `${cpfTruncado.slice(0, 3)}.${cpfTruncado.slice(
+        3,
+        6
+      )}.${cpfTruncado.slice(6, 9)}-${cpfTruncado.slice(9)}`;
+    }
+
+    return cpfTruncado;
+  };
+
   const toggleFlip = () => {
     setFlipped(!flipped);
   };
@@ -507,7 +521,10 @@ const Login = () => {
                     type="text"
                     placeholder="CPF"
                     value={cpf}
-                    onChange={(e) => setCpf(e.target.value)}
+                    onChange={(e) => {
+                      const cpfFormatado = formatarCpf(e.target.value);
+                      setCpf(cpfFormatado);
+                    }}
                   />
                   <CepContainer>
                     <SmallInput
