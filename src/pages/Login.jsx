@@ -418,6 +418,17 @@ const Login = () => {
     setBuscandoCep(false);
   };
 
+  const formatarCep = (cep) => {
+    const cepNumerico = cep.replace(/\D/g, "");
+    const cepTruncado = cepNumerico.slice(0, 8);
+
+    if (cepTruncado.length > 5) {
+      return `${cepTruncado.slice(0, 5)}-${cepTruncado.slice(5)}`;
+    }
+
+    return cepTruncado;
+  };
+
   const toggleFlip = () => {
     setFlipped(!flipped);
   };
@@ -504,10 +515,12 @@ const Login = () => {
                       placeholder="CEP"
                       value={cep}
                       onChange={(e) => {
-                        setCep(e.target.value);
-                        if (e.target.value.length === 8) {
-                          handleCep(e.target.value);
-                        } else if (e.target.value.length === 0) {
+                        const cepFormatado = formatarCep(e.target.value);
+                        setCep(cepFormatado);
+
+                        if (cepFormatado.length === 9) {
+                          handleCep(cepFormatado.replace("-", ""));
+                        } else if (cepFormatado.length === 0) {
                           setCep("");
                           setRua("");
                           setBairro("");
