@@ -512,7 +512,7 @@ const Login = () => {
                   />
 
                   <Input
-                    type="text"
+                    type="date"
                     placeholder="Data de nascimento"
                     value={dataNascimento}
                     onChange={(e) => setDataNascimento(e.target.value)}
