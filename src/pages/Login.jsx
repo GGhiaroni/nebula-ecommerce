@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaCamera } from "react-icons/fa";
+import { FaCamera, FaCheck } from "react-icons/fa";
 import { MdLogin, MdPersonAdd } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
@@ -255,6 +255,7 @@ const Login = () => {
   const [cpf, setCpf] = useState("");
   const [flipped, setFlipped] = useState(false);
   const [foto, setFoto] = useState(null);
+  const [nomeDoArquivoFoto, setNomeDoArquivoFoto] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [cep, setCep] = useState("");
   const [rua, setRua] = useState("");
@@ -290,6 +291,16 @@ const Login = () => {
       }, 2000);
     } else {
       toast.error("Email ou senha incorretos! ⚠️");
+    }
+  };
+
+  const handleFotoChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setFoto(e.target.files[0]);
+      setNomeDoArquivoFoto(e.target.files[0].name);
+    } else {
+      setFoto(null);
+      setNomeDoArquivoFoto("");
     }
   };
 
@@ -344,21 +355,20 @@ const Login = () => {
 
     const reader = new FileReader();
 
-    let novoUsuario = {
-      nome,
-      sobrenome,
-      telefone,
-      cpf,
-      email,
-      senha: password,
-      foto: null,
-      dataNascimento,
-      cep,
-      endereco,
-    };
-
     reader.onloadend = () => {
-      novoUsuario.foto = reader.result;
+      const fotoBase64 = reader.result;
+      let novoUsuario = {
+        nome,
+        sobrenome,
+        telefone,
+        cpf,
+        email,
+        senha: password,
+        foto: fotoBase64,
+        dataNascimento,
+        cep,
+        endereco,
+      };
       usuariosCadastrados.push(novoUsuario);
       localStorage.setItem("usuarios", JSON.stringify(usuariosCadastrados));
       toast.success("Cadastro realizado com sucesso! 🎉");
@@ -370,6 +380,18 @@ const Login = () => {
     if (foto) {
       reader.readAsDataURL(foto);
     } else {
+      let novoUsuario = {
+        nome,
+        sobrenome,
+        telefone,
+        cpf,
+        email,
+        senha: password,
+        foto: null,
+        dataNascimento,
+        cep,
+        endereco,
+      };
       usuariosCadastrados.push(novoUsuario);
       localStorage.setItem("usuarios", JSON.stringify(usuariosCadastrados));
       toast.success("Cadastro realizado com sucesso! 🎉");
@@ -511,11 +533,25 @@ const Login = () => {
                   />
                   <FotoInputContainer>
                     <FaCamera style={{ marginRight: "8px" }} />
-                    <span>Selecionar Foto</span>
+                    <span>
+                      {nomeDoArquivoFoto ? (
+                        <span
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          {nomeDoArquivoFoto} &nbsp;
+                          <FaCheck color="#0d8b06" />
+                        </span>
+                      ) : (
+                        "Selecionar foto"
+                      )}
+                    </span>
                     <FotoInput
                       type="file"
                       accept="image/*"
-                      onChange={(e) => setFoto(e.target.files[0])}
+                      onChange={handleFotoChange}
                     />
                   </FotoInputContainer>
                   <Input
