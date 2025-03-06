@@ -365,7 +365,7 @@ const Login = () => {
         email,
         senha: password,
         foto: fotoBase64,
-        dataNascimento,
+        dataNascimento: formatarDataNascimento(dataNascimento),
         endereco: `${rua}, ${numero}/${complemento} - ${bairro} - ${cidade}/${estado}`,
       };
       usuariosCadastrados.push(novoUsuario);
@@ -387,7 +387,7 @@ const Login = () => {
         email,
         senha: password,
         foto: null,
-        dataNascimento,
+        dataNascimento: formatarDataNascimento(dataNascimento),
         endereco: `${rua}, ${numero}/${complemento} - ${bairro} - ${cidade}/${estado}`,
       };
       usuariosCadastrados.push(novoUsuario);
@@ -475,6 +475,16 @@ const Login = () => {
     }
 
     return telefoneTruncado;
+  };
+
+  const formatarDataNascimento = (data) => {
+    if (!data) return "";
+
+    const partes = data.split("-");
+
+    if (partes.length !== 3) return data;
+
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
   };
 
   const toggleFlip = () => {
