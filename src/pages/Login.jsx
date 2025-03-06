@@ -366,8 +366,7 @@ const Login = () => {
         senha: password,
         foto: fotoBase64,
         dataNascimento,
-        cep,
-        endereco,
+        endereco: `${rua}, ${numero}/${complemento} - ${bairro} - ${cidade}/${estado}`,
       };
       usuariosCadastrados.push(novoUsuario);
       localStorage.setItem("usuarios", JSON.stringify(usuariosCadastrados));
@@ -389,8 +388,7 @@ const Login = () => {
         senha: password,
         foto: null,
         dataNascimento,
-        cep,
-        endereco,
+        endereco: `${rua}, ${numero}/${complemento} - ${bairro} - ${cidade}/${estado}`,
       };
       usuariosCadastrados.push(novoUsuario);
       localStorage.setItem("usuarios", JSON.stringify(usuariosCadastrados));

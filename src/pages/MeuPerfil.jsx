@@ -123,7 +123,9 @@ const MeuPerfil = () => {
           }}
         >
           <Avatar src={usuario.foto} alt="foto usuário" />
-          <Nome>{usuario.nome}</Nome>
+          <Nome>
+            {usuario.nome} {usuario.sobrenome}
+          </Nome>
           <span>___</span>
           <Email>{usuario.email}</Email>
         </div>
