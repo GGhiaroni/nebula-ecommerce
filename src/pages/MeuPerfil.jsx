@@ -132,7 +132,9 @@ const MeuPerfil = () => {
         <Informacoes>
           <Item>
             <Label>Nome Completo:</Label>
-            <Valor>{usuario.nome}</Valor>
+            <Valor>
+              {usuario.nome} {usuario.sobrenome}
+            </Valor>
           </Item>
           <Item>
             <Label>Telefone:</Label>
