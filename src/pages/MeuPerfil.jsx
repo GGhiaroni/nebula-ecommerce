@@ -137,6 +137,10 @@ const MeuPerfil = () => {
             </Valor>
           </Item>
           <Item>
+            <Label>CPF:</Label>
+            <Valor>{usuario.cpf}</Valor>
+          </Item>
+          <Item>
             <Label>Telefone:</Label>
             <Valor>{usuario.telefone}</Valor>
           </Item>
