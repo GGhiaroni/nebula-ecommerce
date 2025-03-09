@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
@@ -103,6 +103,38 @@ const EditButton = styled.button`
   }
 `;
 
+const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const ModalConteudo = styled.div`
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+`;
+
+const ModalFechar = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+`;
+
 const MeuPerfil = () => {
   const usuario = useSelector((state) => state.usuario.dados);
   const [modalAberta, setModalAberta] = useState(false);
@@ -168,6 +200,16 @@ const MeuPerfil = () => {
           )}
         </Informacoes>
       </Card>
+      {modalAberta && (
+        <Modal>
+          <ModalConteudo>
+            <ModalFechar onClick={fecharModal}>&times;</ModalFechar>
+            {/* Conteúdo da Modal */}
+            <h2>Editar Perfil</h2>
+            {/* Adicione aqui os campos para editar o perfil */}
+          </ModalConteudo>
+        </Modal>
+      )}
     </Container>
   );
 };
