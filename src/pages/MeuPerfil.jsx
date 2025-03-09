@@ -30,6 +30,7 @@ const Container = styled.div`
   align-items: center;
   min-height: 80vh;
   background-color: #f4f7f9;
+  padding: 80px 0px;
 `;
 
 const Avatar = styled.img`
