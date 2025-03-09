@@ -105,6 +105,15 @@ const EditButton = styled.button`
 
 const MeuPerfil = () => {
   const usuario = useSelector((state) => state.usuario.dados);
+  const [modalAberta, setModalAberta] = useState(false);
+
+  const abrirModal = () => {
+    setModalAberta(true);
+  };
+
+  const fecharModal = () => {
+    setModalAberta(false);
+  };
 
   if (!usuario) {
     return <p>Usuário não logado.</p>;
@@ -113,7 +122,7 @@ const MeuPerfil = () => {
   return (
     <Container>
       <Card>
-        <EditButton>
+        <EditButton onClick={abrirModal}>
           <MdEdit size={20} />
         </EditButton>
         <div
