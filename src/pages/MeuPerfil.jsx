@@ -109,20 +109,26 @@ const Modal = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  animation: ${fadeIn} 0.3s ease-in-out;
+  padding: 20px;
 `;
 
 const ModalConteudo = styled.div`
   background-color: white;
-  padding: 2rem;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 500px;
+  padding: 3rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
   position: relative;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 `;
 
 const ModalFechar = styled.button`
@@ -133,14 +139,56 @@ const ModalFechar = styled.button`
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
+const Formulario = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+`;
+
+const InputGroup = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
+  padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+    background-color: #f9fbfd;
+  }
+`;
+
+const SaveButton = styled.button`
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 14px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: 1.5rem;
+
+  &:hover {
+    background-color: #0056b3;
+  }
 `;
 
 const MeuPerfil = () => {
@@ -214,30 +262,19 @@ const MeuPerfil = () => {
             <ModalFechar onClick={fecharModal}>&times;</ModalFechar>
             {/* Conteúdo da Modal */}
             <h2>Editar Perfil</h2>
-            <Item>
-              <Label>Nome:</Label>
-              <Input placeholder={usuario.nome} />
-            </Item>
-            <Item>
-              <Label>Sobrenome:</Label>
-              <Input placeholder={usuario.sobrenome} />
-            </Item>
-            <Item>
-              <Label>Email:</Label>
-              <Input placeholder={usuario.email} />
-            </Item>
-            <Item>
-              <Label>Email:</Label>
-              <Input placeholder={usuario.email} />
-            </Item>
-            <Item>
-              <Label>Telefone:</Label>
-              <Input placeholder={usuario.telefone} />
-            </Item>
-            <Item>
-              <Label>Endereço:</Label>
-              <Input placeholder={usuario.endereco} />
-            </Item>
+            <Modal>
+              <ModalConteudo>
+                <ModalFechar onClick={fecharModal}>&times;</ModalFechar>
+                <h2>Editar Perfil</h2>
+                <InputGroup>
+                  <Input placeholder={usuario.nome} />
+                  <Input placeholder={usuario.sobrenome} />
+                  <Input placeholder={usuario.email} />
+                  <Input placeholder={usuario.telefone} />
+                </InputGroup>
+                <SaveButton>Salvar</SaveButton>
+              </ModalConteudo>
+            </Modal>
           </ModalConteudo>
         </Modal>
       )}
