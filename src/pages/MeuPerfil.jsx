@@ -135,6 +135,14 @@ const ModalFechar = styled.button`
   cursor: pointer;
 `;
 
+const Input = styled.input`
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
 const MeuPerfil = () => {
   const usuario = useSelector((state) => state.usuario.dados);
   const [modalAberta, setModalAberta] = useState(false);
@@ -206,7 +214,30 @@ const MeuPerfil = () => {
             <ModalFechar onClick={fecharModal}>&times;</ModalFechar>
             {/* Conteúdo da Modal */}
             <h2>Editar Perfil</h2>
-            {/* Adicione aqui os campos para editar o perfil */}
+            <Item>
+              <Label>Nome:</Label>
+              <Input placeholder={usuario.nome} />
+            </Item>
+            <Item>
+              <Label>Sobrenome:</Label>
+              <Input placeholder={usuario.sobrenome} />
+            </Item>
+            <Item>
+              <Label>Email:</Label>
+              <Input placeholder={usuario.email} />
+            </Item>
+            <Item>
+              <Label>Email:</Label>
+              <Input placeholder={usuario.email} />
+            </Item>
+            <Item>
+              <Label>Telefone:</Label>
+              <Input placeholder={usuario.telefone} />
+            </Item>
+            <Item>
+              <Label>Endereço:</Label>
+              <Input placeholder={usuario.endereco} />
+            </Item>
           </ModalConteudo>
         </Modal>
       )}
