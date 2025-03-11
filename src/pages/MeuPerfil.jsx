@@ -155,6 +155,7 @@ const Formulario = styled.div`
 const InputGroup = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 `;
 
 const Input = styled.input`
@@ -267,10 +268,16 @@ const MeuPerfil = () => {
                 <ModalFechar onClick={fecharModal}>&times;</ModalFechar>
                 <h2>Editar Perfil</h2>
                 <InputGroup>
+                  <Label>Nome</Label>
                   <Input placeholder={usuario.nome} />
+                  <Label>Sobrenome</Label>
                   <Input placeholder={usuario.sobrenome} />
+                  <Label>Email</Label>
                   <Input placeholder={usuario.email} />
+                  <Label>Telefone</Label>
                   <Input placeholder={usuario.telefone} />
+                  <Label>Endereço</Label>
+                  <Input placeholder={usuario.endereco} />
                 </InputGroup>
                 <SaveButton>Salvar</SaveButton>
               </ModalConteudo>
