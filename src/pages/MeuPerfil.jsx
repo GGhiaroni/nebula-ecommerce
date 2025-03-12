@@ -261,7 +261,6 @@ const MeuPerfil = () => {
         <Modal>
           <ModalConteudo>
             <ModalFechar onClick={fecharModal}>&times;</ModalFechar>
-            {/* Conteúdo da Modal */}
             <h2>Editar Perfil</h2>
             <Modal>
               <ModalConteudo>

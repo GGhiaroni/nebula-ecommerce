@@ -366,6 +366,7 @@ const Login = () => {
         senha: password,
         foto: fotoBase64,
         dataNascimento: formatarDataNascimento(dataNascimento),
+        cep,
         endereco: `${rua}, ${numero}/${complemento} - ${bairro} - ${cidade}/${estado}`,
       };
       usuariosCadastrados.push(novoUsuario);
@@ -388,6 +389,7 @@ const Login = () => {
         senha: password,
         foto: null,
         dataNascimento: formatarDataNascimento(dataNascimento),
+        cep,
         endereco: `${rua}, ${numero}/${complemento} - ${bairro} - ${cidade}/${estado}`,
       };
       usuariosCadastrados.push(novoUsuario);
@@ -405,6 +407,7 @@ const Login = () => {
       setBairro("");
       setCidade("");
       setEstado("");
+      setCep("");
       return;
     }
 
@@ -420,6 +423,7 @@ const Login = () => {
         setBairro("");
         setCidade("");
         setEstado("");
+        setCep("");
         return;
       }
 
@@ -427,12 +431,14 @@ const Login = () => {
       setBairro(data.bairro);
       setCidade(data.localidade);
       setEstado(data.uf);
+      setCep(data.cep);
     } catch (error) {
       toast.error("Erro ao buscar o endereço! ⚠️");
       setRua("");
       setBairro("");
       setCidade("");
       setEstado("");
+      setCep("");
     }
 
     setBuscandoCep(false);
