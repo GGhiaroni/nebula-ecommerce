@@ -37,14 +37,14 @@ const Avatar = styled.img`
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  margin-bottom: 1rem;
+  margin-bottom: 5px;
   animation: ${slideIn} 0.5s ease-in-out;
   object-fit: cover;
 `;
 
 const Nome = styled.h2`
   font-size: 1.8rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   animation: ${slideIn} 0.6s ease-in-out;
   color: #333;
 `;
@@ -160,6 +160,24 @@ const SaveButton = styled.button`
   }
 `;
 
+const AlterarSenhaButton = styled.button`
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: 1rem;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
 const MeuPerfil = () => {
   const usuario = useSelector((state) => state.usuario.dados);
   const [modalAberta, setModalAberta] = useState(false);
@@ -224,6 +242,7 @@ const MeuPerfil = () => {
             <MdEdit />
           </EditButton>
         </InputGroup>
+        <AlterarSenhaButton>alterar senha</AlterarSenhaButton>
       </Card>
       {modalAberta && (
         <Modal>
