@@ -217,9 +217,7 @@ const MeuPerfil = () => {
 
         <Label>Telefone</Label>
         <InputGroup>
-          <Valor>
-            {usuario.nome} {usuario.sobrenome}
-          </Valor>
+          <Valor>{usuario.telefone}</Valor>
           <EditButton>
             <MdEdit />
           </EditButton>
@@ -227,9 +225,7 @@ const MeuPerfil = () => {
 
         <Label>Endereço</Label>
         <InputGroup>
-          <Valor>
-            {usuario.nome} {usuario.sobrenome}
-          </Valor>
+          <Valor>{usuario.endereco}</Valor>
           <EditButton>
             <MdEdit />
           </EditButton>
