@@ -56,53 +56,6 @@ const Email = styled.p`
   animation: ${slideIn} 0.7s ease-in-out;
 `;
 
-const Informacoes = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-  animation: ${slideIn} 0.8s ease-in-out;
-`;
-
-const Item = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
-  width: 100%;
-`;
-
-const Label = styled.span`
-  font-weight: 600;
-  margin-bottom: 0.2rem;
-  color: #444;
-`;
-
-const Valor = styled.span`
-  font-size: 1rem;
-  color: #333;
-`;
-
-const EditButton = styled.button`
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
-
 const Modal = styled.div`
   position: fixed;
   top: 0;
@@ -120,15 +73,15 @@ const Modal = styled.div`
 
 const ModalConteudo = styled.div`
   background-color: white;
-  padding: 3rem;
+  padding: 2rem;
   border-radius: 12px;
   width: 100%;
-  max-width: 600px;
+  max-width: 400px;
   position: relative;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 `;
 
 const ModalFechar = styled.button`
@@ -146,16 +99,37 @@ const ModalFechar = styled.button`
   }
 `;
 
-const Formulario = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-`;
-
 const InputGroup = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  background: #f4f4f4;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 10px;
+`;
+
+const Label = styled.label`
+  font-weight: 600;
+  color: #444;
+`;
+
+const Valor = styled.span`
+  font-size: 1rem;
+  color: #333;
+`;
+
+const EditButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #007bff;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #0056b3;
+  }
 `;
 
 const Input = styled.input`
@@ -179,13 +153,13 @@ const SaveButton = styled.button`
   color: white;
   border: none;
   border-radius: 6px;
-  padding: 14px;
+  padding: 12px;
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-weight: bold;
   text-transform: uppercase;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 
   &:hover {
     background-color: #0056b3;
@@ -211,9 +185,6 @@ const MeuPerfil = () => {
   return (
     <Container>
       <Card>
-        <EditButton onClick={abrirModal}>
-          <MdEdit size={20} />
-        </EditButton>
         <div
           style={{
             display: "flex",
@@ -225,37 +196,44 @@ const MeuPerfil = () => {
           <Nome>
             {usuario.nome} {usuario.sobrenome}
           </Nome>
-          <span>___</span>
-          <Email>{usuario.email}</Email>
         </div>
-        <Informacoes>
-          <Item>
-            <Label>Nome Completo:</Label>
-            <Valor>
-              {usuario.nome} {usuario.sobrenome}
-            </Valor>
-          </Item>
-          <Item>
-            <Label>CPF:</Label>
-            <Valor>{usuario.cpf}</Valor>
-          </Item>
-          <Item>
-            <Label>Telefone:</Label>
-            <Valor>{usuario.telefone}</Valor>
-          </Item>
-          {usuario.dataNascimento && (
-            <Item>
-              <Label>Data de Nascimento:</Label>
-              <Valor>{usuario.dataNascimento}</Valor>
-            </Item>
-          )}
-          {usuario.endereco && (
-            <Item>
-              <Label>Endereço:</Label>
-              <Valor>{usuario.endereco}</Valor>
-            </Item>
-          )}
-        </Informacoes>
+        <Label>Nome</Label>
+        <InputGroup>
+          <Valor>
+            {usuario.nome} {usuario.sobrenome}
+          </Valor>
+          <EditButton>
+            <MdEdit />
+          </EditButton>
+        </InputGroup>
+
+        <Label>E-mail</Label>
+        <InputGroup>
+          <Valor>{usuario.email}</Valor>
+          <EditButton>
+            <MdEdit />
+          </EditButton>
+        </InputGroup>
+
+        <Label>Telefone</Label>
+        <InputGroup>
+          <Valor>
+            {usuario.nome} {usuario.sobrenome}
+          </Valor>
+          <EditButton>
+            <MdEdit />
+          </EditButton>
+        </InputGroup>
+
+        <Label>Endereço</Label>
+        <InputGroup>
+          <Valor>
+            {usuario.nome} {usuario.sobrenome}
+          </Valor>
+          <EditButton>
+            <MdEdit />
+          </EditButton>
+        </InputGroup>
       </Card>
       {modalAberta && (
         <Modal>
@@ -266,8 +244,8 @@ const MeuPerfil = () => {
               <ModalConteudo>
                 <ModalFechar onClick={fecharModal}>&times;</ModalFechar>
                 <h2>Editar Perfil</h2>
+                <Label>Nome</Label>
                 <InputGroup>
-                  <Label>Nome</Label>
                   <Input placeholder={usuario.nome} />
                   <Label>Sobrenome</Label>
                   <Input placeholder={usuario.sobrenome} />
