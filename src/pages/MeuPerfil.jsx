@@ -49,13 +49,6 @@ const Nome = styled.h2`
   color: #333;
 `;
 
-const Email = styled.p`
-  font-size: 1.1rem;
-  color: #666;
-  margin-bottom: 1.5rem;
-  animation: ${slideIn} 0.7s ease-in-out;
-`;
-
 const Modal = styled.div`
   position: fixed;
   top: 0;
@@ -107,6 +100,7 @@ const InputGroup = styled.div`
   padding: 10px;
   border-radius: 6px;
   margin-top: 10px;
+  margin-bottom: 15px;
 `;
 
 const Label = styled.label`
