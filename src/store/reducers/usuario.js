@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const usuarioSlice = createSlice({
   name: "usuario",
   initialState: {
-    dados: null,
+    lista: JSON.parse(localStorage.getItem("usuarios")) || [],
+    dados: JSON.parse(localStorage.getItem("usuario")) || null,
   },
   reducers: {
     login: (state, action) => {
@@ -13,7 +14,13 @@ const usuarioSlice = createSlice({
       state.dados = null;
     },
     atualizarPerfil: (state, action) => {
-      state.dados = { ...state.dados, ...action.payload };
+      state.lista = state.lista.map((user) => {
+        user.id === action.payload.id ? action.payload : user;
+      });
+
+      state.dados = action.payload;
+      localStorage.setItem("usuarios", JSON.stringify(state.lista));
+      localStorage.setItem("usuario", JSON.stringify(state.dados));
     },
   },
 });

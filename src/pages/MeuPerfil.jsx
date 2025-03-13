@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { MdEdit } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
+import { atualizarPerfil } from "../store/reducers/usuario";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -185,6 +186,12 @@ const MeuPerfil = () => {
   const [campoEditando, setCampoEditando] = useState("");
   const [valorEditado, setValorEditado] = useState("");
 
+  if (!usuarioLogado) {
+    return <p>Usuário não logado.</p>;
+  }
+
+  const dispatch = useDispatch();
+
   const abrirModal = (campo, valor) => {
     setCampoEditando(campo);
     setValorEditado(valor);
@@ -196,15 +203,23 @@ const MeuPerfil = () => {
   };
 
   const alterarDado = () => {
-    const usuarioAtualizado = {
-      ...usuario,
-      [campoQueEstaSendoEditado]: valorEdicao,
-    };
-  };
+    if (!usuarioLogado || !campoEditando) return;
 
-  if (!usuario) {
-    return <p>Usuário não logado.</p>;
-  }
+    const usuarioAtualizado = {
+      ...usuarioLogado,
+      [campoEditando]: valorEditado,
+    };
+
+    const novaListaDeUsuarios = todosOsUsuarios.map((user) => {
+      user.id === usuarioLogado.id ? usuarioAtualizado : user;
+    });
+
+    localStorage.setItem("usuarios", JSON.stringify(novaListaDeUsuarios));
+
+    dispatch(atualizarPerfil(usuarioAtualizado));
+
+    fecharModal();
+  };
 
   return (
     <Container>
@@ -216,24 +231,24 @@ const MeuPerfil = () => {
             alignItems: "center",
           }}
         >
-          <Avatar src={usuario.foto} alt="foto usuário" />
+          <Avatar src={usuarioLogado.foto} alt="foto usuário" />
           <Nome>
-            {usuario.nome} {usuario.sobrenome}
+            {usuarioLogado.nome} {usuarioLogado.sobrenome}
           </Nome>
         </div>
         <Label>Nome</Label>
         <InputGroup>
           <Valor>
-            {usuario.nome} {usuario.sobrenome}
+            {usuarioLogado.nome} {usuarioLogado.sobrenome}
           </Valor>
-          <EditButton onClick={() => abrirModal("Nome", usuario.nome)}>
+          <EditButton onClick={() => abrirModal("Nome", usuarioLogado.nome)}>
             <MdEdit />
           </EditButton>
         </InputGroup>
 
         <Label>E-mail</Label>
         <InputGroup>
-          <Valor>{usuario.email}</Valor>
+          <Valor>{usuarioLogado.email}</Valor>
           <EditButton>
             <MdEdit />
           </EditButton>
@@ -241,7 +256,7 @@ const MeuPerfil = () => {
 
         <Label>Telefone</Label>
         <InputGroup>
-          <Valor>{usuario.telefone}</Valor>
+          <Valor>{usuarioLogado.telefone}</Valor>
           <EditButton>
             <MdEdit />
           </EditButton>
@@ -249,7 +264,7 @@ const MeuPerfil = () => {
 
         <Label>Endereço</Label>
         <InputGroup>
-          <Valor>{usuario.endereco}</Valor>
+          <Valor>{usuarioLogado.endereco}</Valor>
           <EditButton>
             <MdEdit />
           </EditButton>
