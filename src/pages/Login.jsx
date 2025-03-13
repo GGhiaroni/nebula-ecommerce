@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled, { keyframes } from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 import backgroundImagePaginaLogin from "../../public/login-bg.png";
 import backgroundImageCardCadastro from "../../public/sign-up-bg.png";
 import { login } from "../store/reducers/usuario";
@@ -358,6 +359,7 @@ const Login = () => {
     reader.onloadend = () => {
       const fotoBase64 = reader.result;
       let novoUsuario = {
+        id: uuidv4(),
         nome,
         sobrenome,
         telefone,
@@ -381,6 +383,7 @@ const Login = () => {
       reader.readAsDataURL(foto);
     } else {
       let novoUsuario = {
+        id: uuidv4(),
         nome,
         sobrenome,
         telefone,
