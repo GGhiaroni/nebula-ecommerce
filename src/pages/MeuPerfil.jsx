@@ -179,7 +179,8 @@ const AlterarSenhaButton = styled.button`
 `;
 
 const MeuPerfil = () => {
-  const usuario = useSelector((state) => state.usuario.dados);
+  const usuarioLogado = useSelector((state) => state.usuario.dados);
+  const todosOsUsuarios = useSelector((state) => state.usuario.lista);
   const [modalAberta, setModalAberta] = useState(false);
   const [campoEditando, setCampoEditando] = useState("");
   const [valorEditado, setValorEditado] = useState("");
@@ -194,7 +195,12 @@ const MeuPerfil = () => {
     setModalAberta(false);
   };
 
-  const alterarDado = () => {};
+  const alterarDado = () => {
+    const usuarioAtualizado = {
+      ...usuario,
+      [campoQueEstaSendoEditado]: valorEdicao,
+    };
+  };
 
   if (!usuario) {
     return <p>Usuário não logado.</p>;
@@ -260,7 +266,7 @@ const MeuPerfil = () => {
                 <ModalFechar onClick={fecharModal}>&times;</ModalFechar>
                 <h2>Editar {campoEditando}</h2>
                 <Input placeholder={valorEditado} />
-                <SaveButton onClick={alterarDados}>Salvar</SaveButton>
+                <SaveButton onClick={alterarDado}>Salvar</SaveButton>
               </ModalConteudo>
             </Modal>
           </ModalConteudo>
