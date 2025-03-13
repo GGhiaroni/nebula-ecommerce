@@ -66,7 +66,7 @@ const Modal = styled.div`
 
 const ModalConteudo = styled.div`
   background-color: white;
-  padding: 2rem;
+  padding: 5rem;
   border-radius: 12px;
   width: 100%;
   max-width: 400px;
@@ -181,14 +181,20 @@ const AlterarSenhaButton = styled.button`
 const MeuPerfil = () => {
   const usuario = useSelector((state) => state.usuario.dados);
   const [modalAberta, setModalAberta] = useState(false);
+  const [campoEditando, setCampoEditando] = useState("");
+  const [valorEditado, setValorEditado] = useState("");
 
-  const abrirModal = () => {
+  const abrirModal = (campo, valor) => {
+    setCampoEditando(campo);
+    setValorEditado(valor);
     setModalAberta(true);
   };
 
   const fecharModal = () => {
     setModalAberta(false);
   };
+
+  const alterarDado = () => {};
 
   if (!usuario) {
     return <p>Usuário não logado.</p>;
@@ -214,7 +220,7 @@ const MeuPerfil = () => {
           <Valor>
             {usuario.nome} {usuario.sobrenome}
           </Valor>
-          <EditButton>
+          <EditButton onClick={() => abrirModal("Nome", usuario.nome)}>
             <MdEdit />
           </EditButton>
         </InputGroup>
@@ -252,20 +258,9 @@ const MeuPerfil = () => {
             <Modal>
               <ModalConteudo>
                 <ModalFechar onClick={fecharModal}>&times;</ModalFechar>
-                <h2>Editar Perfil</h2>
-                <Label>Nome</Label>
-                <InputGroup>
-                  <Input placeholder={usuario.nome} />
-                  <Label>Sobrenome</Label>
-                  <Input placeholder={usuario.sobrenome} />
-                  <Label>Email</Label>
-                  <Input placeholder={usuario.email} />
-                  <Label>Telefone</Label>
-                  <Input placeholder={usuario.telefone} />
-                  <Label>Endereço</Label>
-                  <Input placeholder={usuario.endereco} />
-                </InputGroup>
-                <SaveButton>Salvar</SaveButton>
+                <h2>Editar {campoEditando}</h2>
+                <Input placeholder={valorEditado} />
+                <SaveButton onClick={alterarDados}>Salvar</SaveButton>
               </ModalConteudo>
             </Modal>
           </ModalConteudo>
