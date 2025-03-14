@@ -7,19 +7,12 @@ const usuarioSlice = createSlice({
   },
   reducers: {
     login: (state, action) => {
-      state.dados = action.payload;
+      state.usuarioAtual = action.payload;
+      localStorage("usuarioLogado", JSON.stringify(action.payload));
     },
     logout: (state) => {
-      state.dados = null;
-    },
-    atualizarPerfil: (state, action) => {
-      state.lista = state.lista.map((user) => {
-        user.id === action.payload.id ? action.payload : user;
-      });
-
-      state.dados = action.payload;
-      localStorage.setItem("usuarios", JSON.stringify(state.lista));
-      localStorage.setItem("usuario", JSON.stringify(state.dados));
+      state.usuarioAtual = null;
+      localStorage.removeItem("usuarioLogado");
     },
   },
 });
