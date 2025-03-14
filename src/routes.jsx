@@ -1,4 +1,5 @@
-import { Provider } from "react-redux";
+import { useEffect } from "react";
+import { Provider, useDispatch } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { ToastContainer } from "react-toastify";
 import Footer from "./componentes/Footer";
@@ -20,34 +21,50 @@ import QuemSomos from "./pages/QuemSomos";
 import ResultadosDePesquisa from "./pages/ResultadosDePesquisa";
 import TrocasEDevolucoes from "./pages/TrocasEDevolucoes";
 import store from "./store";
+import { login } from "./store/reducers/usuario";
 
 function AppRoutes() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+    if (usuarioLogado) dispatch(login(usuarioLogado));
+  }, [dispatch]);
+
   return (
-    <BrowserRouter>
-      <Provider store={store}>
-        <ToastContainer position="top-right" autoClose={5000} />
-        <Header />
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="/categoria/:nomeCategoria" element={<Categoria />} />
-          <Route path="/atendimento" element={<Atendimento />} />
-          <Route path="/quem-somos" element={<QuemSomos />} />
-          <Route path="/trocas-e-devolucoes" element={<TrocasEDevolucoes />} />
-          <Route path="/avaliacoes" element={<Avaliacoes />} />
-          <Route path="/cashback" element={<Cashback />} />
-          <Route path="/busca" element={<ResultadosDePesquisa />} />
-          <Route path="/produto/:id" element={<PaginaProduto />} />
-          <Route path="/carrinho" element={<Carrinho />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/cadastrar-produto" element={<CadastrarProduto />} />
-          <Route path="/meu-perfil" element={<MeuPerfil />} />
-          <Route path="*" element={<Pagina404 />} />
-        </Routes>
-      </Provider>
+    <>
+      <ToastContainer position="top-right" autoClose={5000} />
+      <Header />
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="/categoria/:nomeCategoria" element={<Categoria />} />
+        <Route path="/atendimento" element={<Atendimento />} />
+        <Route path="/quem-somos" element={<QuemSomos />} />
+        <Route path="/trocas-e-devolucoes" element={<TrocasEDevolucoes />} />
+        <Route path="/avaliacoes" element={<Avaliacoes />} />
+        <Route path="/cashback" element={<Cashback />} />
+        <Route path="/busca" element={<ResultadosDePesquisa />} />
+        <Route path="/produto/:id" element={<PaginaProduto />} />
+        <Route path="/carrinho" element={<Carrinho />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/cadastrar-produto" element={<CadastrarProduto />} />
+        <Route path="/meu-perfil" element={<MeuPerfil />} />
+        <Route path="*" element={<Pagina404 />} />
+      </Routes>
       <InformacoesAdicionais />
       <Footer />
-    </BrowserRouter>
+    </>
   );
 }
 
-export default AppRoutes;
+function App() {
+  return (
+    <Provider store={store}>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </Provider>
+  );
+}
+
+export default App;
