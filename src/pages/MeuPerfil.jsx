@@ -180,7 +180,7 @@ const AlterarSenhaButton = styled.button`
 `;
 
 const MeuPerfil = () => {
-  const usuarioLogado = useSelector((state) => state.usuario.dados);
+  const usuarioLogado = useSelector((state) => state.usuario.usuarioAtual);
   const todosOsUsuarios = useSelector((state) => state.usuario.lista);
   const [modalAberta, setModalAberta] = useState(false);
   const [campoEditando, setCampoEditando] = useState("");

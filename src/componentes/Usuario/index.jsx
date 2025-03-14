@@ -106,7 +106,7 @@ const LinkSpan = styled(Link)`
 `;
 
 const Usuario = () => {
-  const usuario = useSelector((state) => state.usuario.dados);
+  const usuario = useSelector((state) => state.usuario.usuarioAtual);
   const [dropdownAberto, setDropdownAberto] = useState(false);
   const timeoutRef = useRef(null);
   const dispatch = useDispatch();
