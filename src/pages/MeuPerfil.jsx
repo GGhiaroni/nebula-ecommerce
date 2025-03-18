@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import styled, { keyframes } from "styled-components";
 import { atualizarPerfil } from "../store/reducers/usuario";
 
@@ -179,6 +180,14 @@ const AlterarSenhaButton = styled.button`
   }
 `;
 
+const SpanBuscandoCep = styled.span`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  font-weight: bold;
+  margin: 1rem 0;
+`;
+
 const MeuPerfil = () => {
   const usuarioLogado = useSelector((state) => state.usuario.usuarioAtual);
   const todosOsUsuarios = useSelector((state) => state.usuario.lista);
@@ -285,6 +294,7 @@ const MeuPerfil = () => {
         setCidade("");
         setEstado("");
         setCep("");
+        setBuscandoCep(false);
         return;
       }
 
@@ -300,8 +310,8 @@ const MeuPerfil = () => {
       setCidade("");
       setEstado("");
       setCep("");
+      setBuscandoCep(false);
     }
-
     setBuscandoCep(false);
   };
 
@@ -407,7 +417,11 @@ const MeuPerfil = () => {
                     }
                   }}
                 />
-                {buscandoCep && <span>🔍</span>}
+                {buscandoCep && (
+                  <SpanBuscandoCep>
+                    buscando novo endereço <span>🔍</span>
+                  </SpanBuscandoCep>
+                )}
                 {rua && (
                   <>
                     <Input type="text" placeholder="Rua" value={rua} readOnly />
