@@ -223,6 +223,13 @@ const MeuPerfil = () => {
   const alterarDado = () => {
     if (!usuarioLogado || !campoEditando) return;
 
+    if (modalEnderecoAberta) {
+      if (!numero.trim() || !complemento.trim()) {
+        toast.error("Os campos 'Número' e 'Complemento' são obrigatórios! ⚠️");
+        return;
+      }
+    }
+
     let usuarioAtualizado;
 
     if (campoEditando === "nome") {
@@ -376,94 +383,88 @@ const MeuPerfil = () => {
         </InputGroup>
         <AlterarSenhaButton>alterar senha</AlterarSenhaButton>
       </Card>
-      {modalAberta ? (
+      {modalAberta && (
         <Modal>
           <ModalConteudo>
             <ModalFechar onClick={fecharModal}>&times;</ModalFechar>
-            <Modal>
-              <ModalConteudo>
-                <ModalFechar onClick={fecharModal}>&times;</ModalFechar>
-                <h2>Editar {campoEditando}</h2>
-                <Input placeholder={valorEditado} />
-                <SaveButton onClick={alterarDado}>Salvar</SaveButton>
-              </ModalConteudo>
-            </Modal>
+            <h2>Editar {campoEditando}</h2>
+            <Input placeholder={valorEditado} />
+            <SaveButton onClick={alterarDado}>Salvar</SaveButton>
           </ModalConteudo>
         </Modal>
-      ) : modalEnderecoAberta ? (
+      )}
+      {modalEnderecoAberta && (
         <Modal>
           <ModalConteudo>
-            <Modal>
-              <ModalConteudo>
-                <ModalFechar onClick={fecharModalEndereco}>&times;</ModalFechar>
-                <h2>Editar endereço</h2>
+            <ModalFechar onClick={fecharModalEndereco}>&times;</ModalFechar>
+            <h2>Editar endereço</h2>
+            <Input
+              placeholder="Por favor, insira o seu novo CEP"
+              value={cep}
+              onChange={(e) => {
+                const cepFormatado = formatarCep(e.target.value);
+                setCep(cepFormatado);
+
+                if (cepFormatado.length === 9) {
+                  handleCep(cepFormatado.replace("-", ""));
+                } else if (cepFormatado.length === 0) {
+                  setCep("");
+                  setRua("");
+                  setBairro("");
+                  setCidade("");
+                  setEstado("");
+                  setNumero("");
+                  setComplemento("");
+                }
+              }}
+            />
+            {buscandoCep && (
+              <SpanBuscandoCep>
+                buscando novo endereço <span>🔍</span>
+              </SpanBuscandoCep>
+            )}
+            {rua && (
+              <>
+                <Input type="text" placeholder="Rua" value={rua} readOnly />
                 <Input
-                  placeholder="Por favor, insira o seu novo CEP"
-                  value={cep}
-                  onChange={(e) => {
-                    const cepFormatado = formatarCep(e.target.value);
-                    setCep(cepFormatado);
-
-                    if (cepFormatado.length === 9) {
-                      handleCep(cepFormatado.replace("-", ""));
-                    } else if (cepFormatado.length === 0) {
-                      setCep("");
-                      setRua("");
-                      setBairro("");
-                      setCidade("");
-                      setEstado("");
-                      setNumero("");
-                      setComplemento("");
-                    }
-                  }}
+                  type="text"
+                  placeholder="Bairro"
+                  value={bairro}
+                  readOnly
                 />
-                {buscandoCep && (
-                  <SpanBuscandoCep>
-                    buscando novo endereço <span>🔍</span>
-                  </SpanBuscandoCep>
-                )}
-                {rua && (
-                  <>
-                    <Input type="text" placeholder="Rua" value={rua} readOnly />
-                    <Input
-                      type="text"
-                      placeholder="Bairro"
-                      value={bairro}
-                      readOnly
-                    />
-                    <Input
-                      type="text"
-                      placeholder="Cidade"
-                      value={cidade}
-                      readOnly
-                    />
-                    <Input
-                      type="text"
-                      placeholder="Estado"
-                      value={estado}
-                      readOnly
-                    />
+                <Input
+                  type="text"
+                  placeholder="Cidade"
+                  value={cidade}
+                  readOnly
+                />
+                <Input
+                  type="text"
+                  placeholder="Estado"
+                  value={estado}
+                  readOnly
+                />
 
-                    <Input
-                      type="text"
-                      placeholder="Número"
-                      value={numero}
-                      onChange={(e) => setNumero(e.target.value)}
-                    />
-                    <Input
-                      type="text"
-                      placeholder="Complemento"
-                      value={complemento}
-                      onChange={(e) => setComplemento(e.target.value)}
-                    />
-                  </>
-                )}
-                <SaveButton onClick={alterarDado}>Salvar</SaveButton>
-              </ModalConteudo>
-            </Modal>
+                <Input
+                  type="text"
+                  placeholder="Número"
+                  value={numero}
+                  onChange={(e) => setNumero(e.target.value)}
+                  required
+                />
+                <Input
+                  type="text"
+                  placeholder="Complemento"
+                  value={complemento}
+                  onChange={(e) => setComplemento(e.target.value)}
+                  required
+                />
+              </>
+            )}
+            <SaveButton onClick={alterarDado}>Salvar</SaveButton>
           </ModalConteudo>
         </Modal>
-      ) : null}
+      )}
     </Container>
   );
 };
