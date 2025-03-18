@@ -186,6 +186,14 @@ const MeuPerfil = () => {
   const [modalEnderecoAberta, setModalEnderecoAberta] = useState(false);
   const [campoEditando, setCampoEditando] = useState("");
   const [valorEditado, setValorEditado] = useState("");
+  const [cep, setCep] = useState("");
+  const [rua, setRua] = useState("");
+  const [bairro, setBairro] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [estado, setEstado] = useState("");
+  const [numero, setNumero] = useState("");
+  const [complemento, setComplemento] = useState("");
+  const [buscandoCep, setBuscandoCep] = useState(false);
 
   if (!usuarioLogado) {
     return <p>Usuário não logado.</p>;
@@ -241,6 +249,60 @@ const MeuPerfil = () => {
 
   const fecharModalEndereco = () => {
     setModalEnderecoAberta(false);
+  };
+
+  const formatarCep = (cep) => {
+    const cepNumerico = cep.replace(/\D/g, "");
+    const cepTruncado = cepNumerico.slice(0, 8);
+
+    if (cepTruncado.length > 5) {
+      return `${cepTruncado.slice(0, 5)}-${cepTruncado.slice(5)}`;
+    }
+
+    return cepTruncado;
+  };
+
+  const handleCep = async (cep) => {
+    if (!cep) {
+      setRua("");
+      setBairro("");
+      setCidade("");
+      setEstado("");
+      setCep("");
+      return;
+    }
+
+    setBuscandoCep(true);
+
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const data = await response.json();
+
+      if (data.erro) {
+        toast.error("CEP não encontrado! ⚠️");
+        setRua("");
+        setBairro("");
+        setCidade("");
+        setEstado("");
+        setCep("");
+        return;
+      }
+
+      setRua(data.logradouro);
+      setBairro(data.bairro);
+      setCidade(data.localidade);
+      setEstado(data.uf);
+      setCep(data.cep);
+    } catch (error) {
+      toast.error("Erro ao buscar o endereço! ⚠️");
+      setRua("");
+      setBairro("");
+      setCidade("");
+      setEstado("");
+      setCep("");
+    }
+
+    setBuscandoCep(false);
   };
 
   return (
@@ -321,12 +383,67 @@ const MeuPerfil = () => {
       ) : modalEnderecoAberta ? (
         <Modal>
           <ModalConteudo>
-            <ModalFechar onClick={fecharModal}>&times;</ModalFechar>
             <Modal>
               <ModalConteudo>
                 <ModalFechar onClick={fecharModalEndereco}>&times;</ModalFechar>
                 <h2>Editar endereço</h2>
-                <Input placeholder={valorEditado} />
+                <Input
+                  placeholder="Por favor, insira o seu novo CEP"
+                  value={cep}
+                  onChange={(e) => {
+                    const cepFormatado = formatarCep(e.target.value);
+                    setCep(cepFormatado);
+
+                    if (cepFormatado.length === 9) {
+                      handleCep(cepFormatado.replace("-", ""));
+                    } else if (cepFormatado.length === 0) {
+                      setCep("");
+                      setRua("");
+                      setBairro("");
+                      setCidade("");
+                      setEstado("");
+                      setNumero("");
+                      setComplemento("");
+                    }
+                  }}
+                />
+                {buscandoCep && <span>🔍</span>}
+                {rua && (
+                  <>
+                    <Input type="text" placeholder="Rua" value={rua} readOnly />
+                    <Input
+                      type="text"
+                      placeholder="Bairro"
+                      value={bairro}
+                      readOnly
+                    />
+                    <Input
+                      type="text"
+                      placeholder="Cidade"
+                      value={cidade}
+                      readOnly
+                    />
+                    <Input
+                      type="text"
+                      placeholder="Estado"
+                      value={estado}
+                      readOnly
+                    />
+
+                    <Input
+                      type="text"
+                      placeholder="Número"
+                      value={numero}
+                      onChange={(e) => setNumero(e.target.value)}
+                    />
+                    <Input
+                      type="text"
+                      placeholder="Complemento"
+                      value={complemento}
+                      onChange={(e) => setComplemento(e.target.value)}
+                    />
+                  </>
+                )}
                 <SaveButton onClick={alterarDado}>Salvar</SaveButton>
               </ModalConteudo>
             </Modal>

@@ -265,7 +265,6 @@ const Login = () => {
   const [estado, setEstado] = useState("");
   const [numero, setNumero] = useState("");
   const [complemento, setComplemento] = useState("");
-  const [endereco, setEndereco] = useState("");
   const [buscandoCep, setBuscandoCep] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
