@@ -205,10 +205,22 @@ const MeuPerfil = () => {
   const alterarDado = () => {
     if (!usuarioLogado || !campoEditando) return;
 
-    const usuarioAtualizado = {
-      ...usuarioLogado,
-      [campoEditando]: valorEditado,
-    };
+    let usuarioAtualizado;
+
+    if (campoEditando === "nome") {
+      const [novoNome, ...novoSobrenome] = valorEditado.split(" ");
+
+      usuarioAtualizado = {
+        ...usuarioLogado,
+        nome: novoNome,
+        sobrenome: novoSobrenome.join(" "),
+      };
+    } else {
+      usuarioAtualizado = {
+        ...usuarioLogado,
+        [campoEditando]: valorEditado,
+      };
+    }
 
     const novaListaDeUsuarios = todosOsUsuarios.map((user) => {
       user.id === usuarioLogado.id ? usuarioAtualizado : user;
@@ -241,7 +253,14 @@ const MeuPerfil = () => {
           <Valor>
             {usuarioLogado.nome} {usuarioLogado.sobrenome}
           </Valor>
-          <EditButton onClick={() => abrirModal("Nome", usuarioLogado.nome)}>
+          <EditButton
+            onClick={() =>
+              abrirModal(
+                "Nome",
+                `${usuarioLogado.nome} ${usuarioLogado.sobrenome}`
+              )
+            }
+          >
             <MdEdit />
           </EditButton>
         </InputGroup>
