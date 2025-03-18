@@ -233,6 +233,8 @@ const MeuPerfil = () => {
     fecharModal();
   };
 
+  const abrirModalEndereco = () => {};
+
   return (
     <Container>
       <Card>
@@ -256,7 +258,7 @@ const MeuPerfil = () => {
           <EditButton
             onClick={() =>
               abrirModal(
-                "Nome",
+                "nome",
                 `${usuarioLogado.nome} ${usuarioLogado.sobrenome}`
               )
             }
@@ -268,7 +270,9 @@ const MeuPerfil = () => {
         <Label>E-mail</Label>
         <InputGroup>
           <Valor>{usuarioLogado.email}</Valor>
-          <EditButton>
+          <EditButton
+            onClick={() => abrirModal("email", `${usuarioLogado.email}`)}
+          >
             <MdEdit />
           </EditButton>
         </InputGroup>
@@ -276,7 +280,9 @@ const MeuPerfil = () => {
         <Label>Telefone</Label>
         <InputGroup>
           <Valor>{usuarioLogado.telefone}</Valor>
-          <EditButton>
+          <EditButton
+            onClick={() => abrirModal("telefone", `${usuarioLogado.telefone}`)}
+          >
             <MdEdit />
           </EditButton>
         </InputGroup>
@@ -284,7 +290,9 @@ const MeuPerfil = () => {
         <Label>Endereço</Label>
         <InputGroup>
           <Valor>{usuarioLogado.endereco}</Valor>
-          <EditButton>
+          <EditButton
+            onClick={() => abrirModal("endereço", `${usuarioLogado.endereco}`)}
+          >
             <MdEdit />
           </EditButton>
         </InputGroup>
