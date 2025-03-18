@@ -183,6 +183,7 @@ const MeuPerfil = () => {
   const usuarioLogado = useSelector((state) => state.usuario.usuarioAtual);
   const todosOsUsuarios = useSelector((state) => state.usuario.lista);
   const [modalAberta, setModalAberta] = useState(false);
+  const [modalEnderecoAberta, setModalEnderecoAberta] = useState(false);
   const [campoEditando, setCampoEditando] = useState("");
   const [valorEditado, setValorEditado] = useState("");
 
@@ -233,7 +234,10 @@ const MeuPerfil = () => {
     fecharModal();
   };
 
-  const abrirModalEndereco = () => {};
+  const abrirModalEndereco = () => {
+    console.log("abriu a modal de endereco");
+    setModalEnderecoAberta(true);
+  };
 
   return (
     <Container>
@@ -290,9 +294,7 @@ const MeuPerfil = () => {
         <Label>Endereço</Label>
         <InputGroup>
           <Valor>{usuarioLogado.endereco}</Valor>
-          <EditButton
-            onClick={() => abrirModal("endereço", `${usuarioLogado.endereco}`)}
-          >
+          <EditButton onClick={abrirModalEndereco}>
             <MdEdit />
           </EditButton>
         </InputGroup>
