@@ -239,6 +239,10 @@ const MeuPerfil = () => {
     setModalEnderecoAberta(true);
   };
 
+  const fecharModalEndereco = () => {
+    setModalEnderecoAberta(false);
+  };
+
   return (
     <Container>
       <Card>
@@ -300,11 +304,10 @@ const MeuPerfil = () => {
         </InputGroup>
         <AlterarSenhaButton>alterar senha</AlterarSenhaButton>
       </Card>
-      {modalAberta && (
+      {modalAberta ? (
         <Modal>
           <ModalConteudo>
             <ModalFechar onClick={fecharModal}>&times;</ModalFechar>
-            <h2>Editar Perfil</h2>
             <Modal>
               <ModalConteudo>
                 <ModalFechar onClick={fecharModal}>&times;</ModalFechar>
@@ -315,7 +318,21 @@ const MeuPerfil = () => {
             </Modal>
           </ModalConteudo>
         </Modal>
-      )}
+      ) : modalEnderecoAberta ? (
+        <Modal>
+          <ModalConteudo>
+            <ModalFechar onClick={fecharModal}>&times;</ModalFechar>
+            <Modal>
+              <ModalConteudo>
+                <ModalFechar onClick={fecharModalEndereco}>&times;</ModalFechar>
+                <h2>Editar endereço</h2>
+                <Input placeholder={valorEditado} />
+                <SaveButton onClick={alterarDado}>Salvar</SaveButton>
+              </ModalConteudo>
+            </Modal>
+          </ModalConteudo>
+        </Modal>
+      ) : null}
     </Container>
   );
 };
