@@ -275,61 +275,6 @@ const MeuPerfil = () => {
     setModalEnderecoAberta(false);
   };
 
-  const formatarCep = (cep) => {
-    const cepNumerico = cep.replace(/\D/g, "");
-    const cepTruncado = cepNumerico.slice(0, 8);
-
-    if (cepTruncado.length > 5) {
-      return `${cepTruncado.slice(0, 5)}-${cepTruncado.slice(5)}`;
-    }
-
-    return cepTruncado;
-  };
-
-  const handleCep = async (cep) => {
-    if (!cep) {
-      setRua("");
-      setBairro("");
-      setCidade("");
-      setEstado("");
-      setCep("");
-      return;
-    }
-
-    setBuscandoCep(true);
-
-    try {
-      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-      const data = await response.json();
-
-      if (data.erro) {
-        toast.error("CEP não encontrado! ⚠️");
-        setRua("");
-        setBairro("");
-        setCidade("");
-        setEstado("");
-        setCep("");
-        setBuscandoCep(false);
-        return;
-      }
-
-      setRua(data.logradouro);
-      setBairro(data.bairro);
-      setCidade(data.localidade);
-      setEstado(data.uf);
-      setCep(data.cep);
-    } catch (error) {
-      toast.error("Erro ao buscar o endereço! ⚠️");
-      setRua("");
-      setBairro("");
-      setCidade("");
-      setEstado("");
-      setCep("");
-      setBuscandoCep(false);
-    }
-    setBuscandoCep(false);
-  };
-
   return (
     <Container>
       <Card>
