@@ -121,6 +121,7 @@ const ContainerBaseCard = styled.div`
   padding: 10px;
   margin-top: auto;
   border-radius: 0 0 12px 12px;
+  gap: 70px;
 `;
 
 const BotaoCarrinho = styled.button`
