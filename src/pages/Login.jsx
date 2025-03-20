@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import backgroundImagePaginaLogin from "../../public/login-bg.png";
 import backgroundImageCardCadastro from "../../public/sign-up-bg.png";
 import { login } from "../store/reducers/usuario";
+import { formatarTelefone } from "../utils/formatarTelefone";
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(-20px); }
@@ -469,20 +470,6 @@ const Login = () => {
     }
 
     return cpfTruncado;
-  };
-
-  const formatarTelefone = (telefone) => {
-    const telefoneNumerico = telefone.replace(/\D/g, "");
-    const telefoneTruncado = telefoneNumerico.slice(0, 11);
-
-    if (telefoneTruncado.length === 11) {
-      return `(${telefoneTruncado.slice(0, 2)}) ${telefoneTruncado.slice(
-        2,
-        7
-      )}-${telefoneTruncado.slice(7)}`;
-    }
-
-    return telefoneTruncado;
   };
 
   const formatarDataNascimento = (data) => {
