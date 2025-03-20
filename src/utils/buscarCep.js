@@ -1,10 +1,8 @@
-const buscarCep = async (cep, setEstadoCep, setBuscandoCep) => {
+export const buscarCep = async (cep, setEstadoCep) => {
   if (!cep) {
     setEstadoCep({ rua: "", bairro: "", cidade: "", estado: "", cep: "" });
     return;
   }
-
-  setBuscandoCep(true);
 
   try {
     const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
@@ -26,7 +24,5 @@ const buscarCep = async (cep, setEstadoCep, setBuscandoCep) => {
   } catch (error) {
     toast.error("Erro ao buscar o endereço! ⚠️");
     setEstadoCep({ rua: "", bairro: "", cidade: "", estado: "", cep: "" });
-    setBuscandoCep(false);
   }
-  setBuscandoCep(false);
 };

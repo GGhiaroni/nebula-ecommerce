@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import styled, { keyframes } from "styled-components";
 import { atualizarUsuario } from "../store/reducers/usuario";
+import { buscarCep } from "../utils/buscarCep";
+import { formatarCep } from "../utils/formatarCep";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -363,7 +365,17 @@ const MeuPerfil = () => {
                 setCep(cepFormatado);
 
                 if (cepFormatado.length === 9) {
-                  handleCep(cepFormatado.replace("-", ""));
+                  buscarCep(
+                    cepFormatado.replace("-", ""),
+                    (data) => {
+                      setRua(data.rua);
+                      setBairro(data.bairro);
+                      setCidade(data.cidade);
+                      setEstado(data.estado);
+                      setCep(data.cep);
+                    },
+                    true
+                  );
                 } else if (cepFormatado.length === 0) {
                   setCep("");
                   setRua("");
