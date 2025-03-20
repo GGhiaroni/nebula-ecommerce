@@ -370,17 +370,15 @@ const MeuPerfil = () => {
                 setCep(cepFormatado);
 
                 if (cepFormatado.length === 9) {
-                  buscarCep(
-                    cepFormatado.replace("-", ""),
-                    (data) => {
-                      setRua(data.rua);
-                      setBairro(data.bairro);
-                      setCidade(data.cidade);
-                      setEstado(data.estado);
-                      setCep(data.cep);
-                    },
-                    true
-                  );
+                  setBuscandoCep(true);
+                  buscarCep(cepFormatado.replace("-", ""), (data) => {
+                    setRua(data.rua);
+                    setBairro(data.bairro);
+                    setCidade(data.cidade);
+                    setEstado(data.estado);
+                    setCep(data.cep);
+                    setBuscandoCep(false);
+                  });
                 } else if (cepFormatado.length === 0) {
                   setCep("");
                   setRua("");
@@ -389,6 +387,7 @@ const MeuPerfil = () => {
                   setEstado("");
                   setNumero("");
                   setComplemento("");
+                  setBuscandoCep(false);
                 }
               }}
             />
