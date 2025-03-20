@@ -38,6 +38,6 @@ const usuarioSlice = createSlice({
   },
 });
 
-export const { login, logout, atualizarPerfil } = usuarioSlice.actions;
+export const { login, logout, atualizarUsuario } = usuarioSlice.actions;
 
 export default usuarioSlice.reducer;

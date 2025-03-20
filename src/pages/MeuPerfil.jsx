@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import styled, { keyframes } from "styled-components";
-import { atualizarPerfil } from "../store/reducers/usuario";
+import { atualizarUsuario } from "../store/reducers/usuario";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -191,6 +191,7 @@ const SpanBuscandoCep = styled.span`
 const MeuPerfil = () => {
   const usuarioLogado = useSelector((state) => state.usuario.usuarioAtual);
   const todosOsUsuarios = useSelector((state) => state.usuario.lista);
+  const [perfil, setPerfil] = useState(usuarioLogado || {});
   const [modalAberta, setModalAberta] = useState(false);
   const [modalEnderecoAberta, setModalEnderecoAberta] = useState(false);
   const [campoEditando, setCampoEditando] = useState("");
@@ -208,6 +209,10 @@ const MeuPerfil = () => {
     return <p>Usuário não logado.</p>;
   }
 
+  useEffect(() => {
+    setPerfil(usuarioLogado);
+  }, [usuarioLogado]);
+
   const dispatch = useDispatch();
 
   const abrirModal = (campo, valor) => {
@@ -223,11 +228,9 @@ const MeuPerfil = () => {
   const alterarDado = () => {
     if (!usuarioLogado || !campoEditando) return;
 
-    if (modalEnderecoAberta) {
-      if (!numero.trim() || !complemento.trim()) {
-        toast.error("Os campos 'Número' e 'Complemento' são obrigatórios! ⚠️");
-        return;
-      }
+    if (modalEnderecoAberta && (!numero.trim() || !complemento.trim())) {
+      toast.error("Os campos 'Número' e 'Complemento' são obrigatórios! ⚠️");
+      return;
     }
 
     let usuarioAtualizado;
@@ -247,15 +250,20 @@ const MeuPerfil = () => {
       };
     }
 
-    const novaListaDeUsuarios = todosOsUsuarios.map((user) => {
-      user.id === usuarioLogado.id ? usuarioAtualizado : user;
-    });
+    const novaListaDeUsuarios = todosOsUsuarios.map((user) =>
+      user.id === usuarioLogado.id ? usuarioAtualizado : user
+    );
 
     localStorage.setItem("usuarios", JSON.stringify(novaListaDeUsuarios));
 
-    dispatch(atualizarPerfil(usuarioAtualizado));
+    localStorage.setItem("usuarioLogado", JSON.stringify(usuarioAtualizado));
+
+    dispatch(atualizarUsuario(usuarioAtualizado));
 
     fecharModal();
+    fecharModalEndereco();
+
+    window.location.reload();
   };
 
   const abrirModalEndereco = () => {
@@ -388,7 +396,11 @@ const MeuPerfil = () => {
           <ModalConteudo>
             <ModalFechar onClick={fecharModal}>&times;</ModalFechar>
             <h2>Editar {campoEditando}</h2>
-            <Input placeholder={valorEditado} />
+            <Input
+              placeholder={valorEditado}
+              value={valorEditado}
+              onChange={(e) => setValorEditado(e.target.value)}
+            />
             <SaveButton onClick={alterarDado}>Salvar</SaveButton>
           </ModalConteudo>
         </Modal>
