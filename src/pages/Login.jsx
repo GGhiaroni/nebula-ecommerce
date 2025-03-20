@@ -10,6 +10,10 @@ import { v4 as uuidv4 } from "uuid";
 import backgroundImagePaginaLogin from "../../public/login-bg.png";
 import backgroundImageCardCadastro from "../../public/sign-up-bg.png";
 import { login } from "../store/reducers/usuario";
+import { buscarCep } from "../utils/buscarCep";
+import { formatarCep } from "../utils/formatarCep";
+import { formatarCpf } from "../utils/formatarCpf";
+import { formatarDataNascimento } from "../utils/formatarDataDeNascimento";
 import { formatarTelefone } from "../utils/formatarTelefone";
 
 const fadeIn = keyframes`
@@ -404,58 +408,8 @@ const Login = () => {
     }
   };
 
-  const handleCep = async (cep) => {
-    if (!cep) {
-      setRua("");
-      setBairro("");
-      setCidade("");
-      setEstado("");
-      setCep("");
-      return;
-    }
-
-    setBuscandoCep(true);
-
-    try {
-      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-      const data = await response.json();
-
-      if (data.erro) {
-        toast.error("CEP não encontrado! ⚠️");
-        setRua("");
-        setBairro("");
-        setCidade("");
-        setEstado("");
-        setCep("");
-        return;
-      }
-
-      setRua(data.logradouro);
-      setBairro(data.bairro);
-      setCidade(data.localidade);
-      setEstado(data.uf);
-      setCep(data.cep);
-    } catch (error) {
-      toast.error("Erro ao buscar o endereço! ⚠️");
-      setRua("");
-      setBairro("");
-      setCidade("");
-      setEstado("");
-      setCep("");
-    }
-
-    setBuscandoCep(false);
-  };
-
-  const formatarCep = (cep) => {
-    const cepNumerico = cep.replace(/\D/g, "");
-    const cepTruncado = cepNumerico.slice(0, 8);
-
-    if (cepTruncado.length > 5) {
-      return `${cepTruncado.slice(0, 5)}-${cepTruncado.slice(5)}`;
-    }
-
-    return cepTruncado;
+  const toggleFlip = () => {
+    setFlipped(!flipped);
   };
 
   return (
@@ -566,7 +520,15 @@ const Login = () => {
                         setCep(cepFormatado);
 
                         if (cepFormatado.length === 9) {
-                          handleCep(cepFormatado.replace("-", ""));
+                          setBuscandoCep(true);
+                          buscarCep(cepFormatado.replace("-", ""), (data) => {
+                            setRua(data.rua);
+                            setBairro(data.bairro);
+                            setCidade(data.cidade);
+                            setEstado(data.estado);
+                            setCep(data.cep);
+                            setBuscandoCep(false);
+                          });
                         } else if (cepFormatado.length === 0) {
                           setCep("");
                           setRua("");
@@ -575,11 +537,16 @@ const Login = () => {
                           setEstado("");
                           setNumero("");
                           setComplemento("");
+                          setBuscandoCep(false);
                         }
                       }}
                       style={{ borderColor: buscandoCep ? "#1a9b83" : "" }}
                     />
-                    {buscandoCep && <span>🔍</span>}
+                    {buscandoCep && (
+                      <span>
+                        buscando endereço <span>🔍</span>
+                      </span>
+                    )}
                   </CepContainer>
                   {rua && (
                     <>
