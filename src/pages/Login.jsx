@@ -458,34 +458,6 @@ const Login = () => {
     return cepTruncado;
   };
 
-  const formatarCpf = (cpf) => {
-    const cpfNumerico = cpf.replace(/\D/g, "");
-    const cpfTruncado = cpfNumerico.slice(0, 11);
-
-    if (cpfTruncado.length === 11) {
-      return `${cpfTruncado.slice(0, 3)}.${cpfTruncado.slice(
-        3,
-        6
-      )}.${cpfTruncado.slice(6, 9)}-${cpfTruncado.slice(9)}`;
-    }
-
-    return cpfTruncado;
-  };
-
-  const formatarDataNascimento = (data) => {
-    if (!data) return "";
-
-    const partes = data.split("-");
-
-    if (partes.length !== 3) return data;
-
-    return `${partes[2]}/${partes[1]}/${partes[0]}`;
-  };
-
-  const toggleFlip = () => {
-    setFlipped(!flipped);
-  };
-
   return (
     <PageContainer>
       <CardContainer>
