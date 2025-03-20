@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -6,6 +6,7 @@ import styled, { keyframes } from "styled-components";
 import { atualizarUsuario } from "../store/reducers/usuario";
 import { buscarCep } from "../utils/buscarCep";
 import { formatarCep } from "../utils/formatarCep";
+import { formatarTelefone } from "../utils/formatarTelefone";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -193,7 +194,6 @@ const SpanBuscandoCep = styled.span`
 const MeuPerfil = () => {
   const usuarioLogado = useSelector((state) => state.usuario.usuarioAtual);
   const todosOsUsuarios = useSelector((state) => state.usuario.lista);
-  const [perfil, setPerfil] = useState(usuarioLogado || {});
   const [modalAberta, setModalAberta] = useState(false);
   const [modalEnderecoAberta, setModalEnderecoAberta] = useState(false);
   const [campoEditando, setCampoEditando] = useState("");
@@ -210,10 +210,6 @@ const MeuPerfil = () => {
   if (!usuarioLogado) {
     return <p>Usuário não logado.</p>;
   }
-
-  useEffect(() => {
-    setPerfil(usuarioLogado);
-  }, [usuarioLogado]);
 
   const dispatch = useDispatch();
 
@@ -236,6 +232,12 @@ const MeuPerfil = () => {
     }
 
     let usuarioAtualizado;
+
+    let novoValorTelefone = valorEditado;
+
+    if (campoEditando === "telefone") {
+      novoValorTelefone = formatarTelefone(valorEditado);
+    }
 
     if (campoEditando === "nome") {
       const [novoNome, ...novoSobrenome] = valorEditado.split(" ");
@@ -350,8 +352,19 @@ const MeuPerfil = () => {
             <h2>Editar {campoEditando}</h2>
             <Input
               placeholder={valorEditado}
-              value={valorEditado}
-              onChange={(e) => setValorEditado(e.target.value)}
+              value={
+                campoEditando === "telefone"
+                  ? formatarTelefone(valorEditado)
+                  : valorEditado
+              }
+              onChange={(e) => {
+                const novoValor = e.target.value;
+                setValorEditado(
+                  campoEditando === "telefone"
+                    ? formatarTelefone(novoValor)
+                    : novoValor
+                );
+              }}
             />
             <SaveButton onClick={alterarDado}>Salvar</SaveButton>
           </ModalConteudo>
