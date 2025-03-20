@@ -245,6 +245,11 @@ const MeuPerfil = () => {
         nome: novoNome,
         sobrenome: novoSobrenome.join(" "),
       };
+    } else if (campoEditando === "endereco") {
+      usuarioAtualizado = {
+        ...usuarioLogado,
+        endereco: `${rua}, ${numero}/${complemento} - ${bairro} - ${cidade} - ${estado}`,
+      };
     } else {
       usuarioAtualizado = {
         ...usuarioLogado,
@@ -269,7 +274,7 @@ const MeuPerfil = () => {
   };
 
   const abrirModalEndereco = () => {
-    console.log("abriu a modal de endereco");
+    setCampoEditando("endereco");
     setModalEnderecoAberta(true);
   };
 
