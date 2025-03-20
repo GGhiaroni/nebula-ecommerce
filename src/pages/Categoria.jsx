@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaCartPlus } from "react-icons/fa";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { MdEdit } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -141,7 +142,26 @@ const ContainerBaseCardIcones = styled.div`
   align-items: center;
 `;
 
+const BotaoEditar = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  color: #fdfdfd;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
 const Categoria = () => {
+  const usuarioLogado = useSelector((state) => state.usuario.usuarioAtual);
   const { nomeCategoria } = useParams();
   const [loading, setLoading] = useState(true);
 
@@ -263,6 +283,14 @@ const Categoria = () => {
                           color={estaNoCarrinho ? "#1875E8" : "#fdfdfd"}
                         />
                       </BotaoCarrinho>
+                      {usuarioLogado ? (
+                        <BotaoEditar>
+                          {" "}
+                          <MdEdit color="#fdfdfd" />{" "}
+                        </BotaoEditar>
+                      ) : (
+                        ""
+                      )}
                     </ContainerBaseCardIcones>
                   </ContainerBaseCard>
                 </Produto>
