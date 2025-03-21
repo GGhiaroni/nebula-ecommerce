@@ -7,6 +7,7 @@ import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled, { keyframes } from "styled-components";
+import ModalEdicaoProduto from "../componentes/ModalEdicaoProduto";
 import { mudarCarrinho } from "../store/reducers/carrinho";
 import { mudarFavorito, setItens } from "../store/reducers/itens";
 
@@ -178,6 +179,27 @@ const Categoria = () => {
 
   const carrinho = useSelector((state) => state.carrinho);
 
+  const [produtoEditando, setProdutoEditando] = useState(null);
+
+  const abrirModalEdicao = (produto) => {
+    setProdutoEditando(produto);
+  };
+
+  const fecharModal = () => {
+    setProdutoEditando(null);
+  };
+
+  const salvarEdicao = (id, dadosEditados) => {
+    const produtosAtualizados = produtos.map((produto) =>
+      produto.id === id ? { ...produto, ...dadosEditados } : produto
+    );
+    setProdutos(produtosAtualizados);
+    localStorage.setItem(
+      `produtos-${categoria.caminhoUrl}`,
+      JSON.stringify(produtosAtualizados)
+    );
+  };
+
   useEffect(() => {
     if (!categoria) return;
 
@@ -246,6 +268,13 @@ const Categoria = () => {
 
   return (
     <CategoriaContainer>
+      {produtoEditando && (
+        <ModalEdicaoProduto
+          produto={produtoEditando}
+          fecharModal={fecharModal}
+          salvarEdicao={salvarEdicao}
+        />
+      )}
       <HeaderImage src={categoria.header} alt={categoria.nome} />
       <h2>{categoria.nome}</h2>
       <h3>{categoria.descricao}</h3>
@@ -265,7 +294,7 @@ const Categoria = () => {
                   <h4>{produto.title}</h4>
                   <ContainerBaseCard>
                     <Preco>
-                      R$ {produto.price.toFixed(2).replace(".", ",")}
+                      R$ {Number(produto.price).toFixed(2).replace(".", ",")}
                     </Preco>
                     <ContainerBaseCardIcones>
                       <BotaoFavorito onClick={() => handleFavorito(produto.id)}>
@@ -285,7 +314,7 @@ const Categoria = () => {
                         />
                       </BotaoCarrinho>
                       {usuarioLogado ? (
-                        <BotaoEditar>
+                        <BotaoEditar onClick={() => abrirModalEdicao(produto)}>
                           {" "}
                           <MdEdit color="#fdfdfd" />{" "}
                         </BotaoEditar>
