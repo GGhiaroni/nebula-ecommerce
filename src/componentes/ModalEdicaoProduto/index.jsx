@@ -11,6 +11,7 @@ const ModalBackground = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 999;
 `;
 
 const ModalContainer = styled.div`
@@ -18,6 +19,8 @@ const ModalContainer = styled.div`
   padding: 20px;
   border-radius: 10px;
   width: 400px;
+  position: relative;
+  z-index: 1000;
 `;
 
 const BotaoFechar = styled.button`

@@ -59,6 +59,7 @@ const Produto = styled.div`
   width: 260px;
   height: auto;
   cursor: pointer;
+  z-index: auto;
 
   &:hover {
     transform: scale(1.05);
