@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const ModalBackground = styled.div`
@@ -46,6 +47,50 @@ const Input = styled.input`
   border-radius: 5px;
 `;
 
-const ModalEdicaoProduto = () => {};
+const ModalEdicaoProduto = ({ produto, fecharModal, salvarEdicao }) => {
+  const [novoTitulo, setNovoTitulo] = useState(produto.title);
+  const [novoPreco, setNovoPreco] = useState(produto.price);
+  const [novaImagem, setNovaImagem] = useState(produto.image);
+
+  const handleSalvar = () => {
+    salvarEdicao(produto.id, {
+      title: novoTitulo,
+      price: novoPreco,
+      image: novaImagem,
+    });
+    fecharModal();
+  };
+
+  return (
+    <ModalBackground>
+      <ModalContainer>
+        <BotaoFechar onClick={fecharModal}>X</BotaoFechar>
+        <h2>Editar Produto</h2>
+        <label>Título:</label>
+        <Input
+          type="text"
+          value={novoTitulo}
+          onChange={(e) => setNovoTitulo(e.target.value)}
+        />
+
+        <label>Preço:</label>
+        <Input
+          type="number"
+          value={novoPreco}
+          onChange={(e) => setNovoPreco(e.target.value)}
+        />
+
+        <label>URL da Imagem:</label>
+        <Input
+          type="text"
+          value={novaImagem}
+          onChange={(e) => setNovaImagem(e.target.value)}
+        />
+
+        <BotaoSalvar onClick={handleSalvar}>Salvar Alterações</BotaoSalvar>
+      </ModalContainer>
+    </ModalBackground>
+  );
+};
 
 export default ModalEdicaoProduto;
